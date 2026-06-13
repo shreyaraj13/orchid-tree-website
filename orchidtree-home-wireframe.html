@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orchid Tree - Home (wireframe)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Mulish:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#f7f3ea; --card:#ffffff; --green:#15583a; --ink:#43382b;
+    --body:#6e675d; --gold:#c9a23c; --line:#ece6da;
+    --media:#e7e1d4; --media-tx:#b3a994; --media-dark:#8c8275;
+    --serif:'Lora',Georgia,serif; --sans:'Mulish',-apple-system,system-ui,sans-serif;
+    --radius:12px; --radius-sm:8px;
+    --img:url('https://orchidtree.in/uploads/bodhi_tree_3_png_eedb89acdf.webp');
+    --pad:clamp(24px,6.5vw,110px);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--sans);background:var(--cream);color:var(--body);line-height:1.65;}
+  .media{background:#e7e1d4 var(--img) center/cover no-repeat;display:flex;align-items:center;justify-content:center;color:transparent;}
+  .media.lbl{color:#fff;font-size:10px;letter-spacing:2px;text-transform:uppercase;text-shadow:0 1px 4px rgba(0,0,0,.5);}
+  .wrap{max-width:1320px;margin:0 auto;padding-left:var(--pad);padding-right:var(--pad);}
+  .eyebrow{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:18px;}
+  h1{font-family:var(--serif);font-weight:500;color:#fff;}
+  h2{font-family:var(--serif);font-size:34px;font-weight:500;color:var(--ink);line-height:1.15;}
+  h3{font-family:var(--serif);font-weight:500;color:var(--ink);}
+  .muted{color:var(--body);font-size:16px;}
+  .note{font-size:12px;color:var(--body);background:var(--card);padding:14px 18px;border:1px dashed #c9bfa9;border-radius:var(--radius);margin:18px auto;max-width:1320px;}
+
+  /* NAV */
+  .nav{position:absolute;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:24px var(--pad);}
+  .nav .logo{font-family:var(--serif);font-size:22px;letter-spacing:.5px;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.45);}
+  .nav .links{display:flex;gap:30px;align-items:center;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#fff;font-weight:600;}
+  .nav .links a{color:rgba(255,255,255,.9);text-decoration:none;text-shadow:0 1px 8px rgba(0,0,0,.45);transition:opacity .2s;}
+  .nav .links a:hover{opacity:.7;}
+  .nav .links .reserve{border:1px solid rgba(255,255,255,.6);padding:9px 18px;border-radius:var(--radius-sm);}
+  .nav .links .reserve:hover{background:#fff;color:var(--ink);opacity:1;}
+
+  /* HERO */
+  .hero{position:relative;height:100vh;min-height:620px;}
+  .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:var(--media-dark);}
+  .hero .scrim{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(40,33,25,.45),rgba(40,33,25,.15) 35%,rgba(40,33,25,.55));}
+  .hero .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 var(--pad);}
+  .hero h1{font-size:64px;line-height:1.05;letter-spacing:1px;}
+  .hero .sub{color:rgba(255,255,255,.92);font-size:19px;margin-top:18px;letter-spacing:.5px;text-shadow:0 1px 6px rgba(0,0,0,.4);}
+  /* quiet booking bar pinned near bottom of hero */
+  .bookbar{position:absolute;left:50%;transform:translateX(-50%);bottom:64px;width:min(820px,92%);background:rgba(255,255,255,.95);border-radius:14px;display:flex;align-items:stretch;overflow:hidden;box-shadow:0 10px 34px rgba(0,0,0,.22);}
+  .bookbar .f{flex:1;padding:18px 24px;font-size:15px;color:var(--ink);border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:center;}
+  .bookbar .f .k{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--media-tx);margin-bottom:3px;}
+  .bookbar button{background:var(--green);color:#fff;border:none;padding:0 34px;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;cursor:pointer;white-space:nowrap;}
+  .bookbar button:hover{background:#0f4730;}
+  .hero .scrolltip{display:none;}
+
+  /* POSITIONING STRIP */
+  .strip{background:var(--ink);color:#fff;text-align:center;padding:20px var(--pad);font-size:13px;letter-spacing:2px;text-transform:uppercase;}
+  .strip b{color:var(--gold);font-weight:700;}
+
+  section{padding:96px 0;}
+  .lead{max-width:620px;margin:0 auto;text-align:center;}
+  .lead h2{margin-bottom:22px;}
+  .lead .muted{font-size:18px;line-height:1.8;}
+
+  /* reusable asymmetric split */
+  .split{display:flex;gap:60px;align-items:stretch;}
+  .split.reverse{flex-direction:row-reverse;}
+  .split .media{flex:0 0 46%;min-height:440px;border-radius:var(--radius);align-self:stretch;}
+  .split .txt{flex:1;display:flex;flex-direction:column;justify-content:center;}
+  .split .txt h2{margin-bottom:20px;}
+  .split .txt .muted{font-size:17px;line-height:1.8;}
+
+  /* BRAND MOMENT - not a resort */
+  .brand{background:var(--card);}
+  .brand .lead h2{margin-bottom:22px;}
+
+  /* ROOMS - big, clear, two tiers */
+  .rooms{padding-bottom:110px;}
+  .rooms-head{text-align:center;margin-bottom:14px;}
+  .tier{margin-top:64px;}
+  .tier .tier-label{text-align:center;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:8px;}
+  .tier .tier-note{text-align:center;color:var(--body);font-size:14px;margin-bottom:30px;font-style:italic;font-family:var(--serif);}
+  .room-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;}
+  .room{border-radius:var(--radius);overflow:hidden;background:var(--card);box-shadow:0 4px 20px rgba(67,56,43,.06);}
+  .room .media{height:320px;}
+  .room .body{padding:26px;}
+  .room h3{font-size:23px;margin-bottom:4px;}
+  .room .names{font-size:12px;letter-spacing:1px;color:var(--media-tx);text-transform:uppercase;margin-bottom:12px;}
+  .room .desc{font-size:14px;color:var(--body);margin-bottom:16px;}
+  .room .foot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:16px;}
+  .room .sleeps{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--ink);font-weight:600;}
+  .room .pet{font-size:10px;letter-spacing:1px;text-transform:uppercase;font-weight:700;padding:5px 10px;border-radius:var(--radius-sm);}
+  .room .pet.yes{background:rgba(201,162,60,.16);color:#9a7820;}
+  .room .pet.no{background:#f1ede4;color:var(--media-tx);}
+
+  /* EXPECTATION / HONESTY band */
+  .honesty{background:var(--ink);color:#fff;}
+  .honesty .inner{display:flex;gap:56px;align-items:center;}
+  .honesty .media{flex:0 0 44%;height:380px;border-radius:var(--radius);}
+  .honesty .txt{flex:1;}
+  .honesty .eyebrow{color:var(--gold);}
+  .honesty h2{color:#fff;margin-bottom:18px;}
+  .honesty p{color:rgba(255,255,255,.86);font-size:16px;}
+
+  /* INCLUDED (new food model) */
+  .incl{background:var(--card);}
+  .incl-cols{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:0;}
+  .incl-col{border:1px solid var(--line);border-radius:var(--radius);padding:30px;}
+  .incl-col h3{font-size:18px;margin-bottom:16px;}
+  .incl-col.in h3{color:var(--green);}
+  .incl-col.out h3{color:var(--media-tx);}
+  .incl-col ul{list-style:none;}
+  .incl-col li{font-size:14px;padding:7px 0 7px 22px;position:relative;color:var(--ink);}
+  .incl-col.in li:before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:700;}
+  .incl-col.out li{color:var(--body);}
+  .incl-col.out li:before{content:"+";position:absolute;left:0;color:var(--media-tx);font-weight:700;}
+
+  /* EXPERIENCES shorts carousel */
+  .shorts{display:flex;gap:18px;margin-top:64px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:14px;}
+  .shorts::-webkit-scrollbar{height:8px;}
+  .shorts::-webkit-scrollbar-thumb{background:#cdc4b2;border-radius:8px;}
+  .short{position:relative;flex:0 0 260px;height:420px;border-radius:var(--radius);overflow:hidden;scroll-snap-align:start;}
+  .short .media{position:absolute;inset:0;height:100%;}
+  .short .scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(40,33,25,.72),transparent 60%);}
+  .short .lbl{position:absolute;left:0;bottom:0;padding:20px;color:#fff;font-size:15px;font-family:var(--serif);}
+
+  /* ARCHITECT story */
+  .arch{background:var(--cream);}
+  .arch .inner{display:flex;gap:56px;align-items:center;}
+  .arch .media{flex:0 0 46%;height:440px;border-radius:var(--radius);}
+  .arch .txt{flex:1;}
+
+  /* REVIEWS */
+  .reviews{background:var(--card);}
+  .rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:44px;}
+  .rev{border:1px solid var(--line);border-radius:var(--radius);padding:28px;}
+  .rev .stars{color:var(--gold);font-size:14px;margin-bottom:14px;letter-spacing:2px;}
+  .rev p{font-style:italic;font-family:var(--serif);color:var(--ink);font-size:15px;margin-bottom:18px;}
+  .rev .who{font-size:13px;font-weight:700;color:var(--ink);}
+  .rev .vg{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--media-tx);}
+  .rev-foot{text-align:center;margin-top:30px;font-size:14px;color:var(--body);}
+  .rev-foot b{color:var(--ink);}
+
+  /* PATHS (moved low, as navigation) */
+  .paths{background:var(--cream);}
+  .path-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:44px;}
+  .path{position:relative;height:300px;border-radius:var(--radius);overflow:hidden;cursor:pointer;}
+  .path .media{position:absolute;inset:0;height:100%;}
+  .path .scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(40,33,25,.8),rgba(40,33,25,.1) 70%);}
+  .path .cap{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:28px;color:#fff;}
+  .path h3{color:#fff;font-size:22px;margin-bottom:6px;}
+  .path .cap p{font-size:13px;color:rgba(255,255,255,.85);margin-bottom:14px;}
+  .path .go{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:700;}
+
+  /* FAQ */
+  .faq{background:var(--cream);}
+  .faq-list{max-width:820px;margin:44px auto 0;}
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-q{width:100%;text-align:left;background:none;border:none;cursor:pointer;padding:24px 0;font-family:var(--serif);font-size:19px;color:var(--ink);display:flex;justify-content:space-between;align-items:center;gap:20px;}
+  .faq-q .plus{color:var(--gold);font-size:22px;flex:0 0 auto;transition:transform .2s;}
+  .faq-item.open .faq-q .plus{transform:rotate(45deg);}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .28s ease;}
+  .faq-item.open .faq-a{max-height:240px;}
+  .faq-a p{padding:0 0 24px;color:var(--body);font-size:15px;max-width:680px;}
+
+  /* FOOTER */
+  footer{background:var(--green);color:#fff;padding:72px var(--pad) 36px;}
+  .foot-grid{max-width:1320px;margin:0 auto;display:flex;gap:60px;justify-content:space-between;flex-wrap:wrap;}
+  footer h4{font-family:var(--serif);font-size:24px;color:var(--gold);margin-bottom:14px;}
+  footer .col h5{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+  footer .col a,footer .col p{display:block;color:rgba(255,255,255,.85);font-size:14px;margin-bottom:10px;text-decoration:none;}
+  footer .tag{max-width:300px;color:rgba(255,255,255,.85);font-size:14px;}
+  .foot-bottom{max-width:1320px;margin:40px auto 0;padding-top:24px;border-top:1px solid rgba(255,255,255,.2);font-size:12px;color:rgba(255,255,255,.7);display:flex;justify-content:space-between;}
+
+  @media (max-width:820px){
+    .nav .links{display:none;}
+    .hero h1{font-size:38px;}
+    .bookbar{flex-direction:column;align-items:stretch;}
+    .bookbar .f{border-right:none;border-bottom:1px solid var(--line);}
+    .bookbar button{padding:16px;}
+    section{padding:60px 0;}
+    h2{font-size:26px;}
+    .room-grid,.incl-cols,.rev-grid,.path-grid{grid-template-columns:1fr;}
+    .honesty .inner,.arch .inner{flex-direction:column;gap:28px;}
+    .honesty .media,.arch .media{flex:0 0 auto;width:100%;height:260px;}
+    .split{flex-direction:column;gap:28px;}
+    .split.reverse{flex-direction:column;}
+    .split .media{flex:0 0 auto;width:100%;height:260px;}
+    .incl-cols{grid-template-columns:1fr;}
+    .short{flex:0 0 200px;height:340px;}
+    .foot-grid{flex-direction:column;gap:32px;}
+    .foot-bottom{flex-direction:column;gap:10px;}
+  }
+</style>
+</head>
+<body>
+
+  <div class="note"><strong>Home page wireframe.</strong> Brand-first and very visual. Hero video with a quiet booking bar (present, not dominating). Reflects Pradeep's facts: breakfast-included model, eleven distinct rooms in two tiers, expectation-setting, the architect story. Hatched/photo areas are image placeholders.</div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="https://orchidtree.in/uploads/ORCHID_WEBISTE_9febd4b485.mov" type="video/quicktime">
+    </video>
+    <div class="scrim"></div>
+    <div class="nav">
+      <div class="logo">Orchid Tree</div>
+      <div class="links">
+        <a href="#">Stays</a>
+        <a href="#">Experiences</a>
+        <a href="#">Restaurant</a>
+        <a href="#">Weddings</a>
+        <a href="#">Corporate</a>
+        <a href="#">About</a>
+        <a href="#" class="reserve">Reserve</a>
+      </div>
+    </div>
+    <div class="center">
+      <div class="eyebrow" style="color:var(--gold);">An architect's private nature estate near Bangalore</div>
+      <h1>The art of doing<br>nothing, beautifully</h1>
+      <div class="sub">A boutique nature retreat forty-five minutes from Whitefield. Eleven rooms, a living forest, and nowhere you need to be.</div>
+    </div>
+    <div class="bookbar">
+      <div class="f"><span class="k">Dates</span>Add your dates</div>
+      <div class="f"><span class="k">Guests</span>2 adults · 0 children</div>
+      <button>Check availability</button>
+    </div>
+    <div class="scrolltip">scroll to explore</div>
+  </div>
+
+  <!-- POSITIONING STRIP -->
+  <div class="strip">Designed by an award-winning landscape architect &nbsp;·&nbsp; <b>4.4</b> from 615+ guests &nbsp;·&nbsp; Calm over crowds, always</div>
+
+  <!-- BRAND MOMENT -->
+  <section class="brand">
+    <div class="wrap lead">
+      <div class="eyebrow">This is not a resort</div>
+      <h2>Eleven rooms. One living forest. No itinerary.</h2>
+      <p class="muted">Orchid Tree was not built on a plot of land. It was built around one, a forest left standing, with rooms tucked between the trees instead of clearing them away. There are no buffet halls, no event crowds, no schedule pinned to your door. You arrive, you slow down, and the estate takes it from there. Forty-five minutes from Whitefield, and a world away from it.</p>
+    </div>
+  </section>
+
+  <!-- EXPERIENCES -->
+  <section class="wrap">
+    <div class="split">
+      <div class="media lbl">Estate / pool image</div>
+      <div class="txt">
+        <div class="eyebrow">A day here</div>
+        <h2>Mornings you don't set an alarm for</h2>
+        <p class="muted">The day starts with birdsong and a breakfast you didn't have to plan. After that, the hours are yours. Float in the ozone pool until your fingers wrinkle. Take the buggy down to the farm and pull a tomato off the vine. Lose an afternoon to carrom and a paperback. As the light drops, there's a bonfire, a sky thick with stars, and your own bottle poured slowly. Do all of it. Do none of it. Both are the right answer here.</p>
+      </div>
+    </div>
+    <div class="shorts" style="margin-top:72px;">
+      <div class="short"><div class="media"></div><div class="scrim"></div><div class="lbl">Ozone pool</div></div>
+      <div class="short"><div class="media"></div><div class="scrim"></div><div class="lbl">Farm visit & buggy ride</div></div>
+      <div class="short"><div class="media"></div><div class="scrim"></div><div class="lbl">Bonfire & stargazing</div></div>
+      <div class="short"><div class="media"></div><div class="scrim"></div><div class="lbl">Steam & deep rest</div></div>
+      <div class="short"><div class="media"></div><div class="scrim"></div><div class="lbl">Karaoke & music corner</div></div>
+      <div class="short"><div class="media"></div><div class="scrim"></div><div class="lbl">Trampoline & games</div></div>
+      <div class="short"><div class="media"></div><div class="scrim"></div><div class="lbl">Birdwatching & trails</div></div>
+      <div class="short"><div class="media"></div><div class="scrim"></div><div class="lbl">Movies in the hall</div></div>
+    </div>
+  </section>
+
+  <!-- ROOMS -->
+  <section class="wrap rooms">
+    <div class="rooms-head">
+      <div class="eyebrow">Eleven rooms, no two the same</div>
+      <h2>Find the one that's yours</h2>
+      <p class="muted" style="max-width:600px;margin:14px auto 0;">Some rooms sit by the pool, bright and easy, steps from the water. Others are cottages built into the trees, with baths open to the sky. Pick the feeling you're after. Every room comes with breakfast, the pool, the steam room, and a full-body massage waiting for you.</p>
+    </div>
+
+    <div class="tier">
+      <div class="tier-label">By the pool</div>
+      <div class="tier-note">bright, open, a few steps from the water</div>
+      <div class="room-grid">
+        <div class="room">
+          <div class="media lbl">Couple Room video</div>
+          <div class="body">
+            <h3>Couple Room by the Pool</h3>
+            <div class="names">Bael · Bilva · Datura · Tulsi</div>
+            <div class="desc">Wake to the pool and a skylight full of morning. Cool, quiet, made for sleeping in.</div>
+            <div class="foot"><span class="sleeps">Sleeps 2 + 1 child</span><span class="pet no">No pets</span></div>
+          </div>
+        </div>
+        <div class="room">
+          <div class="media lbl">Family Room video</div>
+          <div class="body">
+            <h3>Family Room by the Pool</h3>
+            <div class="names">Ashoka · Mallige · Parijata · Spatika</div>
+            <div class="desc">Room for everyone, pullout bedding and the same skylit calm, with the pool just outside.</div>
+            <div class="foot"><span class="sleeps">Sleeps up to 4</span><span class="pet yes">Pet friendly</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tier">
+      <div class="tier-label">Garden cottages</div>
+      <div class="tier-note">built around living trees, open-to-sky baths, private steam</div>
+      <div class="room-grid">
+        <div class="room">
+          <div class="media lbl">Couple Cottage video</div>
+          <div class="body">
+            <h3>The Couple Garden Cottage</h3>
+            <div class="names">Hattimara · Bodhi Tree</div>
+            <div class="desc">Built around a living tree, with a private steam room and a bath open to the sky. Our most romantic room.</div>
+            <div class="foot"><span class="sleeps">Sleeps 2 + 1 child</span><span class="pet yes">Pet friendly</span></div>
+          </div>
+        </div>
+        <div class="room">
+          <div class="media lbl">Family Cottage video</div>
+          <div class="body">
+            <h3>The Family Garden Cottage</h3>
+            <div class="names">Chandana</div>
+            <div class="desc">Our largest space and most private, a vacation home tucked into the forest, with an open-to-sky bath of its own.</div>
+            <div class="foot"><span class="sleeps">Sleeps up to 6</span><span class="pet yes">Pet friendly</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COTTAGES desire band -->
+  <section class="honesty">
+    <div class="wrap inner">
+      <div class="media lbl">Cottage interior video</div>
+      <div class="txt">
+        <div class="eyebrow">The garden cottages</div>
+        <h2>A room with the sky for a ceiling</h2>
+        <p>Chandana, Bodhi Tree and Hattimara are built around living trees. You bathe under open sky, wake to the canopy, and step onto a patio that belongs only to you. These are not poolside rooms. They are their own world, and the guests who choose them rarely want to leave.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- INCLUDED (new food model) -->
+  <section class="incl">
+    <div class="wrap split reverse">
+      <div class="media lbl">Plated food / restaurant image</div>
+      <div class="txt">
+        <div class="eyebrow">What's included</div>
+        <h2>Everything you need, nothing you don't</h2>
+        <p class="muted" style="margin-bottom:28px;">Your room comes with breakfast, the run of the estate, and every amenity. Lunch and dinner are cooked fresh at our restaurant, so we ask you to pre-order, the kitchen cooks to your table, not to a buffet bin. Bring your own bottle; we'll pour it under the stars.</p>
+        <div class="incl-cols">
+          <div class="incl-col in">
+            <h3>Included with your stay</h3>
+            <ul>
+              <li>Your room</li>
+              <li>Breakfast</li>
+              <li>Activities across the estate</li>
+              <li>Pool, steam, games and amenities</li>
+            </ul>
+          </div>
+          <div class="incl-col out">
+            <h3>From the restaurant</h3>
+            <ul>
+              <li>Lunch, freshly cooked (pre-order)</li>
+              <li>Dinner, freshly cooked (pre-order)</li>
+              <li>À la carte through the day</li>
+              <li>Proudly BYOB, enjoy your own</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="reviews">
+    <div class="wrap">
+      <div class="lead">
+        <div class="eyebrow">Guest experiences</div>
+        <h2>They came for the quiet. They remember Mary.</h2>
+      </div>
+      <div class="rev-grid">
+        <div class="rev">
+          <div class="stars">★★★★★</div>
+          <p>"A lovely, calm staycation. Mary was a wonderful host to everyone from the kids to my parents. Homely food made with heart."</p>
+          <div class="who">Aditi Verma</div>
+          <div class="vg">Verified Guest</div>
+        </div>
+        <div class="rev">
+          <div class="stars">★★★★★</div>
+          <p>"A wonderful stay. Mary was so kind and helpful, and the Indian food was incredible, good ingredients, great variety."</p>
+          <div class="who">Ketty Bouder</div>
+          <div class="vg">Verified Guest</div>
+        </div>
+        <div class="rev">
+          <div class="stars">★★★★★</div>
+          <p>"An amazing experience. Mary went above and beyond to make our stay special."</p>
+          <div class="who">Srikant Srivastava</div>
+          <div class="vg">Verified Guest</div>
+        </div>
+      </div>
+      <div class="rev-foot"><b>4.4</b> from 615+ Google reviews</div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="wrap">
+      <div class="lead">
+        <div class="eyebrow">Good to know</div>
+        <h2>Before you come</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item open">
+          <button class="faq-q">How far is Orchid Tree from Bangalore?<span class="plus">+</span></button>
+          <div class="faq-a"><p>About forty-five minutes from Whitefield, in Bangalore Rural near Hoskote. The exact location is shared once your stay is confirmed, to keep the estate private.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">What's included in the price?<span class="plus">+</span></button>
+          <div class="faq-a"><p>Your room, breakfast, all estate activities, and amenities like the pool, steam room, and games. Lunch and dinner are served fresh at the restaurant and can be pre-ordered.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Is Orchid Tree all-inclusive?<span class="plus">+</span></button>
+          <div class="faq-a"><p>Breakfast is included with every stay. Lunch and dinner are à la carte from our restaurant, cooked fresh to order, so we recommend pre-ordering before you arrive.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Can I bring alcohol?<span class="plus">+</span></button>
+          <div class="faq-a"><p>Yes. Orchid Tree is proudly BYOB, enjoyed in our designated outdoor lounge areas.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Are pets allowed?<span class="plus">+</span></button>
+          <div class="faq-a"><p>Pets are welcome in the cottages and family rooms. The Couple Rooms by the pool are kept pet-free for guests with allergies.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Are the cottages different from the poolside rooms?<span class="plus">+</span></button>
+          <div class="faq-a"><p>Yes, and meaningfully so. The garden cottages are built around living trees with open-to-sky baths and private steam rooms. The poolside rooms are brighter and overlook the water. We'd recommend watching the room video before booking.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">How many rooms does Orchid Tree have?<span class="plus">+</span></button>
+          <div class="faq-a"><p>Eleven, across four types, designed for calm rather than crowds.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Is it good for families, couples, or groups?<span class="plus">+</span></button>
+          <div class="faq-a"><p>All three. Couples lean to the pool rooms or the romantic cottages; families and groups to the family rooms and Chandana, our largest cottage.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Can I host an event or wedding here?<span class="plus">+</span></button>
+          <div class="faq-a"><p>Yes. The estate hosts intimate weddings, celebrations, and corporate offsites, with a full buyout of all eleven rooms. Up to 34 guests overnight, up to 60 for day events.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">What's the cancellation policy?<span class="plus">+</span></button>
+          <div class="faq-a"><p>A full refund on cancellations made at least 48 hours before check-in.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PATHS -->
+  <section class="paths">
+    <div class="wrap">
+      <div class="lead">
+        <div class="eyebrow">Beyond the stay</div>
+        <h2>What brings you to Orchid Tree?</h2>
+      </div>
+      <div class="path-grid">
+        <div class="path">
+          <div class="media"></div><div class="scrim"></div>
+          <div class="cap"><h3>A private stay</h3><p>For couples and families seeking calm.</p><div class="go">View rooms ›</div></div>
+        </div>
+        <div class="path">
+          <div class="media"></div><div class="scrim"></div>
+          <div class="cap"><h3>A corporate offsite</h3><p>Quiet space for focus and team time.</p><div class="go">Plan an offsite ›</div></div>
+        </div>
+        <div class="path">
+          <div class="media"></div><div class="scrim"></div>
+          <div class="cap"><h3>An intimate event</h3><p>Small weddings and celebrations.</p><div class="go">Host with us ›</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ARCHITECT -->
+  <section class="arch">
+    <div class="wrap inner">
+      <div class="media lbl">Founder / estate landscape</div>
+      <div class="txt">
+        <div class="eyebrow">The architect of stillness</div>
+        <h2>Designed by Pradeep Kuppa Swamy</h2>
+        <p class="muted" style="margin-bottom:16px;">The landscape architect behind Infosys Mysore, Biocon and Britannia, with work recognised by the World Architecture Award. Orchid Tree is his reflection on stillness.</p>
+        <p class="muted">The architecture bends around the living forest, never the other way. Solar powered, sustained by recycled water, built with a minimal concrete footprint. When you breathe here, you breathe easy.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="foot-grid">
+      <div class="col" style="flex:1;min-width:240px;">
+        <h4>Orchid Tree</h4>
+        <p class="tag">Boutique is not size, it's soul. Every corner here is designed with intention, not repetition.</p>
+      </div>
+      <div class="col">
+        <h5>Explore</h5>
+        <a href="#">Our Stays</a><a href="#">Experiences</a><a href="#">Restaurant</a><a href="#">Our Story</a><a href="#">Contact</a>
+      </div>
+      <div class="col">
+        <h5>Connect</h5>
+        <p>Survey No. 7/2, Yelachamanahalli Village, Hoskote, Karnataka 562114</p>
+        <p>orchidtree.blr@gmail.com</p>
+        <p>+91 80882 51913</p>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Orchid Tree. All rights reserved.</span>
+      <span>Privacy Policy · Terms of Service</span>
+    </div>
+  </footer>
+
+<script>
+  document.querySelectorAll('.faq-q').forEach(function(q){
+    q.addEventListener('click', function(){
+      q.parentElement.classList.toggle('open');
+    });
+  });
+</script>
+</body>
+</html>

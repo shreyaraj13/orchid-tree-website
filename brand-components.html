@@ -1,0 +1,1898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Components | Orchid Tree Brand Guidelines</title>
+  <meta name="description" content="Living component library for the Orchid Tree design system. Page 2 of 3.">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Mulish:wght@400;500;600;700&family=Sacramento&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── TOKENS ──────────────────────────────────────────────── */
+    :root {
+      --cream:     #f7f3ea;
+      --cream-deep:#efe7d6;
+      --card:      #fff;
+      --green:     #3c4a16;
+      --ink:       #43382b;
+      --body:      #6e675d;
+      --gold:      #c9a23c;
+      --gold-soft: #d8bd76;
+      --line:      #ece6da;
+      --media:     #e7e1d4;
+      --media-tx:  #b3a994;
+      --media-dark:#8c8275;
+      --serif:     'Cormorant Garamond', Georgia, serif;
+      --sans:      'Mulish', 'Avenir Next', -apple-system, system-ui, sans-serif;
+      --script:    'Sacramento', cursive;
+      --radius:    12px;
+      --radius-sm: 8px;
+      --pad:       clamp(24px, 5vw, 80px);
+    }
+
+    /* ─── RESET ───────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      background: var(--cream);
+      color: var(--body);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+    /* ─── GLOBAL NAV ──────────────────────────────────────────── */
+    .gnav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(247, 243, 234, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      padding: 18px var(--pad);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .gnav-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      line-height: 1;
+    }
+    .gnav-brand .wordmark {
+      font-family: var(--script);
+      font-size: 30px;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .gnav-brand .sub {
+      font-family: var(--sans);
+      font-size: 9px;
+      letter-spacing: 3px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--media-dark);
+      font-variant: small-caps;
+    }
+    .glinks {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .glinks a {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--ink);
+      position: relative;
+      padding-bottom: 2px;
+      transition: color 0.2s;
+    }
+    .glinks a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      height: 1px;
+      width: 100%;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.25s ease;
+    }
+    .glinks a:hover { color: var(--green); }
+    .glinks a:hover::after { transform: scaleX(1); }
+    .glinks a.active {
+      color: var(--gold);
+    }
+    .glinks a.active::after {
+      transform: scaleX(1);
+    }
+
+    /* ─── WRAP ────────────────────────────────────────────────── */
+    .wrap {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 var(--pad);
+    }
+
+    /* ─── PAGE HERO ───────────────────────────────────────────── */
+    .page-hero {
+      padding: clamp(64px, 10vw, 120px) var(--pad) clamp(48px, 7vw, 80px);
+      max-width: 1320px;
+      margin: 0 auto;
+    }
+    .page-hero .eyebrow {
+      margin-bottom: 20px;
+    }
+    .page-hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(38px, 5.5vw, 72px);
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.08;
+      margin-bottom: 20px;
+    }
+    .page-hero h1 em {
+      font-style: italic;
+    }
+    .page-hero p {
+      max-width: 600px;
+      font-size: 17px;
+      line-height: 1.8;
+      color: var(--body);
+    }
+    .guide-steps {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+    .guide-step {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 7px 16px;
+      border-radius: 40px;
+      border: 1px solid var(--line);
+      color: var(--media-tx);
+      transition: all 0.2s;
+    }
+    .guide-step.current {
+      background: var(--green);
+      color: #fff;
+      border-color: var(--green);
+    }
+    .guide-step-arrow {
+      color: var(--line);
+      font-size: 14px;
+    }
+
+    /* ─── EYEBROW ─────────────────────────────────────────────── */
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .eyebrow::before {
+      content: '';
+      display: block;
+      width: 34px;
+      height: 1px;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    /* ─── SECTION DIVIDER ─────────────────────────────────────── */
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--line);
+      margin: clamp(48px, 7vw, 96px) 0;
+    }
+
+    /* ─── SECTION HEADING ─────────────────────────────────────── */
+    .section-head {
+      margin-bottom: clamp(36px, 5vw, 60px);
+    }
+    .section-head h2 {
+      font-family: var(--serif);
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.15;
+      margin-top: 14px;
+    }
+    .section-head p {
+      margin-top: 12px;
+      max-width: 560px;
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--body);
+    }
+
+    /* ─── SPEC CARD ───────────────────────────────────────────── */
+    .spec-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 28px;
+      margin-top: 32px;
+    }
+    .spec-grid.two-col {
+      grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
+    }
+    .spec-grid.single {
+      grid-template-columns: 1fr;
+    }
+    .spec-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(67, 56, 43, 0.05);
+    }
+    .spec-card-preview {
+      padding: clamp(28px, 4vw, 48px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 140px;
+      background: var(--cream);
+    }
+    .spec-card-preview.dark {
+      background: var(--ink);
+    }
+    .spec-card-preview.cream-deep {
+      background: var(--cream-deep);
+    }
+    .spec-card-preview.padded-tall {
+      min-height: 200px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .spec-card-preview.center-col {
+      flex-direction: column;
+      gap: 16px;
+      align-items: center;
+    }
+    .spec-card-meta {
+      padding: 20px 24px;
+      border-top: 1px solid var(--line);
+    }
+    .spec-card-meta .label {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 6px;
+    }
+    .spec-card-meta .note {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--body);
+    }
+    .spec-card-meta .note code {
+      font-family: 'Menlo', 'Courier New', monospace;
+      font-size: 12px;
+      background: var(--cream-deep);
+      padding: 1px 5px;
+      border-radius: 4px;
+      color: var(--green);
+    }
+
+    /* ─── BUTTONS ─────────────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 16px 30px;
+      border-radius: var(--radius-sm);
+      transition: background 0.22s, color 0.22s, border-color 0.22s, transform 0.15s;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .btn:active { transform: scale(0.98); }
+
+    .btn-primary {
+      background: var(--green);
+      color: #fff;
+      border: 1px solid var(--green);
+    }
+    .btn-primary:hover {
+      background: #2c3810;
+      border-color: #2c3810;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--green);
+      border: 1px solid var(--green);
+    }
+    .btn-ghost:hover {
+      background: var(--green);
+      color: #fff;
+    }
+
+    .btn-ghost-dark {
+      background: transparent;
+      color: #fff;
+      border: 1px solid #fff;
+    }
+    .btn-ghost-dark:hover {
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .btn-wa {
+      background: transparent;
+      color: var(--green);
+      border: 1px solid var(--green);
+      border-radius: 40px;
+      padding: 13px 24px;
+    }
+    .btn-wa:hover {
+      background: var(--green);
+      color: #fff;
+    }
+    .btn-wa svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    .btn-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .text-link {
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--green);
+      text-decoration: underline;
+      text-decoration-color: rgba(201, 162, 60, 0.5);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+    .text-link:hover {
+      text-decoration-color: var(--gold);
+    }
+
+    /* ─── PHOTO CARD ──────────────────────────────────────────── */
+    .photo-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--line);
+      box-shadow: 0 2px 20px rgba(67,56,43,0.07);
+    }
+    .photo-card-media {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      background: var(--media);
+    }
+    .photo-card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.55s ease;
+    }
+    .photo-card:hover .photo-card-media img {
+      transform: scale(1.05);
+    }
+    .photo-card-body {
+      padding: 24px 28px 28px;
+    }
+    .photo-card-body .eyebrow {
+      margin-bottom: 12px;
+    }
+    .photo-card-body h3 {
+      font-family: var(--serif);
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .photo-card-body h3 em { font-style: italic; }
+    .photo-card-body p {
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--body);
+    }
+
+    /* ─── DARK BAND ───────────────────────────────────────────── */
+    .dark-band {
+      background: var(--ink);
+      padding: clamp(40px, 6vw, 72px) clamp(32px, 6vw, 72px);
+      border-radius: var(--radius);
+    }
+    .dark-band .eyebrow { color: var(--gold-soft); }
+    .dark-band .eyebrow::before { background: var(--gold-soft); }
+    .dark-band h2 {
+      font-family: var(--serif);
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 500;
+      font-style: italic;
+      color: #fff;
+      line-height: 1.15;
+      margin-top: 14px;
+      margin-bottom: 14px;
+    }
+    .dark-band p {
+      font-size: 16px;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.72);
+      max-width: 520px;
+    }
+
+    /* ─── STAT BAND ───────────────────────────────────────────── */
+    .stat-band {
+      background: #1c1813;
+      border-radius: var(--radius);
+      padding: clamp(40px, 6vw, 64px) clamp(32px, 5vw, 56px);
+    }
+    .stat-band-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+    .stat-item {
+      padding: 0 24px;
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.1);
+    }
+    .stat-item:first-child { padding-left: 0; }
+    .stat-item:last-child { padding-right: 0; border-right: none; }
+    .stat-item .num {
+      font-family: var(--sans);
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    .stat-item .num sup {
+      font-size: 0.45em;
+      font-weight: 700;
+      vertical-align: super;
+      letter-spacing: 0;
+    }
+    .stat-item .stat-label {
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold-soft);
+    }
+    .stat-note {
+      margin-top: 28px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.6;
+      font-family: var(--sans);
+    }
+    .stat-note strong { color: var(--gold-soft); font-weight: 700; }
+
+    /* ─── MODEL BAND ──────────────────────────────────────────── */
+    .model-band {
+      background: var(--cream-deep);
+      border-radius: var(--radius);
+      padding: clamp(28px, 4vw, 48px) clamp(32px, 5vw, 56px);
+      border: 1px solid var(--line);
+    }
+    .model-items {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0;
+    }
+    .model-item {
+      font-family: var(--serif);
+      font-size: clamp(17px, 2vw, 22px);
+      font-weight: 500;
+      color: var(--ink);
+      padding: 0 24px;
+      line-height: 1.5;
+    }
+    .model-item:first-child { padding-left: 0; }
+    .model-diamond {
+      color: var(--gold);
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .model-fine {
+      display: block;
+      margin-top: 16px;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 14px;
+      color: var(--body);
+      line-height: 1.65;
+    }
+
+    /* ─── FAQ ACCORDION ───────────────────────────────────────── */
+    .faq-list {
+      border-top: 1px solid var(--line);
+    }
+    .faq-item {
+      border-bottom: 1px solid var(--line);
+    }
+    .faq-trigger {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 22px 0;
+      cursor: pointer;
+      background: none;
+      border: none;
+      text-align: left;
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.3;
+      transition: color 0.2s;
+    }
+    .faq-trigger:hover { color: var(--green); }
+    .faq-icon {
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      color: var(--gold);
+      font-size: 18px;
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.3s ease, background 0.2s;
+      font-family: var(--sans);
+      line-height: 1;
+    }
+    .faq-trigger[aria-expanded="true"] .faq-icon {
+      transform: rotate(45deg);
+      background: var(--gold);
+      color: #fff;
+    }
+    .faq-body {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.35s ease;
+    }
+    .faq-body-inner {
+      padding: 0 0 22px;
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--body);
+      max-width: 680px;
+    }
+
+    /* ─── ENQUIRY CARD ────────────────────────────────────────── */
+    .enquiry-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--green);
+      padding: clamp(28px, 4vw, 48px);
+      box-shadow: 0 2px 20px rgba(67,56,43,0.06);
+    }
+    .enquiry-card .eyebrow { margin-bottom: 14px; }
+    .enquiry-card h3 {
+      font-family: var(--serif);
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .enquiry-card h3 em { font-style: italic; }
+    .enquiry-card p {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--body);
+      max-width: 520px;
+      margin-bottom: 28px;
+    }
+    .enquiry-card .links-row {
+      margin-top: 20px;
+      font-size: 13px;
+      color: var(--media-tx);
+    }
+    .enquiry-card .links-row a {
+      color: var(--green);
+      font-weight: 600;
+      text-decoration: underline;
+      text-decoration-color: rgba(201,162,60,0.4);
+      text-underline-offset: 2px;
+    }
+    .enquiry-card .links-row a:hover {
+      text-decoration-color: var(--gold);
+    }
+
+    /* ─── FOOTER SIGNATURE ────────────────────────────────────── */
+    .footer-sig {
+      text-align: center;
+      padding: clamp(40px, 6vw, 64px) var(--pad);
+      background: var(--ink);
+      border-radius: var(--radius);
+    }
+    .footer-sig .script-name {
+      font-family: var(--script);
+      font-size: 52px;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    .footer-sig .tagline {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+    }
+
+    /* ─── BOOK FAB ────────────────────────────────────────────── */
+    .fab-demo-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 16px 0;
+    }
+    .book-fab {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--green);
+      color: #fff;
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 15px 26px;
+      border-radius: 40px;
+      border: none;
+      box-shadow: 0 4px 20px rgba(60,74,22,0.3);
+      cursor: pointer;
+      transition: background 0.22s, transform 0.18s, box-shadow 0.22s;
+    }
+    .book-fab:hover {
+      background: #2c3810;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(60,74,22,0.35);
+    }
+    .book-fab svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    /* ─── DIET DOTS ───────────────────────────────────────────── */
+    .diet-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .diet-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--ink);
+      font-weight: 500;
+    }
+    .diet-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .diet-dot.veg     { background: #3c7a2e; }
+    .diet-dot.nonveg  { background: #9a3328; }
+    .diet-dot.vegan   { background: #1f6f6b; }
+
+    /* ─── LINE ICONS ──────────────────────────────────────────── */
+    .icons-row {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+    .icon-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--body);
+    }
+    .icon-item svg {
+      color: var(--green);
+      display: block;
+    }
+
+    /* ─── SCROLL REVEAL DEMO ──────────────────────────────────── */
+    .reveal-demo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .reveal-block {
+      background: var(--cream-deep);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 28px 20px;
+      text-align: center;
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .reveal-block.is-hidden {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .reveal-block.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-block:nth-child(2) { transition-delay: 0.09s; }
+    .reveal-block:nth-child(3) { transition-delay: 0.18s; }
+    .reveal-block svg {
+      color: var(--gold);
+      margin: 0 auto 12px;
+      display: block;
+    }
+    .reveal-block p {
+      font-size: 14px;
+      color: var(--body);
+      line-height: 1.65;
+    }
+    .reveal-block strong {
+      font-family: var(--serif);
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--ink);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    /* ─── HOVER-ZOOM IMAGE DEMO ───────────────────────────────── */
+    .hover-zoom-wrap {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius);
+      aspect-ratio: 16/9;
+      background: var(--media);
+    }
+    .hover-zoom-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.55s ease;
+    }
+    .hover-zoom-wrap:hover img {
+      transform: scale(1.06);
+    }
+    .hover-zoom-wrap .img-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(28,24,19,0.75) 0%, transparent 100%);
+      padding: 32px 24px 20px;
+      color: rgba(255,255,255,0.85);
+      font-family: var(--serif);
+      font-size: 16px;
+      font-style: italic;
+      transform: translateY(4px);
+      transition: transform 0.35s ease;
+    }
+    .hover-zoom-wrap:hover .img-caption {
+      transform: translateY(0);
+    }
+
+    /* ─── MOTION & ACCESSIBILITY PROSE ───────────────────────── */
+    .prose-section {
+      padding: clamp(48px, 7vw, 96px) 0;
+    }
+    .rule-list {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .rule-item {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 20px 22px;
+      box-shadow: 0 1px 8px rgba(67,56,43,0.04);
+    }
+    .rule-item .rule-tag {
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .rule-item h4 {
+      font-family: var(--serif);
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .rule-item p {
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--body);
+    }
+    .rule-item p code {
+      font-family: 'Menlo', monospace;
+      font-size: 12px;
+      background: var(--cream);
+      padding: 1px 4px;
+      border-radius: 3px;
+      color: var(--green);
+    }
+
+    .a11y-list {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .a11y-item {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--green);
+      border-radius: var(--radius-sm);
+      padding: 18px 20px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .a11y-check {
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: rgba(60,74,22,0.1);
+      color: var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      margin-top: 1px;
+    }
+    .a11y-item h4 {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+    .a11y-item p {
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--body);
+    }
+
+    /* ─── FOCUS VISIBLE ───────────────────────────────────────── */
+    :focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 3px;
+    }
+
+    /* ─── FOOTER ──────────────────────────────────────────────── */
+    .gfoot {
+      background: var(--green);
+      padding: clamp(40px, 6vw, 72px) var(--pad) clamp(28px, 4vw, 48px);
+      text-align: center;
+      margin-top: clamp(64px, 10vw, 120px);
+    }
+    .gfoot .script-name {
+      font-family: var(--script);
+      font-size: 46px;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .gfoot .tagline {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 20px;
+    }
+    .gfoot .foot-note {
+      font-size: 13px;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.6;
+    }
+    .gfoot .foot-note a {
+      color: var(--gold-soft);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* ─── MAIN CONTENT ────────────────────────────────────────── */
+    main {
+      padding-bottom: 0;
+    }
+    .content-block {
+      padding: clamp(48px, 7vw, 80px) 0;
+    }
+    .content-block + .content-block {
+      border-top: 1px solid var(--line);
+    }
+
+    /* ─── RESPONSIVE ──────────────────────────────────────────── */
+    @media (max-width: 820px) {
+      .glinks { gap: 16px; }
+      .glinks li:nth-child(1) { display: none; } /* hide Foundations on small screens */
+      .stat-band-grid { grid-template-columns: repeat(2, 1fr); gap: 28px; }
+      .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 0 0 20px; text-align: left; }
+      .stat-item:last-child { border-bottom: none; }
+      .model-items { flex-direction: column; gap: 8px; }
+      .model-item { padding: 0; }
+      .model-diamond { display: none; }
+      .reveal-demo-grid { grid-template-columns: 1fr; }
+      .spec-grid.two-col { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .glinks li:nth-child(2) { display: none; }
+      .btn-row { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* ─── REDUCED MOTION ──────────────────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .reveal-block.is-hidden {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ─── GLOBAL NAV ─────────────────────────────────────────── -->
+  <header>
+    <nav class="gnav" aria-label="Brand guide navigation">
+      <a href="home.html" class="gnav-brand" aria-label="Orchid Tree home">
+        <span class="wordmark">Orchid Tree</span>
+        <span class="sub">Brand Guidelines</span>
+      </a>
+      <ul class="glinks" role="list">
+        <li><a href="brand.html">Foundations</a></li>
+        <li><a href="brand-components.html" class="active" aria-current="page">Components</a></li>
+        <li><a href="brand-voice.html">Voice &amp; Content</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ─── PAGE HERO ──────────────────────────────────────────── -->
+    <div class="page-hero wrap">
+      <div class="eyebrow" aria-hidden="true">Page 2 of 3</div>
+      <h1>Components, <em>rendered live.</em></h1>
+      <p>Every element on this page is actual HTML and CSS, not a screenshot. Copy the markup, match the tokens, and the brand follows.</p>
+      <div class="guide-steps" aria-label="Guide pages">
+        <a href="brand.html" class="guide-step">Foundations</a>
+        <span class="guide-step-arrow" aria-hidden="true">&#8594;</span>
+        <span class="guide-step current" aria-current="page">Components</span>
+        <span class="guide-step-arrow" aria-hidden="true">&#8594;</span>
+        <a href="brand-voice.html" class="guide-step">Voice &amp; Content</a>
+      </div>
+    </div>
+
+    <!-- ─── COMPONENTS ─────────────────────────────────────────── -->
+    <div class="wrap">
+
+      <!-- EYEBROW & TYPOGRAPHIC ELEMENTS -->
+      <div class="content-block">
+        <div class="section-head">
+          <div class="eyebrow">Typography</div>
+          <h2>Eyebrow and type scale</h2>
+          <p>The eyebrow is the connective tissue of every section. It precedes headings, names rooms, labels stat bands. Always gold, always uppercase, always the same weight.</p>
+        </div>
+
+        <div class="spec-grid">
+          <div class="spec-card">
+            <div class="spec-card-preview padded-tall">
+              <div class="eyebrow">Experiences</div>
+              <div style="font-family:var(--serif);font-size:36px;font-weight:500;color:var(--ink);line-height:1.1;">Slow mornings, <em>real forest.</em></div>
+            </div>
+            <div class="spec-card-meta">
+              <div class="label">Eyebrow + Section H2</div>
+              <div class="note">Gold, 11px, letter-spacing 4px, weight 700. Precede with 34px hairline via <code>::before</code>. Sits above every section heading.</div>
+            </div>
+          </div>
+
+          <div class="spec-card">
+            <div class="spec-card-preview padded-tall" style="background:var(--card);">
+              <div style="font-family:var(--serif);font-size:clamp(38px,5.5vw,64px);font-weight:500;color:var(--ink);line-height:1.06;font-style:italic;">A forest,<br>forty-five minutes away.</div>
+            </div>
+            <div class="spec-card-meta">
+              <div class="label">Hero H1 (editorial)</div>
+              <div class="note">Cormorant Garamond italic, fluid 38px to 64px+, line-height ~1.06. Weight 400 to 600 depending on heaviness of the image behind it.</div>
+            </div>
+          </div>
+
+          <div class="spec-card">
+            <div class="spec-card-preview padded-tall" style="background:var(--cream-deep);">
+              <p style="font-size:17px;line-height:1.8;color:var(--body);max-width:320px;">Breakfast arrives with the light. Lunch and dinner are plated, farm-to-table, and pre-ordered the evening before. The wine is yours to bring.</p>
+              <p style="font-size:13px;line-height:1.7;color:var(--media-tx);font-style:italic;font-family:var(--serif);">A caption or fine print sits here, italic serif.</p>
+            </div>
+            <div class="spec-card-meta">
+              <div class="label">Body + Caption</div>
+              <div class="note">Body: Mulish 15 to 17px, line-height 1.75 to 1.85, <code>var(--body)</code>. Captions: serif italic, <code>var(--media-tx)</code>.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BUTTONS & CTAs -->
+      <div class="content-block">
+        <div class="section-head">
+          <div class="eyebrow">CTAs</div>
+          <h2>Buttons and links</h2>
+          <p>Four CTA patterns. Use primary for the most important action per screen. Ghost on light backgrounds when secondary. WhatsApp pill in the nav and as the main reservation prompt.</p>
+        </div>
+
+        <div class="spec-grid">
+          <div class="spec-card">
+            <div class="spec-card-preview">
+              <button class="btn btn-primary" aria-label="Explore stays at Orchid Tree">Explore Stays</button>
+            </div>
+            <div class="spec-card-meta">
+              <div class="label">Primary Button</div>
+              <div class="note">Olive bg <code>#3c4a16</code>, white text, hover <code>#2c3810</code>. Uppercase 11px, letter-spacing 2px, weight 700, radius 8px, padding 16 x 30px.</div>
+            </div>
+          </div>
+
+          <div class="spec-card">
+            <div class="spec-card-preview" style="background:var(--card);">
+              <button class="btn btn-ghost">View Rooms</button>
+            </div>
+            <div class="spec-card-meta">
+              <div class="label">Ghost Button (light bg)</div>
+              <div class="note">1px olive border, transparent fill, inverts to olive on hover. Pair alongside a primary button for secondary actions.</div>
+            </div>
+          </div>
+
+          <div class="spec-card">
+            <div class="spec-card-preview dark">
+              <button class="btn btn-ghost-dark">Learn More</button>
+            </div>
+            <div class="spec-card-meta">
+              <div class="label">Ghost Button (dark bg)</div>
+              <div class="note">Same ghost pattern on dark bands: 1px white border, inverts to white fill with ink text on hover.</div>
+            </div>
+          </div>
+
+          <div class="spec-card">
+            <div class="spec-card-preview" style="background:var(--card);">
+              <a href="#" class="text-link">Read the full story</a>
+            </div>
+            <div class="spec-card-meta">
+              <div class="label">Inline Text Link</div>
+              <div class="note">Olive, weight 700, underline in soft gold that deepens on hover. Used mid-paragraph for in-page navigation.</div>
+            </div>
+          </div>
+
+          <div class="spec-card">
+            <div class="spec-card-preview">
+              <div class="btn-row">
+                <a href="https://wa.me/918088251913?text=Hello%2C%20I%27d%20like%20to%20enquire%20about%20a%20stay%20at%20Orchid%20Tree."
+                   class="btn btn-wa"
+                   target="_blank"
+                   rel="noopener"
+                   aria-label="Contact Orchid Tree on WhatsApp">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                  </svg>
+                  WhatsApp
+                </a>
+              </div>
+            </div>
+            <div class="spec-card-meta">
+              <div class="label">WhatsApp Pill</div>
+              <div class="note">Bordered pill, radius 40px, links to <code>wa.me/918088251913</code> with a prefilled message. Lives in the main nav and as the primary reservation CTA.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHOTO-LED CARD -->
+      <div class="content-block">
+        <div class="section-head">
+          <div class="eyebrow">Cards</div>
+          <h2>Photo-led card</h2>
+          <p>Photo first, always. Minimal text, serif heading, eyebrow above. Image zooms gently on card hover. Works for rooms, experiences, restaurant categories.</p>
+        </div>
+
+        <div class="spec-grid two-col">
+          <div class="spec-card">
+            <div class="spec-card-preview" style="background:var(--cream-deep);padding:32px;">
+              <!-- Replace with an Orchid Tree photo. Search: "forest pool morning light" on Unsplash if needed. -->
+              <div class="photo-card" style="max-width:380px;width:100%;">
+                <div class="photo-card-media">
+                  <img
+                    src="https://orchidtree.in/uploads/Bodhi_Tree_03_1_35a5ef31e4.webp"
+                    alt="The Bodhi Tree cottage at Orchid Tree resort, a private room amid forest canopy"
+                    loading="lazy"
+                    decoding="async"
+                  >
+                </div>
+                <div class="photo-card-body">
+                  <div class="eyebrow">Cottages</div>
+                  <h3>Bodhi Tree, <em>the retreat.</em></h3>
+                  <p>A private cottage with a shaded deck and open-to-sky bath. Mornings smell of damp earth and wild jasmine.</p>
+                </div>
+              </div>
+            </div>
+            <div class="spec-card-meta">
+              <div class="label">Photo Card</div>
+              <div class="note">Radius 12px, 1px <code>--line</code> border, soft shadow. Media aspect-ratio 4/3, scale 1.05 on hover. Eyebrow + serif H3 + body.</div>
+            </div>
+          </div>
+
+          <!-- Media placeholder example -->
+          <div class="spec-card">
+            <div class="spec-card-preview" style="background:var(--cream-deep);padding:32px;">
+              <div class="photo-card" style="max-width:380px;width:100%;">
+                <div class="photo-card-media" style="display:flex;align-items:center;justify-content:center;">
+                  <!-- PLACEHOLDER: replace with real Orchid Tree dining photo. Mood: "plated farm-to-table dinner candlelight." -->
+                  <span style="color:var(--media-tx);font-size:13px;font-family:var(--sans);letter-spacing:1px;text-align:center;padding:20px;">
+                    Orchid Tree photo here<br>
+                    <span style="font-size:11px;opacity:0.6;">aspect-ratio 4/3 · decoding async · loading lazy</span>
+                  </span>
+                </div>
+                <div class="photo-card-body">
+                  <div class="eyebrow">Dining</div>
+                  <h3>Farm to table, <em>each evening.</em></h3>
+                  <p>Lunch and dinner are plated, pre-ordered the night before. The produce is ours. The wine is yours.</p>
+                </div>
+              </div>
+            </div>
+            <div class="spec-card-meta">
+              <div class="label">Photo Card (placeholder state)</div>
+              <div class="note">Background <code>var(--media)</code> while image loads. Label with swap comment. Never use Pinterest or unlicensed sources.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DARK BAND -->
+      <div class="content-block">
+        <div class="section-head">
+          <div class="eyebrow">Dark Band</div>
+          <h2>Ink section</h2>
+          <p>Used for emotional contrast moments: the honesty section, the cottage descriptions, the two-settings prose. Gold eyebrow, white heading, muted body.</p>
+        </div>
+
+        <div class="spec-grid single">
+          <div class="spec-card">
+            <div class="spec-card-preview dark" style="padding:0;min-height:auto;">
+              <div class="dark-band" style="width:100%;border-radius:0;">
+                <div class="eyebrow">The estate</div>
+                <h2>Eleven rooms. One forest.</h2>
+                <p>No corridors, no lobbies, no queues. An architect-designed estate where the ceiling is the canopy and the pool is the centrepiece.</p>
+                <div style="margin-top:28px;">
+                  <button class="btn btn-ghost-dark">Take a tour</button>
+                </div>
+              </div>
+            </div>
+            <div class="spec-card-meta">
+              <div class="label">Dark Band (.dark-band)</div>
+              <div class="note">Background <code>var(--ink)</code>. Gold-soft eyebrow, white H2 serif italic, white/72 body. Ghost-dark button. Avoid <code>mix-blend-mode</code> here.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STAT BAND -->
+      <div class="content-block">
+        <div class="section-head">
+          <div class="eyebrow">Stat Band</div>
+          <h2>Numbers that read</h2>
+          <p>Four stats on a near-black field. The critical rule: numerals are set in Mulish (sans), never Cormorant. Cormorant's thin verticals make "11" read as "II".</p>
+        </div>
+
+        <div class="spec-grid single">
+          <div class="spec-card">
+            <div class="spec-card-preview dark" style="padding:0;min-height:auto;">
+              <div class="stat-band" style="width:100%;border-radius:0;">
+                <div class="stat-band-grid">
+                  <div class="stat-item">
+                    <div class="num">11</div>
+                    <div class="stat-label">Rooms</div>
+                  </div>
+                  <div class="stat-item">
+                    <div class="num">4.4<sup>★</sup></div>
+                    <div class="stat-label">Guest Rating</div>
+                  </div>
+                  <div class="stat-item">
+                    <div class="num">45</div>
+                    <div class="stat-label">Min from Whitefield</div>
+                  </div>
+                  <div class="stat-item">
+                    <div class="num">34</div>
+                    <div class="stat-label">Guests overnight</div>
+                  </div>
+                </div>
+                <p class="stat-note">
+                  <strong>Numerals rule:</strong> these numbers are set in Mulish (var(--sans), weight 700), not Cormorant Garamond. Cormorant's thin verticals make "11" read as "II" at large sizes. Spell smaller counts in words, or use sans.
+                </p>
+              </div>
+            </div>
+            <div class="spec-card-meta">
+              <div class="label">Stat Band (.stat-band)</div>
+              <div class="note">Background <code>#1c1813</code>. Numbers: <code>var(--sans)</code> weight 700. Labels: 10px uppercase, letter-spacing 3px, gold-soft. Hairlines between columns at 10% white.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODEL BAND -->
+      <div class="content-block">
+        <div class="section-head">
+          <div class="eyebrow">Model Band</div>
+          <h2>Facts, stated plainly</h2>
+          <p>A slim cream strip for bullet-form facts separated by gold diamonds. Fine-print italic line below. Used on the dining and stays pages to state the model clearly.</p>
+        </div>
+
+        <div class="spec-grid single">
+          <div class="spec-card">
+            <div class="spec-card-preview cream-deep" style="padding:0;min-height:auto;">
+              <div class="model-band" style="width:100%;border-radius:0;border-left:none;border-right:none;">
+                <div class="model-items">
+                  <span class="model-item">Breakfast included</span>
+                  <span class="model-diamond" aria-hidden="true">&#9670;</span>
+                  <span class="model-item">Lunch and dinner pre-ordered</span>
+                  <span class="model-diamond" aria-hidden="true">&#9670;</span>
+                  <span class="model-item">Proudly BYOB</span>
+                  <span class="model-diamond" aria-hidden="true">&#9670;</span>
+                  <span class="model-item">Farm to table</span>
+                </div>
+                <span class="model-fine">All meals are plated, never buffet. Dietary preferences noted at check-in.</span>
+              </div>
+            </div>
+            <div class="spec-card-meta">
+              <div class="label">Model Band (.model-band)</div>
+              <div class="note">Cream-deep bg, 1px <code>--line</code> border. Serif 17 to 22px items, gold diamond separators <code>&#9670;</code>. Fine print: serif italic 14px <code>--body</code>.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ ACCORDION -->
+      <div class="content-block">
+        <div class="section-head">
+          <div class="eyebrow">FAQ Accordion</div>
+          <h2>Questions, in order</h2>
+          <p>Serif questions, a gold plus that rotates to a cross on open. Single-open behaviour: opening one closes the others. The visible Q&amp;As auto-generate <code>FAQPage</code> JSON-LD on the live site.</p>
+        </div>
+
+        <div class="spec-grid single">
+          <div class="spec-card">
+            <div class="spec-card-preview" style="padding:40px;min-height:auto;display:block;background:var(--card);">
+              <div class="faq-list" role="list" id="faq-demo">
+
+                <div class="faq-item" role="listitem">
+                  <button
+                    class="faq-trigger"
+                    aria-expanded="false"
+                    aria-controls="faq-1"
+                    id="faq-trigger-1"
+                  >
+                    Is breakfast included with all stays?
+                    <span class="faq-icon" aria-hidden="true">+</span>
+                  </button>
+                  <div class="faq-body" id="faq-1" role="region" aria-labelledby="faq-trigger-1">
+                    <div class="faq-body-inner">
+                      Yes. Breakfast is included with every overnight stay. Lunch and dinner are plated, farm-to-table, and pre-ordered the evening before. Orchid Tree is proudly BYOB.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="faq-item" role="listitem">
+                  <button
+                    class="faq-trigger"
+                    aria-expanded="false"
+                    aria-controls="faq-2"
+                    id="faq-trigger-2"
+                  >
+                    How far is Orchid Tree from Bangalore?
+                    <span class="faq-icon" aria-hidden="true">+</span>
+                  </button>
+                  <div class="faq-body" id="faq-2" role="region" aria-labelledby="faq-trigger-2">
+                    <div class="faq-body-inner">
+                      About forty-five minutes from Whitefield, on the Hoskote road. The address is Survey No. 7/2, Yelachamanahalli Village, Hoskote, Bangalore Rural.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="faq-item" role="listitem">
+                  <button
+                    class="faq-trigger"
+                    aria-expanded="false"
+                    aria-controls="faq-3"
+                    id="faq-trigger-3"
+                  >
+                    Can Orchid Tree host a wedding?
+                    <span class="faq-icon" aria-hidden="true">+</span>
+                  </button>
+                  <div class="faq-body" id="faq-3" role="region" aria-labelledby="faq-trigger-3">
+                    <div class="faq-body-inner">
+                      Yes. Orchid Tree is available as a full estate buyout for intimate weddings and events, up to sixty guests for a day event and thirty-four overnight. Weddings are enquiry only, not instant-book. Write to us at orchidtree.blr@gmail.com.
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="spec-card-meta">
+              <div class="label">FAQ Accordion (.faq)</div>
+              <div class="note">Single-open: opening one closes others. Gold <code>+</code> rotates 45deg on open via <code>aria-expanded</code>. Keyboard operable (Enter, Space, Escape). JSON-LD <code>FAQPage</code> auto-generated from visible Q&amp;As on the live site.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ENQUIRY CARD -->
+      <div class="content-block">
+        <div class="section-head">
+          <div class="eyebrow">Enquiry Card</div>
+          <h2>The contact moment</h2>
+          <p>Left olive rule, eyebrow, serif heading, lead paragraph, WhatsApp and email buttons. Used for weddings, events, and hosting, where the estate does not offer instant-book.</p>
+        </div>
+
+        <div class="spec-grid single">
+          <div class="spec-card">
+            <div class="spec-card-preview cream-deep" style="padding:40px;min-height:auto;display:block;">
+              <div class="enquiry-card">
+                <div class="eyebrow">Weddings at Orchid Tree</div>
+                <h3>An intimate ceremony, <em>in a real forest.</em></h3>
+                <p>Up to sixty guests, a full estate buyout, and a kitchen that treats your menu like a love letter. Enquiry only, because each wedding deserves a conversation.</p>
+                <div class="btn-row">
+                  <a href="https://wa.me/918088251913?text=Hello%2C%20I%27d%20like%20to%20enquire%20about%20a%20wedding%20at%20Orchid%20Tree."
+                     class="btn btn-wa"
+                     target="_blank"
+                     rel="noopener"
+                     aria-label="Enquire about a wedding via WhatsApp">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:16px;height:16px;">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                    </svg>
+                    WhatsApp
+                  </a>
+                  <a href="mailto:orchidtree.blr@gmail.com" class="btn btn-ghost" aria-label="Send an email enquiry for a wedding">Email us</a>
+                </div>
+                <div class="links-row">
+                  Also see: <a href="corporate.html">Corporate offsites</a> and <a href="host-with-us.html">Host with Us</a>
+                </div>
+              </div>
+            </div>
+            <div class="spec-card-meta">
+              <div class="label">Enquiry Card</div>
+              <div class="note">Cream card, 4px left olive rule, 1px <code>--line</code> border. WhatsApp pill + ghost email button side by side. Internal-links line below in <code>--media-tx</code>.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FOOTER SIGNATURE LOCKUP -->
+      <div class="content-block">
+        <div class="section-head">
+          <div class="eyebrow">Signature</div>
+          <h2>Footer lockup</h2>
+          <p>The script wordmark and tagline appear centred at the base of every page footer. Script in gold, tagline in uppercase white at low opacity. This is a component, not just styling.</p>
+        </div>
+
+        <div class="spec-grid single">
+          <div class="spec-card">
+            <div class="spec-card-preview dark" style="padding:0;min-height:auto;">
+              <div class="footer-sig" style="width:100%;border-radius:0;">
+                <div class="script-name">Orchid Tree</div>
+                <div class="tagline">The Art of Doing Nothing</div>
+              </div>
+            </div>
+            <div class="spec-card-meta">
+              <div class="label">Footer Signature</div>
+              <div class="note">Sacramento 46 to 52px gold. Tagline Mulish 11px uppercase letter-spacing 5px white/55. Centred. Appears on every page footer, never replaced by the logo mark.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FLOATING BOOK FAB -->
+      <div class="content-block">
+        <div class="section-head">
+          <div class="eyebrow">Floating CTA</div>
+          <h2>Book FAB (floating action)</h2>
+          <p>A persistent olive pill that appears at the bottom-right of the viewport once the user scrolls past the hero. The same WhatsApp glyph as the nav pill. Lifts on hover.</p>
+        </div>
+
+        <div class="spec-grid">
+          <div class="spec-card">
+            <div class="spec-card-preview cream-deep">
+              <div class="fab-demo-wrap" style="width:100%;">
+                <button
+                  class="book-fab"
+                  aria-label="Open WhatsApp to book a stay at Orchid Tree"
+                >
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                  </svg>
+                  Book via WhatsApp
+                </button>
+              </div>
+            </div>
+            <div class="spec-card-meta">
+              <div class="label">Book FAB</div>
+              <div class="note">Olive bg, white text, radius 40px, shadow <code>rgba(60,74,22,0.3)</code>. Appears via JS past the hero. Hover: darkens to <code>#2c3810</code>, lifts <code>translateY(-2px)</code>.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DIET DOTS & ICONS -->
+      <div class="content-block">
+        <div class="section-head">
+          <div class="eyebrow">Iconography</div>
+          <h2>Diet dots and line icons</h2>
+          <p>Diet dots: small filled circles on menu items, using specific colours defined in the brand palette. Line icons: 1.7px stroke, round caps, currentColor, approximately 22px.</p>
+        </div>
+
+        <div class="spec-grid">
+          <div class="spec-card">
+            <div class="spec-card-preview" style="background:var(--card);flex-direction:column;align-items:flex-start;gap:20px;padding:32px;">
+              <div class="diet-row">
+                <div class="diet-item">
+                  <span class="diet-dot veg" aria-label="Vegetarian"></span>
+                  Vegetarian
+                </div>
+                <div class="diet-item">
+                  <span class="diet-dot nonveg" aria-label="Non-vegetarian"></span>
+                  Non-veg
+                </div>
+                <div class="diet-item">
+                  <span class="diet-dot vegan" aria-label="Vegan"></span>
+                  Vegan
+                </div>
+              </div>
+              <div style="font-size:13px;color:var(--media-tx);line-height:1.6;">
+                Veg: <code>#3c7a2e</code> &nbsp; Non-veg: <code>#9a3328</code> &nbsp; Vegan: <code>#1f6f6b</code>
+              </div>
+            </div>
+            <div class="spec-card-meta">
+              <div class="label">Diet Dots</div>
+              <div class="note">12px filled circles. Used only on menu/dining pages. These are the only coloured status indicators on the site. Pair with an <code>aria-label</code>.</div>
+            </div>
+          </div>
+
+          <div class="spec-card">
+            <div class="spec-card-preview" style="background:var(--cream);flex-direction:column;align-items:flex-start;gap:0;padding:32px;">
+              <div class="icons-row">
+                <!-- Calendar icon -->
+                <div class="icon-item">
+                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-label="Calendar">
+                    <rect x="3" y="4" width="16" height="15" rx="2"/>
+                    <line x1="3" y1="9" x2="19" y2="9"/>
+                    <line x1="7" y1="2" x2="7" y2="6"/>
+                    <line x1="15" y1="2" x2="15" y2="6"/>
+                  </svg>
+                  <span>Calendar</span>
+                </div>
+                <!-- Leaf icon -->
+                <div class="icon-item">
+                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-label="Leaf">
+                    <path d="M4 18c0 0 2-8 10-10C18 6 20 4 20 4s-2 8-8 10c-2 0.8-4.5 0.5-6 0.5"/>
+                    <line x1="4" y1="18" x2="11" y2="11"/>
+                  </svg>
+                  <span>Leaf</span>
+                </div>
+                <!-- Clock icon -->
+                <div class="icon-item">
+                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-label="Clock">
+                    <circle cx="11" cy="11" r="8"/>
+                    <polyline points="11,6 11,11 14.5,13.5"/>
+                  </svg>
+                  <span>Clock</span>
+                </div>
+                <!-- Location pin icon -->
+                <div class="icon-item">
+                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-label="Location">
+                    <path d="M11 2C8.24 2 6 4.24 6 7c0 4.25 5 11 5 11s5-6.75 5-11c0-2.76-2.24-5-5-5z"/>
+                    <circle cx="11" cy="7" r="1.5" fill="currentColor" stroke="none"/>
+                  </svg>
+                  <span>Location</span>
+                </div>
+              </div>
+            </div>
+            <div class="spec-card-meta">
+              <div class="label">Line Icons</div>
+              <div class="note">Stroke 1.7px, <code>stroke-linecap="round"</code>, <code>stroke-linejoin="round"</code>, <code>currentColor</code>, 22px. Never filled. Pair with an <code>aria-label</code> on the SVG or a visible text label.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.wrap -->
+
+    <!-- ─── MOTION & INTERACTION ──────────────────────────────── -->
+    <section class="prose-section" aria-labelledby="motion-heading" style="background:var(--cream-deep);margin-top:clamp(48px,7vw,96px);">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">Motion and Interaction</div>
+          <h2 id="motion-heading">Calm is a design decision</h2>
+          <p>Motion at Orchid Tree is purposeful and restrained. One well-orchestrated reveal beats ten scattered micro-animations. Every rule below was learned from a performance or jank issue on the live site.</p>
+        </div>
+
+        <div class="rule-list">
+          <div class="rule-item">
+            <div class="rule-tag">Scroll Reveal</div>
+            <h4>Fade and rise</h4>
+            <p>Elements use <code>.reveal</code> + IntersectionObserver. On intersect, add <code>.in</code>. Cascading groups stagger at 0.09s per child. Always include a failsafe that reveals anything still hidden 1.5s after load, so a missed observer never leaves a section blank.</p>
+          </div>
+          <div class="rule-item">
+            <div class="rule-tag">Parallax</div>
+            <h4>Read then write</h4>
+            <p>Full-bleed images drift on scroll via <code>data-parallax</code> + speed. Read all positions first, then write all transforms in a single rAF pass. Skip far-offscreen elements. No layout thrash.</p>
+          </div>
+          <div class="rule-item">
+            <div class="rule-tag">Ken Burns</div>
+            <h4>Slow infinite zoom</h4>
+            <p>Applied to key hero images only. A slow, infinite CSS <code>scale</code> animation adds life without distraction. Disabled entirely under <code>prefers-reduced-motion</code>.</p>
+          </div>
+          <div class="rule-item">
+            <div class="rule-tag">Hover</div>
+            <h4>Image zoom, link grow</h4>
+            <p>Images scale to 1.04 to 1.07 on hover. Nav underlines grow from left via <code>scaleX</code> on <code>::after</code>. CTA arrows nudge right. Caption overlays reveal. All via CSS transitions, no JS required.</p>
+          </div>
+          <div class="rule-item">
+            <div class="rule-tag">Scroll Progress</div>
+            <h4>2px gold top bar</h4>
+            <p>A thin gold line at the very top of long cinematic pages, driven by a single passive scroll listener. Width mapped to <code>scrollY / documentHeight</code>.</p>
+          </div>
+          <div class="rule-item">
+            <div class="rule-tag">Page Load</div>
+            <h4>One hero reveal</h4>
+            <p>Staggered eyebrow, H1, sub, rule fade-up on DOMContentLoaded. One orchestrated sequence beats scattered micro-animations across the page.</p>
+          </div>
+          <div class="rule-item">
+            <div class="rule-tag">Reduced Motion</div>
+            <h4>Respect the preference</h4>
+            <p>Every animation defers to <code>prefers-reduced-motion: reduce</code>. No Ken Burns, no parallax drift, instant reveals, no scroll-progress bar motion. Test this in OS accessibility settings.</p>
+          </div>
+        </div>
+
+        <div style="margin-top:40px;padding-top:40px;border-top:1px solid var(--line);">
+          <div class="eyebrow" style="margin-bottom:20px;">Performance Rules</div>
+          <div class="rule-list">
+            <div class="rule-item" style="border-left:3px solid var(--gold);">
+              <div class="rule-tag">Critical</div>
+              <h4>No mix-blend-mode overlays</h4>
+              <p><code>mix-blend-mode</code> on full-screen overlays forces the browser to repaint the entire page every frame. Use semi-opaque fills instead. This rule was added after a measurable scroll-jank incident.</p>
+            </div>
+            <div class="rule-item" style="border-left:3px solid var(--gold);">
+              <div class="rule-tag">Critical</div>
+              <h4>No stacked backdrop-filter over parallax</h4>
+              <p>Stacking <code>backdrop-filter: blur()</code> on elements that sit over a moving parallax layer is extremely expensive. Use near-opaque fill backgrounds instead of blur for frosted panels over moving images.</p>
+            </div>
+            <div class="rule-item">
+              <div class="rule-tag">Images</div>
+              <h4>content-visibility, decoding, lazy</h4>
+              <p>Use <code>content-visibility: auto</code> on heavy offscreen sections. Add <code>decoding="async"</code> to all images, <code>loading="lazy"</code> below the fold, and <code>fetchpriority="high"</code> on the hero image only.</p>
+            </div>
+            <div class="rule-item">
+              <div class="rule-tag">JS Loop</div>
+              <h4>Single rAF loop</h4>
+              <p>All scroll-driven work (parallax, progress bar, reveal checks) runs inside a single <code>requestAnimationFrame</code> loop with passive event listeners. Never attach multiple independent scroll listeners.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live reveal demo -->
+        <div style="margin-top:48px;">
+          <div class="eyebrow" style="margin-bottom:16px;">Live demo: scroll reveal with stagger</div>
+          <div class="reveal-demo-grid" id="reveal-demo">
+            <div class="reveal-block is-hidden" aria-label="Eleven rooms">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="4" y="10" width="20" height="14" rx="2"/>
+                <path d="M4 12L14 4l10 8"/>
+              </svg>
+              <strong>Eleven rooms</strong>
+              <p>Each different. Each with a reason to exist.</p>
+            </div>
+            <div class="reveal-block is-hidden" aria-label="One forest">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M14 4L8 16h12L14 4z"/>
+                <path d="M10 16L5 24h18l-5-8"/>
+                <line x1="14" y1="24" x2="14" y2="28"/>
+              </svg>
+              <strong>One forest</strong>
+              <p>A living canopy shared by guests and wildlife alike.</p>
+            </div>
+            <div class="reveal-block is-hidden" aria-label="A single pool">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 18c2-2 4 0 6-2s4-4 6-2 4 2 6 0"/>
+                <rect x="4" y="12" width="20" height="10" rx="2" fill="none"/>
+              </svg>
+              <strong>A single pool</strong>
+              <p>Open to sky, at the heart of the estate.</p>
+            </div>
+          </div>
+          <p style="margin-top:16px;font-size:13px;color:var(--media-tx);">Blocks fade up with 0.09s stagger. If IntersectionObserver misses them, a 1.5s failsafe reveals all. Disabled under <code>prefers-reduced-motion</code>.</p>
+        </div>
+
+        <!-- Hover zoom demo -->
+        <div style="margin-top:48px;">
+          <div class="eyebrow" style="margin-bottom:16px;">Live demo: hover-zoom image with caption reveal</div>
+          <!-- Replace with a real Orchid Tree forest or pool photo. Mood: "forest pool dawn light". -->
+          <div class="hover-zoom-wrap" style="max-width:720px;">
+            <img
+              src="https://orchidtree.in/uploads/Bodhi_Tree_03_1_35a5ef31e4.webp"
+              alt="A cottage at Orchid Tree, framed by forest canopy in morning light"
+              loading="lazy"
+              decoding="async"
+            >
+            <div class="img-caption">Hover to see the scale and caption reveal.</div>
+          </div>
+          <p style="margin-top:16px;font-size:13px;color:var(--media-tx);">Image scales to 1.06. Caption lifts from below via <code>translateY</code>. Both via CSS transitions, no JS. Container clips with <code>overflow: hidden</code>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── ACCESSIBILITY ─────────────────────────────────────── -->
+    <section class="prose-section" aria-labelledby="a11y-heading" style="padding-bottom:clamp(64px,10vw,120px);">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">Accessibility</div>
+          <h2 id="a11y-heading">The checklist</h2>
+          <p>WCAG AA minimum. Accessible to every guest, on every device, with any assistive technology. These are requirements, not suggestions.</p>
+        </div>
+
+        <div class="a11y-list">
+          <div class="a11y-item">
+            <div class="a11y-check" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="2,6 5,9 10,3"/>
+              </svg>
+            </div>
+            <div>
+              <h4>Colour contrast: WCAG AA</h4>
+              <p>White on olive is approximately 9.6:1. Ink on cream is strong. The olive was chosen precisely for contrast: the earlier forest green (#15583a) was rejected as cool and clinical.</p>
+            </div>
+          </div>
+          <div class="a11y-item">
+            <div class="a11y-check" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="2,6 5,9 10,3"/>
+              </svg>
+            </div>
+            <div>
+              <h4>Visible focus states</h4>
+              <p>All interactive elements show a 2px gold outline on <code>:focus-visible</code>. Never use <code>outline: none</code> without a custom focus indicator. Tab through this page to verify.</p>
+            </div>
+          </div>
+          <div class="a11y-item">
+            <div class="a11y-check" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="2,6 5,9 10,3"/>
+              </svg>
+            </div>
+            <div>
+              <h4>Keyboard-operable nav and accordions</h4>
+              <p>Nav links and the FAQ accordion are fully keyboard-operable. Escape closes overlays and panels. Focus is managed on open/close. Accordions use <code>aria-expanded</code> and <code>aria-controls</code>.</p>
+            </div>
+          </div>
+          <div class="a11y-item">
+            <div class="a11y-check" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="2,6 5,9 10,3"/>
+              </svg>
+            </div>
+            <div>
+              <h4>ARIA usage</h4>
+              <p><code>aria-current="page"</code> on the active nav link. <code>aria-label</code> on icon buttons and links with no visible text. <code>aria-hidden="true"</code> on decorative icons and the eyebrow lines. <code>aria-expanded</code> on accordions.</p>
+            </div>
+          </div>
+          <div class="a11y-item">
+            <div class="a11y-check" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="2,6 5,9 10,3"/>
+              </svg>
+            </div>
+            <div>
+              <h4>Descriptive alt text</h4>
+              <p>Every meaningful image has specific, descriptive alt text. Decorative images use <code>alt=""</code>. Placeholders include a comment noting the intended Orchid Tree photo to replace them with.</p>
+            </div>
+          </div>
+          <div class="a11y-item">
+            <div class="a11y-check" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="2,6 5,9 10,3"/>
+              </svg>
+            </div>
+            <div>
+              <h4>Reduced motion</h4>
+              <p>All animation respects <code>prefers-reduced-motion: reduce</code>. Ken Burns and parallax are disabled outright. Reveals are instant. Test in System Preferences on macOS or Accessibility settings on iOS.</p>
+            </div>
+          </div>
+          <div class="a11y-item">
+            <div class="a11y-check" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="2,6 5,9 10,3"/>
+              </svg>
+            </div>
+            <div>
+              <h4>Semantic landmarks and heading order</h4>
+              <p>Every page uses <code>header</code>, <code>nav</code>, <code>main</code>, <code>section[aria-label]</code>, <code>article</code>, and <code>footer</code>. Heading order is strict: one H1, H2 for sections, H3 for cards. Never skip levels.</p>
+            </div>
+          </div>
+          <div class="a11y-item">
+            <div class="a11y-check" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="2,6 5,9 10,3"/>
+              </svg>
+            </div>
+            <div>
+              <h4>Touch targets</h4>
+              <p>All interactive elements are at minimum 44px in their tap target. The WhatsApp pill, FAQ triggers, and buttons all meet this. On mobile, stacked buttons never touch.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ─── GLOBAL FOOTER ─────────────────────────────────────── -->
+  <footer class="gfoot" role="contentinfo">
+    <div class="script-name">Orchid Tree</div>
+    <div class="tagline">The Art of Doing Nothing</div>
+    <p class="foot-note">
+      Internal brand reference. Match the live site at
+      <a href="https://orchid-sigma.vercel.app" target="_blank" rel="noopener">orchid-sigma.vercel.app</a>.
+    </p>
+  </footer>
+
+
+  <!-- ─── JAVASCRIPT ─────────────────────────────────────────── -->
+  <script>
+    // ── FAQ ACCORDION ──────────────────────────────────────────
+    // Single-open: opening one closes the others.
+    // Keyboard: Enter, Space open/close. Escape closes.
+    // aria-expanded drives the icon rotation via CSS.
+    (function () {
+      var triggers = document.querySelectorAll('.faq-trigger');
+
+      function close(trigger) {
+        var body = document.getElementById(trigger.getAttribute('aria-controls'));
+        trigger.setAttribute('aria-expanded', 'false');
+        body.style.maxHeight = '0';
+      }
+
+      function open(trigger) {
+        var body = document.getElementById(trigger.getAttribute('aria-controls'));
+        trigger.setAttribute('aria-expanded', 'true');
+        body.style.maxHeight = body.scrollHeight + 'px';
+      }
+
+      triggers.forEach(function (trigger) {
+        trigger.addEventListener('click', function () {
+          var isOpen = trigger.getAttribute('aria-expanded') === 'true';
+
+          // Close all
+          triggers.forEach(function (t) { close(t); });
+
+          // Open this one if it was closed
+          if (!isOpen) {
+            open(trigger);
+          }
+        });
+
+        trigger.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') {
+            close(trigger);
+            trigger.blur();
+          }
+        });
+      });
+    })();
+
+
+    // ── SCROLL REVEAL ──────────────────────────────────────────
+    // Uses IntersectionObserver. Failsafe reveals anything still hidden after 1.5s.
+    (function () {
+      var items = document.querySelectorAll('.reveal-block.is-hidden');
+      if (!items.length) return;
+
+      // Failsafe: reveal everything after 1.5s regardless
+      var failsafe = setTimeout(function () {
+        items.forEach(function (el) {
+          el.classList.remove('is-hidden');
+          el.classList.add('is-visible');
+        });
+      }, 1500);
+
+      if (!('IntersectionObserver' in window)) {
+        clearTimeout(failsafe);
+        items.forEach(function (el) {
+          el.classList.remove('is-hidden');
+          el.classList.add('is-visible');
+        });
+        return;
+      }
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.remove('is-hidden');
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+        // If all revealed, clear failsafe
+        var stillHidden = document.querySelectorAll('.reveal-block.is-hidden');
+        if (!stillHidden.length) clearTimeout(failsafe);
+      }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+      items.forEach(function (el) {
+        observer.observe(el);
+      });
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orchid Tree — Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Mulish:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#f7f3ea; --card:#ffffff; --green:#3c4a16; --ink:#43382b;
+    --body:#6e675d; --gold:#e0a23c; --line:#ece6da; --soft:#faf7f0;
+    --warn:#c0392b; --serif:'Lora',Georgia,serif; --sans:'Mulish',-apple-system,system-ui,sans-serif;
+    --radius:12px; --radius-sm:8px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--sans);background:var(--cream);color:var(--body);line-height:1.55;}
+  .wrap{max-width:1280px;margin:0 auto;padding:0 clamp(20px,4vw,48px);}
+
+  /* header */
+  header{background:var(--green);color:#fff;padding:22px 0;}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;}
+  header .brand{font-family:var(--serif);font-size:22px;}
+  header .brand b{font-weight:600;}
+  header .sub{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.7);font-weight:700;}
+
+  .eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:14px;}
+  h2{font-family:var(--serif);font-size:24px;font-weight:500;color:var(--ink);}
+
+  /* layout: compose form + live preview */
+  .grid{display:flex;gap:32px;align-items:flex-start;padding:36px 0;}
+  .form-col{flex:1 1 60%;min-width:0;}
+  .preview-col{flex:0 0 360px;position:sticky;top:24px;}
+  @media(max-width:900px){.grid{flex-direction:column;}.preview-col{position:static;flex-basis:auto;width:100%;}}
+
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:26px 28px;margin-bottom:24px;}
+  .panel h3{font-family:var(--serif);font-size:18px;font-weight:500;color:var(--ink);margin-bottom:4px;}
+  .panel .hint{font-size:12px;color:var(--body);margin-bottom:18px;}
+
+  label{display:block;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;color:var(--body);margin-bottom:7px;}
+  .field{margin-bottom:18px;}
+  .row2{display:flex;gap:16px;}.row2 .field{flex:1;}
+  input[type=text],input[type=tel],input[type=number],input[type=date],input[type=datetime-local]{
+    width:100%;padding:11px 13px;border:1px solid #d6cfc0;border-radius:var(--radius-sm);font-family:var(--sans);
+    font-size:14px;color:var(--ink);background:var(--soft);transition:border-color .15s,background .15s;}
+  input:focus{outline:none;border-color:var(--green);background:#fff;}
+  .prefix{position:relative;}
+  .prefix span{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--media-tx,#b3a994);font-size:14px;font-weight:600;}
+  .prefix input{padding-left:34px;}
+
+  /* steppers */
+  .steppers{display:flex;gap:14px;flex-wrap:wrap;}
+  .stepper{flex:1;min-width:120px;background:var(--soft);border:1px solid var(--line);border-radius:var(--radius-sm);padding:12px 14px;}
+  .stepper .sl{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--body);font-weight:700;}
+  .stepper .sc{display:flex;align-items:center;justify-content:space-between;margin-top:8px;}
+  .stepper .sc button{width:30px;height:30px;border-radius:50%;border:1px solid #d6cfc0;background:#fff;color:var(--green);font-size:18px;line-height:1;cursor:pointer;font-weight:700;}
+  .stepper .sc button:hover{border-color:var(--green);}
+  .stepper .sc .v{font-family:var(--serif);font-size:22px;color:var(--ink);}
+
+  /* room multi-select */
+  .cat-label{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;color:var(--gold);margin:18px 0 10px;}
+  .cat-label:first-child{margin-top:0;}
+  .room-card{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:var(--radius-sm);padding:11px 14px;margin-bottom:9px;cursor:pointer;background:var(--soft);transition:border-color .15s,background .15s;}
+  .room-card:hover{border-color:#c9bfa9;}
+  .room-card.sel{border-color:var(--green);background:rgba(60,74,22,.05);}
+  .room-card input{width:18px;height:18px;accent-color:var(--green);cursor:pointer;flex:none;}
+  .room-card .rc-main{flex:1;min-width:0;}
+  .room-card .rc-name{font-weight:700;color:var(--ink);font-size:14px;}
+  .room-card .rc-name .ph{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-left:6px;}
+  .room-card .rc-meta{font-size:12px;color:var(--body);}
+  .room-card .rc-cap{font-size:11px;font-weight:700;color:var(--green);background:rgba(60,74,22,.08);padding:4px 9px;border-radius:20px;flex:none;}
+  .pet-dot{font-size:10px;letter-spacing:.5px;text-transform:uppercase;font-weight:700;padding:3px 8px;border-radius:6px;flex:none;}
+  .pet-dot.y{background:rgba(224,162,60,.16);color:#b9802a;}
+  .pet-dot.n{background:#f1ede4;color:#b3a994;}
+
+  /* capacity tally */
+  .tally{position:sticky;bottom:0;margin-top:14px;background:var(--soft);border:1px solid var(--line);border-radius:var(--radius-sm);padding:13px 16px;display:flex;justify-content:space-between;align-items:center;font-size:13px;}
+  .tally.bad{background:#fbeeec;border-color:#e6c3bc;}
+  .tally .big{font-family:var(--serif);font-size:17px;color:var(--ink);}
+  .tally.bad .big{color:var(--warn);}
+  .tally .msg{font-size:11px;font-weight:700;letter-spacing:.5px;}
+  .tally .msg.ok{color:var(--green);}.tally .msg.bad{color:var(--warn);}
+
+  /* preview card (mirrors guest booking card) */
+  .preview{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;}
+  .preview .pblock{padding:20px 22px;border-bottom:1px solid var(--line);}
+  .preview .pblock:last-child{border-bottom:none;}
+  .grow{font-size:13px;display:flex;justify-content:space-between;padding:6px 0;}
+  .grow span{color:#b3a994;}.grow strong{color:var(--ink);font-weight:600;text-align:right;}
+  .irow{display:flex;justify-content:space-between;padding:6px 0;font-size:13px;}
+  .irow span:last-child{color:var(--ink);font-weight:600;}
+  .irow.total{font-family:var(--serif);font-size:18px;border-top:1px solid var(--line);margin-top:6px;padding-top:12px;color:var(--ink);}
+  .irow.total span:last-child{color:var(--green);}
+  .irow.save span{color:var(--green);font-weight:700;}
+  .fc{margin:14px 0 2px;background:rgba(60,74,22,.06);border:1px solid rgba(60,74,22,.18);border-radius:var(--radius-sm);padding:13px;text-align:center;}
+  .fc .a{font-family:var(--serif);font-size:18px;color:var(--green);}
+  .fc .l{font-size:11px;color:var(--body);margin-top:2px;}
+  .pdead{text-align:center;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--body);margin:14px 0 2px;}
+
+  .btn{display:block;width:100%;text-align:center;padding:14px 18px;font-size:12px;letter-spacing:1.3px;text-transform:uppercase;font-weight:700;cursor:pointer;border-radius:var(--radius-sm);border:1px solid #d6cfc0;background:#fff;color:var(--green);transition:all .16s;}
+  .btn:hover{border-color:var(--green);}
+  .btn.primary{background:var(--green);color:#fff;border-color:var(--green);}
+  .btn.primary:hover{background:#2c3810;}
+  .btn:disabled{opacity:.45;cursor:not-allowed;}
+  .btn+.btn{margin-top:9px;}
+
+  /* generated link */
+  .linkbox{margin-top:14px;padding:14px;background:var(--soft);border:1px dashed #c9bfa9;border-radius:var(--radius-sm);display:none;}
+  .linkbox.show{display:block;}
+  .linkbox .lk{font-size:12px;color:var(--green);word-break:break-all;font-weight:600;margin-bottom:10px;}
+
+  /* bookings table */
+  .bookings table{width:100%;border-collapse:collapse;}
+  .bookings th{text-align:left;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--body);font-weight:700;padding:0 12px 12px;border-bottom:1px solid var(--line);}
+  .bookings td{padding:14px 12px;border-bottom:1px solid var(--line);font-size:13px;color:var(--ink);vertical-align:middle;}
+  .bookings tr:last-child td{border-bottom:none;}
+  .bk-name{font-weight:700;}
+  .bk-sub{font-size:11px;color:var(--body);}
+  .badge{display:inline-block;font-size:10px;letter-spacing:1px;text-transform:uppercase;font-weight:700;padding:5px 10px;border-radius:20px;}
+  .badge.draft{background:#f1ede4;color:#8c8275;}
+  .badge.sent{background:rgba(224,162,60,.16);color:#b9802a;}
+  .badge.viewed{background:#e6eef0;color:#3a7184;}
+  .badge.confirmed{background:rgba(60,74,22,.12);color:var(--green);}
+  .badge.declined{background:#fbeeec;color:var(--warn);}
+  .badge.expired{background:#efe9df;color:#a39a87;}
+  .tact button{font-size:11px;font-weight:700;letter-spacing:.5px;color:var(--green);background:none;border:none;cursor:pointer;padding:4px 6px;}
+  .tact button:hover{text-decoration:underline;}
+  .tact button.danger{color:var(--warn);}
+  .empty{text-align:center;padding:46px 20px;color:var(--body);}
+  .empty .e1{font-family:var(--serif);font-size:18px;color:var(--ink);margin-bottom:6px;}
+
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:13px 22px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:all .25s;z-index:80;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div><div class="brand">Orchid Tree <b>· Admin</b></div></div>
+      <div class="sub">Booking Composer</div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="grid">
+      <!-- COMPOSE FORM -->
+      <div class="form-col">
+        <div class="eyebrow" id="formMode">New booking</div>
+        <h2 id="formTitle">Compose a stay</h2>
+
+        <div class="panel" style="margin-top:18px;">
+          <h3>Guest</h3>
+          <div class="hint">Who this bundle is being prepared for.</div>
+          <div class="row2">
+            <div class="field"><label>Guest name</label><input type="text" id="gName" placeholder="Rohan Mehta"></div>
+            <div class="field"><label>WhatsApp number</label><input type="tel" id="gWhats" placeholder="+91 9XXXX XXXXX"></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label>Check in</label><input type="date" id="checkIn"></div>
+            <div class="field"><label>Check out</label><input type="date" id="checkOut"></div>
+          </div>
+          <div id="nightsNote" class="hint" style="margin-bottom:0;"></div>
+        </div>
+
+        <div class="panel">
+          <h3>Guest mix</h3>
+          <div class="hint">Adults and children count toward capacity; pets are informational.</div>
+          <div class="steppers">
+            <div class="stepper"><div class="sl">Adults</div><div class="sc"><button data-step="adults" data-d="-1">−</button><span class="v" id="vAdults">2</span><button data-step="adults" data-d="1">+</button></div></div>
+            <div class="stepper"><div class="sl">Children</div><div class="sc"><button data-step="children" data-d="-1">−</button><span class="v" id="vChildren">0</span><button data-step="children" data-d="1">+</button></div></div>
+            <div class="stepper"><div class="sl">Pets</div><div class="sc"><button data-step="pets" data-d="-1">−</button><span class="v" id="vPets">0</span><button data-step="pets" data-d="1">+</button></div></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Rooms</h3>
+          <div class="hint">Pick the rooms in this bundle. Capacity tallies against the guest count below.</div>
+          <div id="roomList"></div>
+          <div class="tally" id="tally">
+            <div><span class="big" id="tallyCap">0</span> <span style="font-size:12px;">capacity</span> · <span id="tallyGuests">0 guests</span></div>
+            <div class="msg ok" id="tallyMsg">Pick rooms</div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Pricing &amp; offer</h3>
+          <div class="hint">Enter the room subtotal you are charging. 18% tax and the total are calculated. Set a higher usual price to show the guest a discount.</div>
+          <div class="row2">
+            <div class="field"><label>Usual price (₹, optional)</label><div class="prefix"><span>₹</span><input type="number" id="listPrice" min="0" step="100" placeholder="80000"></div></div>
+            <div class="field"><label>Room subtotal (₹)</label><div class="prefix"><span>₹</span><input type="number" id="subtotal" min="0" step="100" placeholder="72000"></div></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label>Food credit (₹)</label><div class="prefix"><span>₹</span><input type="number" id="foodCredit" min="0" step="500" placeholder="5000"></div></div>
+            <div class="field" style="margin-bottom:0;"><label>Confirm within (hours)</label><input type="number" id="deadlineHours" min="0" step="1" placeholder="48"></div>
+          </div>
+          <div class="hint" style="margin:8px 0 0;">The confirmation countdown starts when you generate the link. Leave blank for no deadline.</div>
+        </div>
+      </div>
+
+      <!-- LIVE PREVIEW -->
+      <div class="preview-col">
+        <div class="eyebrow">Guest will see</div>
+        <div class="preview">
+          <div class="pblock">
+            <div class="eyebrow" style="margin-bottom:10px;">Booking for</div>
+            <div class="grow"><span>Name</span><strong id="pvName">—</strong></div>
+            <div class="grow"><span>WhatsApp</span><strong id="pvWhats">—</strong></div>
+            <div class="grow"><span>Dates</span><strong id="pvDates">—</strong></div>
+          </div>
+          <div class="pblock">
+            <div class="eyebrow" style="margin-bottom:10px;">Invoice</div>
+            <div id="pvInvoice"></div>
+            <div class="fc" id="pvFoodCard"><div class="a" id="pvFood">Rs 0 food credit</div><div class="l">complimentary, included free with your stay</div></div>
+            <div class="pdead" id="pvDeadline"></div>
+          </div>
+          <div class="pblock">
+            <button class="btn primary" id="genBtn">Generate link</button>
+            <button class="btn" id="saveDraftBtn">Save as draft</button>
+            <button class="btn" id="clearBtn" style="border:none;color:var(--body);">Clear form</button>
+            <div class="linkbox" id="linkBox">
+              <div class="lk" id="linkUrl"></div>
+              <button class="btn" id="copyLinkBtn">Copy link</button>
+              <button class="btn" id="copyWaBtn">Copy WhatsApp message</button>
+              <button class="btn" id="openGuestBtn" style="border:none;color:var(--green);">Open guest page ↗</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOOKINGS LIST -->
+    <div class="panel bookings" style="margin-bottom:60px;">
+      <div class="eyebrow">All bookings</div>
+      <h2 style="margin-bottom:18px;">Bookings</h2>
+      <div id="bookingsArea"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="shared/catalog.js"></script>
+  <script src="shared/store.js"></script>
+  <script>
+  (function(){
+    const S = window.OrchidStore, C = window.OrchidCatalog;
+
+    // editing state — null = composing new, else id of booking being edited
+    let editingId = null;
+    let lastGenerated = null; // booking we just generated a link for
+
+    // ---- form state ----
+    const mix = { adults: 2, children: 0, pets: 0 };
+    const selectedRooms = new Set();
+
+    // ---- render the room picker, grouped by category ----
+    function renderRoomList(){
+      const area = document.getElementById('roomList');
+      let html = '';
+      C.categories.forEach(function(cat){
+        const inCat = C.rooms.filter(function(r){ return r.category === cat; });
+        if(!inCat.length) return;
+        html += '<div class="cat-label">'+cat+'</div>';
+        inCat.forEach(function(r){
+          const sel = selectedRooms.has(r.id);
+          html += '<label class="room-card'+(sel?' sel':'')+'" data-room="'+r.id+'">'+
+            '<input type="checkbox" '+(sel?'checked':'')+' data-room="'+r.id+'">'+
+            '<div class="rc-main"><div class="rc-name">'+r.name+(r.placeholder?' <span class="ph">placeholder</span>':'')+'</div>'+
+            '<div class="rc-meta">'+r.signature+' · sleeps '+r.sleepsLabel+'</div></div>'+
+            '<span class="pet-dot '+(r.petFriendly?'y':'n')+'">'+(r.petFriendly?'Pet ok':'No pets')+'</span>'+
+            '<span class="rc-cap" title="Room occupancy">sleeps '+r.capacity+'</span>'+
+          '</label>';
+        });
+      });
+      area.innerHTML = html;
+      area.querySelectorAll('input[type=checkbox]').forEach(function(cb){
+        cb.addEventListener('change', function(){
+          if(cb.checked) selectedRooms.add(cb.dataset.room); else selectedRooms.delete(cb.dataset.room);
+          renderRoomList(); refresh();
+        });
+      });
+    }
+
+    // ---- build a live booking object from current form state ----
+    function draftBooking(){
+      return {
+        guest: { name: val('gName'), whatsapp: val('gWhats') },
+        stay: { checkIn: val('checkIn'), checkOut: val('checkOut') },
+        roomIds: Array.from(selectedRooms),
+        guestMix: { adults: mix.adults, children: mix.children, pets: mix.pets },
+        pricing: { roomSubtotal: numVal('subtotal'), listPrice: numVal('listPrice'), taxRate: 0.18 },
+        foodCredit: numVal('foodCredit'),
+        deadlineHours: numVal('deadlineHours'),
+      };
+    }
+
+    // ---- refresh tally + preview ----
+    function refresh(){
+      const b = draftBooking();
+      const guests = S.guestCount(b);
+      const cap = S.capacityTotal(b);
+
+      // nights note
+      const n = S.nights(b);
+      document.getElementById('nightsNote').textContent = (b.stay.checkIn && b.stay.checkOut)
+        ? (n>0 ? n+(n===1?' night':' nights') : 'Check-out must be after check-in') : '';
+
+      // tally — guest-centric: how many still need a spot as rooms are picked
+      document.getElementById('tallyCap').textContent = cap;
+      document.getElementById('tallyGuests').textContent = guests+(guests===1?' guest':' guests');
+      const tally = document.getElementById('tally'), msg = document.getElementById('tallyMsg');
+      const remaining = guests - cap; // >0 = still need to place this many
+      if(selectedRooms.size === 0){
+        tally.classList.remove('bad'); msg.className='msg ok';
+        msg.textContent = guests>0 ? ('Seat '+guests+' '+(guests===1?'guest':'guests')) : 'Pick rooms';
+      } else if(remaining > 0){
+        tally.classList.add('bad'); msg.className='msg bad';
+        msg.textContent = remaining+' still '+(remaining===1?'needs':'need')+' a spot';
+      } else if(remaining === 0){
+        tally.classList.remove('bad'); msg.className='msg ok';
+        msg.textContent = 'Everyone placed — fits exactly';
+      } else {
+        tally.classList.remove('bad'); msg.className='msg ok';
+        msg.textContent = 'Everyone placed · '+(-remaining)+' spare';
+      }
+
+      // preview
+      document.getElementById('pvName').textContent = b.guest.name || '—';
+      document.getElementById('pvWhats').textContent = b.guest.whatsapp || '—';
+      document.getElementById('pvDates').textContent = S.dateRangeLabel(b) || '—';
+      const rooms = b.roomIds.length;
+      const roomsLbl = rooms+' room'+(rooms===1?'':'s')+(n>0?', '+n+' night'+(n===1?'':'s'):'');
+      var inv;
+      if(S.discount(b) > 0){
+        inv =
+          '<div class="irow"><span>'+roomsLbl+'</span><span>'+S.rupees(S.listPrice(b))+'</span></div>'+
+          '<div class="irow save"><span>You save ('+S.discountPct(b)+'% off)</span><span>- '+S.rupees(S.discount(b))+'</span></div>'+
+          '<div class="irow"><span>Taxes (18%)</span><span>'+S.rupees(S.tax(b))+'</span></div>'+
+          '<div class="irow total"><span>Total</span><span>'+S.rupees(S.grandTotal(b))+'</span></div>';
+      } else {
+        inv =
+          '<div class="irow"><span>'+roomsLbl+'</span><span>'+S.rupees(b.pricing.roomSubtotal)+'</span></div>'+
+          '<div class="irow"><span>Taxes (18%)</span><span>'+S.rupees(S.tax(b))+'</span></div>'+
+          '<div class="irow total"><span>Total</span><span>'+S.rupees(S.grandTotal(b))+'</span></div>';
+      }
+      document.getElementById('pvInvoice').innerHTML = inv;
+      document.getElementById('pvFood').textContent = S.rupees(b.foodCredit)+' food credit';
+      document.getElementById('pvFoodCard').style.display = b.foodCredit > 0 ? '' : 'none';
+      // preview shows the relative phrasing (the real send time isn't known yet)
+      document.getElementById('pvDeadline').textContent = S.relativeDeadlineLabel(b.deadlineHours);
+
+      // generate button validity
+      document.getElementById('genBtn').disabled = !canGenerate(b);
+    }
+
+    function canGenerate(b){
+      return b.guest.name.trim() && b.guest.whatsapp.trim() && b.stay.checkIn && b.stay.checkOut
+        && S.nights(b) > 0 && b.roomIds.length > 0;
+    }
+
+    // ---- steppers ----
+    document.querySelectorAll('.stepper button').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        const k = btn.dataset.step, d = parseInt(btn.dataset.d,10);
+        mix[k] = Math.max(0, mix[k] + d);
+        document.getElementById('v'+k.charAt(0).toUpperCase()+k.slice(1)).textContent = mix[k];
+        refresh();
+      });
+    });
+
+    ['gName','gWhats','checkIn','checkOut','listPrice','subtotal','foodCredit','deadlineHours'].forEach(function(id){
+      document.getElementById(id).addEventListener('input', refresh);
+    });
+
+    // check-out can't be on/before check-in: constrain the picker to the day after,
+    // and clear an already-chosen check-out that's now invalid.
+    function syncCheckoutBound(){
+      const ci = document.getElementById('checkIn').value;
+      const co = document.getElementById('checkOut');
+      co.min = ci ? nextDay(ci) : '';
+      if(ci && co.value && co.value < co.min){ co.value = ''; }
+    }
+    document.getElementById('checkIn').addEventListener('change', function(){ syncCheckoutBound(); refresh(); });
+    function nextDay(s){ const p=s.split('-').map(Number); const d=new Date(Date.UTC(p[0],p[1]-1,p[2])); d.setUTCDate(d.getUTCDate()+1); return d.toISOString().slice(0,10); }
+
+    // ---- generate / save ----
+    document.getElementById('genBtn').addEventListener('click', function(){
+      commit(S.STATUS.SENT);
+    });
+    document.getElementById('saveDraftBtn').addEventListener('click', function(){
+      commit(S.STATUS.DRAFT);
+    });
+
+    function commit(status){
+      const data = draftBooking();
+      let booking;
+      if(editingId){
+        const patch = Object.assign({}, data, { status: status });
+        if(status === S.STATUS.SENT) patch.timestamps = { sentAt: new Date().toISOString() };
+        booking = S.update(editingId, patch);
+      } else {
+        data.status = status;
+        booking = S.create(data);
+        if(status === S.STATUS.SENT) S.markSent(booking.id);
+        booking = S.getById(booking.id);
+      }
+      lastGenerated = booking;
+      renderBookings();
+      if(status === S.STATUS.SENT){
+        showLink(booking);
+        toast(editingId ? 'Booking updated & link ready' : 'Link generated');
+      } else {
+        toast('Saved as draft');
+        resetForm();
+      }
+      editingId = null; setFormMode();
+    }
+
+    function showLink(booking){
+      const url = guestUrl(booking.token);
+      document.getElementById('linkUrl').textContent = url;
+      document.getElementById('linkBox').classList.add('show');
+    }
+    function guestUrl(token){
+      const base = location.href.replace(/admin\.html.*$/, 'guest.html');
+      return base + '?b=' + token;
+    }
+    function waMessage(booking){
+      return 'Hi '+booking.guest.name+', your Orchid Tree stay is ready to view & confirm here: '+guestUrl(booking.token);
+    }
+
+    document.getElementById('copyLinkBtn').addEventListener('click', function(){
+      copy(guestUrl(lastGenerated.token)); toast('Link copied');
+    });
+    document.getElementById('copyWaBtn').addEventListener('click', function(){
+      copy(waMessage(lastGenerated)); toast('WhatsApp message copied');
+    });
+    document.getElementById('openGuestBtn').addEventListener('click', function(){
+      window.open(guestUrl(lastGenerated.token), '_blank');
+    });
+
+    document.getElementById('clearBtn').addEventListener('click', function(){
+      editingId = null; resetForm(); setFormMode(); toast('Form cleared');
+    });
+
+    function resetForm(){
+      ['gName','gWhats','checkIn','checkOut','listPrice','subtotal','foodCredit','deadlineHours'].forEach(function(id){ document.getElementById(id).value=''; });
+      mix.adults=2; mix.children=0; mix.pets=0;
+      document.getElementById('vAdults').textContent=2;
+      document.getElementById('vChildren').textContent=0;
+      document.getElementById('vPets').textContent=0;
+      selectedRooms.clear();
+      document.getElementById('linkBox').classList.remove('show');
+      document.getElementById('checkOut').min = '';
+      renderRoomList(); refresh();
+    }
+
+    function setFormMode(){
+      document.getElementById('formMode').textContent = editingId ? 'Editing booking' : 'New booking';
+      document.getElementById('formTitle').textContent = editingId ? 'Edit this stay' : 'Compose a stay';
+      document.getElementById('genBtn').textContent = editingId ? 'Update & regenerate link' : 'Generate link';
+    }
+
+    // ---- load a booking into the form for editing ----
+    function editBooking(id){
+      const b = S.getById(id); if(!b) return;
+      editingId = id;
+      set('gName', b.guest.name); set('gWhats', b.guest.whatsapp);
+      set('checkIn', b.stay.checkIn); set('checkOut', b.stay.checkOut);
+      set('listPrice', b.pricing.listPrice || ''); set('subtotal', b.pricing.roomSubtotal || ''); set('foodCredit', b.foodCredit || '');
+      set('deadlineHours', b.deadlineHours || '');
+      mix.adults=b.guestMix.adults; mix.children=b.guestMix.children; mix.pets=b.guestMix.pets;
+      document.getElementById('vAdults').textContent=mix.adults;
+      document.getElementById('vChildren').textContent=mix.children;
+      document.getElementById('vPets').textContent=mix.pets;
+      selectedRooms.clear(); (b.roomIds||[]).forEach(function(r){ selectedRooms.add(r); });
+      document.getElementById('linkBox').classList.remove('show');
+      renderRoomList(); syncCheckoutBound(); refresh(); setFormMode();
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+
+    // ---- bookings table ----
+    function renderBookings(){
+      const area = document.getElementById('bookingsArea');
+      const list = S.list().slice().reverse();
+      if(!list.length){
+        area.innerHTML = '<div class="empty"><div class="e1">No bookings yet</div><div>Compose a stay above and generate a link to get started.</div></div>';
+        return;
+      }
+      let rows = '';
+      list.forEach(function(b){
+        const st = S.effectiveStatus(b);
+        const rooms = (b.roomIds||[]).length;
+        rows += '<tr>'+
+          '<td><div class="bk-name">'+(b.guest.name||'(no name)')+'</div><div class="bk-sub">'+(b.guest.whatsapp||'')+'</div></td>'+
+          '<td>'+(S.dateRangeLabel(b)||'—')+'</td>'+
+          '<td>'+rooms+' room'+(rooms===1?'':'s')+'<div class="bk-sub">'+S.rupees(S.grandTotal(b))+'</div></td>'+
+          '<td><span class="badge '+st+'">'+st+'</span></td>'+
+          '<td class="tact">'+
+            '<button data-act="copy" data-id="'+b.id+'">Copy link</button>'+
+            '<button data-act="open" data-id="'+b.id+'">Open</button>'+
+            '<button data-act="edit" data-id="'+b.id+'">Edit</button>'+
+            '<button data-act="del" data-id="'+b.id+'" class="danger">Delete</button>'+
+          '</td>'+
+        '</tr>';
+      });
+      area.innerHTML = '<table><thead><tr><th>Guest</th><th>Dates</th><th>Rooms</th><th>Status</th><th></th></tr></thead><tbody>'+rows+'</tbody></table>';
+      area.querySelectorAll('button[data-act]').forEach(function(btn){
+        btn.addEventListener('click', function(){ tableAction(btn.dataset.act, btn.dataset.id); });
+      });
+    }
+
+    function tableAction(act, id){
+      const b = S.getById(id); if(!b) return;
+      if(act==='copy'){ copy(guestUrl(b.token)); toast('Link copied'); }
+      else if(act==='open'){ window.open(guestUrl(b.token),'_blank'); }
+      else if(act==='edit'){ editBooking(id); }
+      else if(act==='del'){ if(confirm('Delete booking for '+(b.guest.name||'this guest')+'?')){ S.remove(id); renderBookings(); toast('Booking deleted'); } }
+    }
+
+    // ---- utils ----
+    function val(id){ return document.getElementById(id).value.trim(); }
+    function numVal(id){ const n=parseFloat(document.getElementById(id).value); return isNaN(n)?0:n; }
+    function set(id,v){ document.getElementById(id).value = v==null?'':v; }
+    function copy(text){
+      if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).catch(function(){ fallbackCopy(text); }); }
+      else fallbackCopy(text);
+    }
+    function fallbackCopy(text){ const t=document.createElement('textarea'); t.value=text; document.body.appendChild(t); t.select(); try{document.execCommand('copy');}catch(e){} document.body.removeChild(t); }
+    let toastTimer;
+    function toast(msg){ const el=document.getElementById('toast'); el.textContent=msg; el.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(function(){ el.classList.remove('show'); },2200); }
+
+    // ---- init ----
+    renderRoomList(); refresh(); renderBookings(); setFormMode();
+    // refresh table when guest page (other tab) changes a status
+    window.addEventListener('storage', function(e){ if(e.key==='orchid_bookings') renderBookings(); });
+  })();
+  </script>
+</body>
+</html>

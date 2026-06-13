@@ -1,0 +1,2044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plan Your Dining | Orchid Tree</title>
+  <meta name="description" content="Personalise your dining at Orchid Tree before you arrive. Choose your meals, beverages and celebration add-ons so the kitchen is ready for you.">
+  <meta name="robots" content="noindex">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Mulish:wght@400;500;600;700&family=Sacramento&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Design tokens (verbatim from Orchid Tree design system) ── */
+    :root {
+      --cream: #f7f3ea;
+      --card:  #ffffff;
+      --green: #3c4a16;
+      --ink:   #43382b;
+      --body:  #6e675d;
+      --gold:  #c9a23c;
+      --line:  #ece6da;
+      --media: #e7e1d4;
+      --media-dark: #8c8275;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans:  'Mulish', 'Avenir Next', -apple-system, system-ui, sans-serif;
+      --script:'Sacramento', cursive;
+      --radius: 10px;
+      --pad: clamp(20px, 5vw, 64px);
+
+      /* diet colours */
+      --veg:   #3c7a2e;
+      --nonveg:#9a3328;
+      --vegan: #1f6f6b;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--cream);
+      color: var(--body);
+      line-height: 1.65;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    img { display: block; max-width: 100%; }
+
+    /* ── HEADER ── */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--cream);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--pad);
+      height: 64px;
+    }
+
+    .site-header .logo img {
+      height: 44px;
+      width: auto;
+      display: block;
+    }
+
+    .site-header .back-link {
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--body);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color .18s;
+    }
+
+    .site-header .back-link:hover { color: var(--green); }
+
+    .site-header .back-link svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* ── MAIN CONTENT SHELL ── */
+    .flow-shell {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: clamp(32px, 6vw, 72px) var(--pad) 120px;
+    }
+
+    /* ── STEP INDICATOR ── */
+    .step-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 48px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 4px;
+    }
+
+    .step-indicator::-webkit-scrollbar { display: none; }
+
+    .step-pip {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      min-width: 0;
+      position: relative;
+    }
+
+    .step-pip:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 14px;
+      left: 50%;
+      right: -50%;
+      height: 1px;
+      background: var(--line);
+      z-index: 0;
+    }
+
+    .step-pip.done:not(:last-child)::after,
+    .step-pip.active:not(:last-child)::after {
+      background: linear-gradient(to right, var(--green), var(--line));
+    }
+
+    .pip-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid var(--line);
+      background: var(--cream);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--media-dark, #8c8275);
+      position: relative;
+      z-index: 1;
+      transition: all .25s ease;
+      flex-shrink: 0;
+    }
+
+    .step-pip.done .pip-dot {
+      background: var(--green);
+      border-color: var(--green);
+      color: #fff;
+    }
+
+    .step-pip.active .pip-dot {
+      border-color: var(--green);
+      color: var(--green);
+      background: var(--cream);
+      box-shadow: 0 0 0 3px rgba(60,74,22,.12);
+    }
+
+    .pip-label {
+      font-size: 9px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--media-dark, #8c8275);
+      margin-top: 7px;
+      text-align: center;
+      line-height: 1.3;
+      max-width: 56px;
+      word-break: break-word;
+    }
+
+    .step-pip.active .pip-label { color: var(--green); }
+    .step-pip.done .pip-label { color: var(--ink); }
+
+    /* ── STEP PANELS ── */
+    .step-panel {
+      display: none;
+      animation: stepIn .3s ease both;
+    }
+
+    .step-panel.visible { display: block; }
+
+    @keyframes stepIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    /* ── TYPOGRAPHY ── */
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    h1, h2, h3, h4 { font-family: var(--serif); color: var(--ink); }
+
+    h2 {
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 600;
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
+
+    h3 {
+      font-size: 22px;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    .step-lead {
+      font-size: 16px;
+      color: var(--body);
+      line-height: 1.75;
+      margin-bottom: 32px;
+      max-width: 540px;
+    }
+
+    /* ── CONFIRMATION PANEL (step 1) ── */
+    .confirm-panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: clamp(24px, 4vw, 48px);
+      margin-bottom: 32px;
+    }
+
+    .confirm-panel .script-accent {
+      font-family: var(--script);
+      font-size: 36px;
+      color: var(--green);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .confirm-panel p {
+      font-size: 15px;
+      color: var(--body);
+      line-height: 1.75;
+    }
+
+    /* ── FORM ELEMENTS ── */
+    .form-group {
+      margin-bottom: 22px;
+    }
+
+    label {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="number"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 13px 16px;
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+      font-family: var(--sans);
+      font-size: 15px;
+      color: var(--ink);
+      outline: none;
+      transition: border-color .18s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    input:focus,
+    textarea:focus { border-color: var(--green); }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    /* ── TOGGLE CHIPS ── */
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .chip {
+      padding: 9px 16px;
+      border-radius: 40px;
+      border: 1.5px solid var(--line);
+      background: var(--card);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--body);
+      cursor: pointer;
+      transition: all .18s ease;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .chip.selected {
+      background: var(--green);
+      border-color: var(--green);
+      color: #fff;
+    }
+
+    .chip.chip-spice.selected {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: #fff;
+    }
+
+    /* ── CATEGORY FILTER ROW ── */
+    .cat-filter {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 4px;
+      margin-bottom: 28px;
+    }
+
+    .cat-filter::-webkit-scrollbar { display: none; }
+
+    .cat-chip {
+      padding: 7px 14px;
+      border-radius: 40px;
+      border: 1.5px solid var(--line);
+      background: var(--card);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .5px;
+      color: var(--body);
+      cursor: pointer;
+      transition: all .18s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .cat-chip.active {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: #fff;
+    }
+
+    /* ── MENU ITEM CARD ── */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 100px;
+    }
+
+    @media (max-width: 540px) {
+      .menu-grid { grid-template-columns: 1fr; }
+    }
+
+    .menu-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow .2s ease;
+    }
+
+    .menu-card.unavailable { opacity: .55; }
+
+    .menu-card:hover {
+      box-shadow: 0 8px 32px rgba(67,56,43,.1);
+    }
+
+    .menu-card .card-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      background: var(--media);
+      display: block;
+    }
+
+    .menu-card .card-body {
+      padding: 14px 16px 16px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .menu-card .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .diet-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .diet-dot.veg    { background: var(--veg); }
+    .diet-dot.nonveg { background: var(--nonveg); }
+    .diet-dot.vegan  { background: var(--vegan); }
+
+    .diet-label {
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .diet-label.veg    { color: var(--veg); }
+    .diet-label.nonveg { color: var(--nonveg); }
+    .diet-label.vegan  { color: var(--vegan); }
+
+    .unavail-badge {
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--media-dark);
+      margin-left: auto;
+    }
+
+    .menu-card .dish-name {
+      font-family: var(--serif);
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.2;
+      margin-bottom: 5px;
+    }
+
+    .menu-card .dish-desc {
+      font-size: 13px;
+      color: var(--body);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .menu-card .card-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 14px;
+    }
+
+    .dish-price {
+      font-family: var(--serif);
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    /* ── ADD / QUANTITY CONTROLS ── */
+    .add-btn {
+      padding: 8px 18px;
+      border-radius: 40px;
+      border: 1.5px solid var(--green);
+      background: transparent;
+      color: var(--green);
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .5px;
+      cursor: pointer;
+      transition: all .18s ease;
+    }
+
+    .add-btn:hover {
+      background: var(--green);
+      color: #fff;
+    }
+
+    .add-btn:disabled {
+      border-color: var(--line);
+      color: var(--media-dark);
+      cursor: default;
+      background: transparent;
+    }
+
+    .qty-control {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      border: 1.5px solid var(--green);
+      border-radius: 40px;
+      overflow: hidden;
+    }
+
+    .qty-btn {
+      width: 32px;
+      height: 32px;
+      border: none;
+      background: transparent;
+      color: var(--green);
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .15s;
+      line-height: 1;
+    }
+
+    .qty-btn:hover { background: rgba(60,74,22,.08); }
+
+    .qty-num {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--ink);
+      min-width: 24px;
+      text-align: center;
+    }
+
+    /* ── BEVERAGE CARD ── */
+    .bev-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 100px;
+    }
+
+    .bev-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      transition: box-shadow .18s;
+    }
+
+    .bev-card:hover { box-shadow: 0 4px 20px rgba(67,56,43,.08); }
+
+    .bev-info { flex: 1; min-width: 0; }
+
+    .bev-name {
+      font-family: var(--serif);
+      font-size: 19px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 3px;
+    }
+
+    .bev-desc {
+      font-size: 13px;
+      color: var(--body);
+      line-height: 1.5;
+    }
+
+    /* ── CELEBRATION ADD-ONS ── */
+    .addon-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+
+    .addon-item {
+      background: var(--card);
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      cursor: pointer;
+      transition: all .18s ease;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .addon-item.selected {
+      border-color: var(--green);
+      background: rgba(60,74,22,.04);
+    }
+
+    .addon-check {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--line);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .18s;
+    }
+
+    .addon-item.selected .addon-check {
+      background: var(--green);
+      border-color: var(--green);
+    }
+
+    .addon-check svg {
+      width: 10px;
+      height: 10px;
+      stroke: #fff;
+      display: none;
+    }
+
+    .addon-item.selected .addon-check svg { display: block; }
+
+    .addon-label {
+      font-family: var(--serif);
+      font-size: 18px;
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .addon-text-input {
+      margin-top: 12px;
+      padding-left: 34px;
+    }
+
+    /* ── SPECIAL REQUESTS ── */
+    .requests-section {
+      margin-bottom: 32px;
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin-bottom: 12px;
+    }
+
+    .toggle-label {
+      font-family: var(--serif);
+      font-size: 18px;
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+
+    .toggle-switch input { opacity: 0; width: 0; height: 0; position: absolute; }
+
+    .toggle-thumb {
+      position: absolute;
+      inset: 0;
+      border-radius: 40px;
+      background: var(--line);
+      cursor: pointer;
+      transition: background .2s;
+    }
+
+    .toggle-thumb::before {
+      content: '';
+      position: absolute;
+      left: 3px;
+      top: 3px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #fff;
+      transition: transform .2s;
+      box-shadow: 0 1px 4px rgba(0,0,0,.2);
+    }
+
+    .toggle-switch input:checked + .toggle-thumb { background: var(--green); }
+    .toggle-switch input:checked + .toggle-thumb::before { transform: translateX(20px); }
+
+    .kids-count-row {
+      display: none;
+      align-items: center;
+      gap: 14px;
+      padding: 0 20px 16px;
+      margin-top: -10px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-top: none;
+      border-radius: 0 0 var(--radius) var(--radius);
+      margin-bottom: 12px;
+    }
+
+    .kids-count-row.visible { display: flex; }
+
+    .kids-count-row label { margin: 0; white-space: nowrap; }
+
+    .kids-count-row input[type="number"] { max-width: 80px; }
+
+    /* ── STICKY CART BAR ── */
+    .cart-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 80;
+      background: var(--card);
+      border-top: 1px solid var(--line);
+      padding: 16px var(--pad);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      box-shadow: 0 -4px 24px rgba(67,56,43,.08);
+    }
+
+    .cart-bar.hidden { display: none; }
+
+    .cart-summary {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cart-count {
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--body);
+    }
+
+    .cart-total {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    /* ── BUTTONS ── */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 28px;
+      background: var(--green);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      font-family: var(--sans);
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .18s ease;
+      text-decoration: none;
+      min-height: 50px;
+    }
+
+    .btn-primary:hover { background: #2c3810; }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 22px;
+      background: transparent;
+      color: var(--body);
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius);
+      font-family: var(--sans);
+      font-size: 13px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .18s ease;
+      min-height: 50px;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--ink);
+      color: var(--ink);
+    }
+
+    .btn-skip {
+      background: none;
+      border: none;
+      font-family: var(--sans);
+      font-size: 13px;
+      color: var(--body);
+      cursor: pointer;
+      padding: 10px 0;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .step-footer {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      padding: 32px 0 0;
+      border-top: 1px solid var(--line);
+      margin-top: 32px;
+    }
+
+    .step-footer .spacer { flex: 1; }
+
+    /* ── ORDER REVIEW ── */
+    .review-panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 28px;
+    }
+
+    .review-section-head {
+      padding: 16px 22px;
+      background: var(--cream);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .review-section-head h4 {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 700;
+      font-family: var(--sans);
+    }
+
+    .review-section-body { padding: 4px 0; }
+
+    .review-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 14px 22px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .review-row:last-child { border-bottom: none; }
+
+    .review-row .rr-label {
+      font-size: 14px;
+      color: var(--body);
+      font-weight: 600;
+    }
+
+    .review-row .rr-value {
+      font-size: 14px;
+      color: var(--ink);
+      text-align: right;
+    }
+
+    .review-row .rr-price {
+      font-family: var(--serif);
+      font-size: 16px;
+      color: var(--ink);
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .review-total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 22px;
+      background: rgba(60,74,22,.05);
+      border-top: 1.5px solid var(--green);
+    }
+
+    .review-total-row .label {
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--green);
+    }
+
+    .review-total-row .total {
+      font-family: var(--serif);
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .note-fine {
+      font-size: 12px;
+      color: var(--body);
+      line-height: 1.6;
+      font-style: italic;
+      margin-bottom: 24px;
+    }
+
+    /* ── CONFIRMATION STATE ── */
+    .confirm-state {
+      display: none;
+      text-align: center;
+      padding: clamp(48px, 8vw, 96px) 0;
+    }
+
+    .confirm-state.visible { display: block; }
+
+    .confirm-state .script {
+      font-family: var(--script);
+      font-size: 52px;
+      color: var(--green);
+      display: block;
+      margin-bottom: 16px;
+    }
+
+    .confirm-state h2 { margin-bottom: 12px; }
+
+    .confirm-state p {
+      font-size: 16px;
+      color: var(--body);
+      line-height: 1.8;
+      max-width: 460px;
+      margin: 0 auto 32px;
+    }
+
+    .confirm-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .confirm-actions .email-fallback {
+      font-size: 13px;
+      color: var(--body);
+    }
+
+    .confirm-actions .email-fallback a {
+      color: var(--green);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .confirm-actions .email-fallback a:hover { text-decoration: underline; }
+
+    /* ── SECTION DIVIDER ── */
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--line);
+      margin: 28px 0;
+    }
+
+    /* ── EMPTY STATE ── */
+    .empty-note {
+      font-size: 14px;
+      color: var(--body);
+      font-style: italic;
+      padding: 12px 0;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 480px) {
+      .step-indicator { margin-bottom: 32px; }
+      .pip-label { font-size: 8px; max-width: 44px; }
+      .pip-dot { width: 24px; height: 24px; font-size: 10px; }
+      .step-pip:not(:last-child)::after { top: 12px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .step-panel { animation: none; }
+      .menu-card, .bev-card, .addon-item { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MINIMAL BRANDED HEADER -->
+  <header class="site-header">
+    <a class="logo" href="home.html" aria-label="Orchid Tree home">
+      <img src="images/logo.png" alt="Orchid Tree" height="44">
+    </a>
+    <a class="back-link" href="restaurant.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 12H5M12 5l-7 7 7 7"/>
+      </svg>
+      Back to dining
+    </a>
+  </header>
+
+  <main>
+    <div class="flow-shell">
+
+      <!-- STEP INDICATOR -->
+      <nav class="step-indicator" aria-label="Progress" id="stepIndicator">
+        <div class="step-pip" data-step="1">
+          <div class="pip-dot">1</div>
+          <span class="pip-label">Booking</span>
+        </div>
+        <div class="step-pip" data-step="2">
+          <div class="pip-dot">2</div>
+          <span class="pip-label">Mood</span>
+        </div>
+        <div class="step-pip" data-step="3">
+          <div class="pip-dot">3</div>
+          <span class="pip-label">Meals</span>
+        </div>
+        <div class="step-pip" data-step="4">
+          <div class="pip-dot">4</div>
+          <span class="pip-label">Drinks</span>
+        </div>
+        <div class="step-pip" data-step="5">
+          <div class="pip-dot">5</div>
+          <span class="pip-label">Celebrate</span>
+        </div>
+        <div class="step-pip" data-step="6">
+          <div class="pip-dot">6</div>
+          <span class="pip-label">Review</span>
+        </div>
+      </nav>
+
+      <!-- ════════════════════════════════════
+           STEP 1: BOOKING CONFIRMED
+           ════════════════════════════════════ -->
+      <section class="step-panel" id="step1">
+        <div class="eyebrow">Your reservation</div>
+        <h2>Booking confirmed</h2>
+        <p class="step-lead">
+          A few details to personalise your meals. The kitchen will have everything ready the hour you arrive.
+        </p>
+
+        <div class="confirm-panel">
+          <span class="script-accent">Orchid Tree</span>
+          <p>
+            Plated, fresh and farm to table. Lunch and dinner are cooked to order, so we ask you to pre-select before you arrive. This takes about three minutes.
+          </p>
+        </div>
+
+        <div class="form-group">
+          <label for="guestName">Guest name</label>
+          <input type="text" id="guestName" placeholder="Your name" autocomplete="name">
+        </div>
+
+        <div class="form-group">
+          <label for="roomNumber">Room number</label>
+          <input type="text" id="roomNumber" placeholder="e.g. Room 4">
+        </div>
+
+        <div class="form-group">
+          <label for="arrivalDate">Arrival date</label>
+          <input type="date" id="arrivalDate">
+        </div>
+
+        <div class="step-footer">
+          <div class="spacer"></div>
+          <button class="btn-primary" onclick="goToStep(2)">Begin planning</button>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════
+           STEP 2: PLAN YOUR DINING (Preferences)
+           ════════════════════════════════════ -->
+      <section class="step-panel" id="step2">
+        <div class="eyebrow">Your preferences</div>
+        <h2>What are you in the mood for?</h2>
+        <p class="step-lead">
+          Choose as many as you like. We will bring the most relevant dishes forward for you.
+        </p>
+
+        <div class="chip-row" id="preferenceChips"></div>
+
+        <div class="step-footer">
+          <button class="btn-ghost" onclick="goToStep(1)">Back</button>
+          <div class="spacer"></div>
+          <button class="btn-primary" onclick="goToStep(3)">Select meals</button>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════
+           STEP 3: SELECT MEALS
+           ════════════════════════════════════ -->
+      <section class="step-panel" id="step3">
+        <div class="eyebrow">From the kitchen</div>
+        <h2>Select your meals</h2>
+        <p class="step-lead">Add the dishes you would like the kitchen to prepare. Pre-selected choices are cooked fresh on arrival.</p>
+
+        <div class="cat-filter" id="categoryFilter"></div>
+
+        <div class="menu-grid" id="dishGrid"></div>
+      </section>
+
+      <!-- ════════════════════════════════════
+           STEP 4: SELECT BEVERAGES
+           ════════════════════════════════════ -->
+      <section class="step-panel" id="step4">
+        <div class="eyebrow">Pour something</div>
+        <h2>Signature beverages</h2>
+        <p class="step-lead">House-made, cold and bright. Add any you would like to have ready on arrival.</p>
+
+        <div class="bev-list" id="bevList"></div>
+      </section>
+
+      <!-- ════════════════════════════════════
+           STEP 5: CELEBRATION ADD-ONS
+           ════════════════════════════════════ -->
+      <section class="step-panel" id="step5">
+        <div class="eyebrow">A little extra</div>
+        <h2>Celebration add-ons</h2>
+        <p class="step-lead">Marking a birthday, anniversary or a quiet occasion. Let us know and we will make it feel right.</p>
+
+        <div class="addon-list" id="addonList"></div>
+
+        <hr class="section-divider">
+
+        <!-- SPECIAL REQUESTS embedded in step 5 before review -->
+        <div class="eyebrow" style="margin-top:8px;">Your preferences</div>
+        <h3 style="margin-bottom:16px; font-size:22px;">A few more details</h3>
+
+        <div class="requests-section">
+
+          <div class="form-group">
+            <label>Spice preference</label>
+            <div class="chip-row" id="spiceChips">
+              <div class="chip chip-spice" data-spice="Mild">Mild</div>
+              <div class="chip chip-spice" data-spice="Medium">Medium</div>
+              <div class="chip chip-spice" data-spice="Spicy">Spicy</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="dietaryRestrictions">Dietary restrictions</label>
+            <input type="text" id="dietaryRestrictions" placeholder="e.g. Jain, no onion and garlic">
+          </div>
+
+          <div class="form-group">
+            <label for="foodAllergies">Food allergies</label>
+            <input type="text" id="foodAllergies" placeholder="e.g. peanuts, dairy, gluten">
+          </div>
+
+          <div class="toggle-row">
+            <span class="toggle-label">Kids meals needed</span>
+            <label class="toggle-switch">
+              <input type="checkbox" id="kidsMealsToggle">
+              <span class="toggle-thumb"></span>
+            </label>
+          </div>
+
+          <div class="kids-count-row" id="kidsCountRow">
+            <label for="kidsCount">Number of children</label>
+            <input type="number" id="kidsCount" min="1" max="10" value="1">
+          </div>
+
+          <div class="form-group">
+            <label for="customRequests">Anything else</label>
+            <textarea id="customRequests" placeholder="Any other requests for the kitchen"></textarea>
+          </div>
+        </div>
+
+        <div class="step-footer">
+          <button class="btn-ghost" onclick="goToStep(4)">Back</button>
+          <div class="spacer"></div>
+          <button class="btn-primary" onclick="goToStep(6)">Review order</button>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════
+           STEP 6: REVIEW AND CONFIRM
+           ════════════════════════════════════ -->
+      <section class="step-panel" id="step6">
+        <div id="reviewContent">
+          <div class="eyebrow">Almost done</div>
+          <h2>Review your order</h2>
+          <p class="step-lead">Check everything looks right, then send it to the kitchen.</p>
+
+          <div id="orderSummary"></div>
+
+          <p class="note-fine">
+            Prices are indicative. The final bill is settled at the property. Subject to availability on the day.
+          </p>
+
+          <!--
+            PRODUCTION NOTE:
+            Replace the WhatsApp dispatch below with a POST to your backend/kitchen dashboard endpoint.
+            Suggested: POST /api/pre-orders with the full order JSON.
+            The kitchen dashboard should receive and display this order before guest arrival.
+            WhatsApp fallback can remain as a secondary confirmation channel.
+          -->
+          <div class="step-footer">
+            <button class="btn-ghost" onclick="goToStep(5)">Back</button>
+            <div class="spacer"></div>
+            <button class="btn-primary" id="confirmBtn" onclick="confirmOrder()">Confirm order</button>
+          </div>
+        </div>
+
+        <!-- CONFIRMATION STATE -->
+        <div class="confirm-state" id="confirmState">
+          <span class="script">Thank you</span>
+          <h2>We have your preferences</h2>
+          <p>
+            The kitchen will have it ready for your arrival. You should receive a WhatsApp confirmation shortly. See you at Orchid Tree.
+          </p>
+          <div class="confirm-actions">
+            <a class="btn-primary" href="home.html">Back to Orchid Tree</a>
+            <p class="email-fallback">
+              Did not receive a confirmation? Write to us at
+              <a href="mailto:orchidtree.blr@gmail.com">orchidtree.blr@gmail.com</a>
+            </p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- STICKY CART BAR (visible on steps 3 and 4) -->
+  <div class="cart-bar hidden" id="cartBar">
+    <div class="cart-summary">
+      <span class="cart-count" id="cartCount">0 items</span>
+      <span class="cart-total" id="cartTotal">₹0</span>
+    </div>
+    <button class="btn-primary" id="cartContinueBtn" onclick="cartContinue()">Continue</button>
+  </div>
+
+  <script src="shared/menu.js"></script>
+  <script>
+  (function () {
+
+    /* ─── STATE ─────────────────────────────────────────────────── */
+    var LS_KEY = 'ot_dining';
+    var state = load();
+
+    function defaultState() {
+      return {
+        step: 1,
+        guest: { name: '', room: '', arrival: '' },
+        preferences: [],         // string[]
+        cart: {},                 // { [dishId]: qty }
+        beverages: {},            // { [bevName]: qty }
+        addons: [],               // string[]
+        addonMessages: {},        // { addonName: string }
+        spice: '',
+        dietary: '',
+        allergies: '',
+        kidsNeeded: false,
+        kidsCount: 1,
+        customRequests: ''
+      };
+    }
+
+    function load() {
+      try {
+        var raw = localStorage.getItem(LS_KEY);
+        if (raw) return JSON.parse(raw);
+      } catch (e) {}
+      return defaultState();
+    }
+
+    function save() {
+      try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch (e) {}
+    }
+
+    /* ─── STEP NAVIGATION ───────────────────────────────────────── */
+    var TOTAL_STEPS = 6;
+    var CART_STEPS = [3, 4];
+
+    window.goToStep = function (n) {
+      if (n === 2) collectStep1();
+      if (n === 3) collectStep2();
+      if (n === 5) collectStep3();
+      if (n === 6) {
+        collectStep5();
+        renderReview();
+      }
+      state.step = n;
+      save();
+      renderStepUI(n);
+    };
+
+    function renderStepUI(n) {
+      /* hide all panels */
+      document.querySelectorAll('.step-panel').forEach(function (p) {
+        p.classList.remove('visible');
+      });
+      /* show current */
+      var panel = document.getElementById('step' + n);
+      if (panel) panel.classList.add('visible');
+
+      /* update step indicator */
+      document.querySelectorAll('.step-pip').forEach(function (pip) {
+        var s = parseInt(pip.dataset.step, 10);
+        pip.classList.remove('active', 'done');
+        if (s < n) pip.classList.add('done');
+        if (s === n) pip.classList.add('active');
+      });
+
+      /* pip done: show tick */
+      document.querySelectorAll('.step-pip.done .pip-dot').forEach(function (dot) {
+        dot.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><polyline points="20 6 9 17 4 12"/></svg>';
+      });
+      document.querySelectorAll('.step-pip:not(.done) .pip-dot').forEach(function (dot) {
+        var s = parseInt(dot.closest('.step-pip').dataset.step, 10);
+        dot.innerHTML = s;
+      });
+
+      /* cart bar */
+      var bar = document.getElementById('cartBar');
+      if (CART_STEPS.indexOf(n) > -1) {
+        bar.classList.remove('hidden');
+        updateCartBar();
+      } else {
+        bar.classList.add('hidden');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ─── COLLECT STEP DATA ──────────────────────────────────────── */
+    function collectStep1() {
+      state.guest.name    = val('guestName');
+      state.guest.room    = val('roomNumber');
+      state.guest.arrival = val('arrivalDate');
+      save();
+    }
+
+    function collectStep2() {
+      /* preferences already tracked on chip click */
+      save();
+    }
+
+    function collectStep3() {
+      /* cart already tracked via add/qty buttons */
+      save();
+    }
+
+    function collectStep5() {
+      state.spice    = document.querySelector('.chip-spice.selected') ?
+                       document.querySelector('.chip-spice.selected').dataset.spice : '';
+      state.dietary  = val('dietaryRestrictions');
+      state.allergies= val('foodAllergies');
+      state.kidsNeeded = document.getElementById('kidsMealsToggle').checked;
+      state.kidsCount  = parseInt(val('kidsCount'), 10) || 1;
+      state.customRequests = val('customRequests');
+
+      /* addon messages */
+      state.addons.forEach(function (a) {
+        var inp = document.getElementById('addonMsg_' + safeId(a));
+        if (inp) state.addonMessages[a] = inp.value.trim();
+      });
+      save();
+    }
+
+    function val(id) {
+      var el = document.getElementById(id);
+      return el ? el.value.trim() : '';
+    }
+
+    /* ─── STEP 2: PREFERENCE CHIPS ──────────────────────────────── */
+    function buildPreferenceChips() {
+      if (!window.OrchidMenu) return;
+      var wrap = document.getElementById('preferenceChips');
+      if (!wrap) return;
+      wrap.innerHTML = '';
+      OrchidMenu.preferences.forEach(function (pref) {
+        var chip = document.createElement('div');
+        chip.className = 'chip' + (state.preferences.indexOf(pref) > -1 ? ' selected' : '');
+        chip.textContent = pref;
+        chip.addEventListener('click', function () {
+          var idx = state.preferences.indexOf(pref);
+          if (idx > -1) state.preferences.splice(idx, 1);
+          else state.preferences.push(pref);
+          chip.classList.toggle('selected', state.preferences.indexOf(pref) > -1);
+          save();
+        });
+        wrap.appendChild(chip);
+      });
+    }
+
+    /* ─── STEP 3: DISH GRID ──────────────────────────────────────── */
+    var activeCat = 'all';
+
+    /* Preference-to-category mapping for soft filter/sorting */
+    var prefCatMap = {
+      'Indian Cuisine':        ['indian'],
+      'Western Cuisine':       ['western'],
+      'Nepali Cuisine':        ['nepali'],
+      'Kerala Cuisine':        ['kerala'],
+      'Farm Specials':         ['farm'],
+      "Chef's Recommendations":['chef'],
+      'Vegetarian':            [],    // handled by diet
+      'Non-Vegetarian':        [],
+      'Seafood':               [],
+      'Vegan':                 []
+    };
+
+    var dietPrefMap = {
+      'Vegetarian':    ['veg'],
+      'Non-Vegetarian':['nonveg'],
+      'Vegan':         ['vegan'],
+      'Seafood':       ['nonveg']
+    };
+
+    function dishScore(dish) {
+      /* Higher = more relevant to selected preferences. Used for soft sort. */
+      if (state.preferences.length === 0) return 0;
+      var score = 0;
+      state.preferences.forEach(function (pref) {
+        var cats = prefCatMap[pref] || [];
+        if (cats.indexOf(dish.category) > -1) score += 2;
+        var diets = dietPrefMap[pref] || [];
+        if (diets.indexOf(dish.diet) > -1) score += 1;
+      });
+      return score;
+    }
+
+    function buildCategoryFilter() {
+      if (!window.OrchidMenu) return;
+      var wrap = document.getElementById('categoryFilter');
+      if (!wrap) return;
+      wrap.innerHTML = '';
+
+      var allChip = document.createElement('div');
+      allChip.className = 'cat-chip' + (activeCat === 'all' ? ' active' : '');
+      allChip.textContent = 'All';
+      allChip.addEventListener('click', function () {
+        activeCat = 'all';
+        updateCatFilter();
+        renderDishGrid();
+      });
+      wrap.appendChild(allChip);
+
+      OrchidMenu.categories.filter(function (c) {
+        return c.id !== 'mocktails' && c.id !== 'desserts' && c.id !== 'celebration';
+      }).forEach(function (cat) {
+        var chip = document.createElement('div');
+        chip.className = 'cat-chip' + (activeCat === cat.id ? ' active' : '');
+        chip.textContent = cat.name;
+        chip.dataset.catId = cat.id;
+        chip.addEventListener('click', function () {
+          activeCat = cat.id;
+          updateCatFilter();
+          renderDishGrid();
+        });
+        wrap.appendChild(chip);
+      });
+    }
+
+    function updateCatFilter() {
+      document.querySelectorAll('.cat-chip').forEach(function (c) {
+        c.classList.toggle('active',
+          c.textContent === 'All' ? activeCat === 'all' : c.dataset.catId === activeCat);
+      });
+    }
+
+    function renderDishGrid() {
+      if (!window.OrchidMenu) return;
+      var grid = document.getElementById('dishGrid');
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      var dishes = OrchidMenu.dishes.slice();
+
+      /* filter by category */
+      if (activeCat !== 'all') {
+        dishes = dishes.filter(function (d) { return d.category === activeCat; });
+      }
+
+      /* soft sort by preference relevance (highest score first, else original order) */
+      if (state.preferences.length > 0) {
+        dishes.sort(function (a, b) { return dishScore(b) - dishScore(a); });
+      }
+
+      dishes.forEach(function (dish) {
+        grid.appendChild(makeDishCard(dish));
+      });
+    }
+
+    function makeDishCard(dish) {
+      var card = document.createElement('div');
+      card.className = 'menu-card' + (!dish.available ? ' unavailable' : '');
+
+      var img = document.createElement('img');
+      img.className = 'card-img';
+      img.src = dish.image;
+      img.alt = dish.name;
+      img.loading = 'lazy';
+      card.appendChild(img);
+
+      var body = document.createElement('div');
+      body.className = 'card-body';
+
+      var meta = document.createElement('div');
+      meta.className = 'card-meta';
+
+      var dot = document.createElement('div');
+      dot.className = 'diet-dot ' + dish.diet;
+      meta.appendChild(dot);
+
+      var dlabel = document.createElement('span');
+      dlabel.className = 'diet-label ' + dish.diet;
+      dlabel.textContent = dish.diet === 'nonveg' ? 'Non-veg' : dish.diet.charAt(0).toUpperCase() + dish.diet.slice(1);
+      meta.appendChild(dlabel);
+
+      if (!dish.available) {
+        var ubadge = document.createElement('span');
+        ubadge.className = 'unavail-badge';
+        ubadge.textContent = 'Not available';
+        meta.appendChild(ubadge);
+      }
+
+      body.appendChild(meta);
+
+      var name = document.createElement('div');
+      name.className = 'dish-name';
+      name.textContent = dish.name;
+      body.appendChild(name);
+
+      var desc = document.createElement('div');
+      desc.className = 'dish-desc';
+      desc.textContent = dish.desc;
+      body.appendChild(desc);
+
+      var foot = document.createElement('div');
+      foot.className = 'card-foot';
+
+      var price = document.createElement('div');
+      price.className = 'dish-price';
+      price.textContent = '₹' + dish.price;
+      foot.appendChild(price);
+
+      var qty = state.cart[dish.id] || 0;
+      var control = makeQtyControl(dish.id, qty, dish.available, 'cart');
+      foot.appendChild(control);
+
+      body.appendChild(foot);
+      card.appendChild(body);
+
+      return card;
+    }
+
+    /* ─── STEP 4: BEVERAGES ──────────────────────────────────────── */
+    function renderBevList() {
+      if (!window.OrchidMenu) return;
+      var list = document.getElementById('bevList');
+      if (!list) return;
+      list.innerHTML = '';
+
+      OrchidMenu.signatureBeverages.forEach(function (bev) {
+        var card = document.createElement('div');
+        card.className = 'bev-card';
+
+        var info = document.createElement('div');
+        info.className = 'bev-info';
+
+        var name = document.createElement('div');
+        name.className = 'bev-name';
+        name.textContent = bev.name;
+        info.appendChild(name);
+
+        var desc = document.createElement('div');
+        desc.className = 'bev-desc';
+        desc.textContent = bev.desc;
+        info.appendChild(desc);
+
+        card.appendChild(info);
+
+        var qty = state.beverages[bev.name] || 0;
+        var ctrl = makeQtyControl(bev.name, qty, true, 'bev');
+        card.appendChild(ctrl);
+
+        list.appendChild(card);
+      });
+    }
+
+    /* ─── GENERIC QTY CONTROL ───────────────────────────────────── */
+    function makeQtyControl(id, qty, available, storeKey) {
+      if (!available) {
+        var btn = document.createElement('button');
+        btn.className = 'add-btn';
+        btn.textContent = 'Not available';
+        btn.disabled = true;
+        return btn;
+      }
+
+      if (qty === 0) {
+        var addBtn = document.createElement('button');
+        addBtn.className = 'add-btn';
+        addBtn.textContent = 'Add';
+        addBtn.addEventListener('click', function () {
+          setQty(storeKey, id, 1);
+          /* re-render the parent grid/list section */
+          if (storeKey === 'cart') renderDishGrid();
+          else if (storeKey === 'bev') renderBevList();
+          updateCartBar();
+        });
+        return addBtn;
+      }
+
+      var wrap = document.createElement('div');
+      wrap.className = 'qty-control';
+
+      var minus = document.createElement('button');
+      minus.className = 'qty-btn';
+      minus.textContent = '−';
+      minus.setAttribute('aria-label', 'Remove one');
+      minus.addEventListener('click', function () {
+        var cur = getQty(storeKey, id);
+        setQty(storeKey, id, Math.max(0, cur - 1));
+        if (storeKey === 'cart') renderDishGrid();
+        else if (storeKey === 'bev') renderBevList();
+        updateCartBar();
+      });
+      wrap.appendChild(minus);
+
+      var num = document.createElement('span');
+      num.className = 'qty-num';
+      num.textContent = qty;
+      wrap.appendChild(num);
+
+      var plus = document.createElement('button');
+      plus.className = 'qty-btn';
+      plus.textContent = '+';
+      plus.setAttribute('aria-label', 'Add one more');
+      plus.addEventListener('click', function () {
+        var cur = getQty(storeKey, id);
+        setQty(storeKey, id, cur + 1);
+        if (storeKey === 'cart') renderDishGrid();
+        else if (storeKey === 'bev') renderBevList();
+        updateCartBar();
+      });
+      wrap.appendChild(plus);
+
+      return wrap;
+    }
+
+    function getQty(storeKey, id) {
+      if (storeKey === 'cart') return state.cart[id] || 0;
+      if (storeKey === 'bev')  return state.beverages[id] || 0;
+      return 0;
+    }
+
+    function setQty(storeKey, id, qty) {
+      if (storeKey === 'cart') {
+        if (qty <= 0) delete state.cart[id];
+        else state.cart[id] = qty;
+      } else if (storeKey === 'bev') {
+        if (qty <= 0) delete state.beverages[id];
+        else state.beverages[id] = qty;
+      }
+      save();
+    }
+
+    /* ─── CART BAR ───────────────────────────────────────────────── */
+    function cartTotal() {
+      if (!window.OrchidMenu) return 0;
+      var total = 0;
+      Object.keys(state.cart).forEach(function (id) {
+        var dish = OrchidMenu.get(id);
+        if (dish) total += dish.price * state.cart[id];
+      });
+      return total;
+    }
+
+    function cartItemCount() {
+      var count = 0;
+      Object.keys(state.cart).forEach(function (id) { count += state.cart[id]; });
+      Object.keys(state.beverages).forEach(function (n) { count += state.beverages[n]; });
+      return count;
+    }
+
+    function updateCartBar() {
+      var cnt = document.getElementById('cartCount');
+      var tot = document.getElementById('cartTotal');
+      var c = cartItemCount();
+      if (cnt) cnt.textContent = c + (c === 1 ? ' item' : ' items');
+      if (tot) tot.textContent = '₹' + cartTotal();
+    }
+
+    window.cartContinue = function () {
+      if (state.step === 3) goToStep(4);
+      else if (state.step === 4) goToStep(5);
+    };
+
+    /* ─── STEP 5: ADD-ONS ────────────────────────────────────────── */
+    function buildAddonList() {
+      if (!window.OrchidMenu) return;
+      var list = document.getElementById('addonList');
+      if (!list) return;
+      list.innerHTML = '';
+
+      var needsText = ['Custom Message', 'Other Requests'];
+
+      OrchidMenu.celebrationAddOns.forEach(function (addon) {
+        var item = document.createElement('div');
+        item.className = 'addon-item' + (state.addons.indexOf(addon) > -1 ? ' selected' : '');
+        item.setAttribute('role', 'checkbox');
+        item.setAttribute('aria-checked', state.addons.indexOf(addon) > -1 ? 'true' : 'false');
+
+        var check = document.createElement('div');
+        check.className = 'addon-check';
+        check.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+        item.appendChild(check);
+
+        var lbl = document.createElement('span');
+        lbl.className = 'addon-label';
+        lbl.textContent = addon;
+        item.appendChild(lbl);
+
+        item.addEventListener('click', function () {
+          var idx = state.addons.indexOf(addon);
+          if (idx > -1) state.addons.splice(idx, 1);
+          else state.addons.push(addon);
+          item.classList.toggle('selected', state.addons.indexOf(addon) > -1);
+          item.setAttribute('aria-checked', item.classList.contains('selected') ? 'true' : 'false');
+          if (textRow) textRow.style.display = item.classList.contains('selected') && needsText.indexOf(addon) > -1 ? 'block' : 'none';
+          save();
+        });
+
+        list.appendChild(item);
+
+        /* text input for Custom Message / Other Requests */
+        var textRow = null;
+        if (needsText.indexOf(addon) > -1) {
+          textRow = document.createElement('div');
+          textRow.className = 'addon-text-input';
+          textRow.style.display = state.addons.indexOf(addon) > -1 ? 'block' : 'none';
+          var inp = document.createElement('input');
+          inp.type = 'text';
+          inp.id = 'addonMsg_' + safeId(addon);
+          inp.placeholder = addon === 'Custom Message' ? 'Your message for the card' : 'Describe your request';
+          inp.value = state.addonMessages[addon] || '';
+          textRow.appendChild(inp);
+          list.appendChild(textRow);
+        }
+      });
+
+      /* Spice chips */
+      document.querySelectorAll('.chip-spice').forEach(function (chip) {
+        if (chip.dataset.spice === state.spice) chip.classList.add('selected');
+        chip.addEventListener('click', function () {
+          document.querySelectorAll('.chip-spice').forEach(function (c) { c.classList.remove('selected'); });
+          chip.classList.add('selected');
+          state.spice = chip.dataset.spice;
+          save();
+        });
+      });
+
+      /* Kids meals toggle */
+      var toggle = document.getElementById('kidsMealsToggle');
+      if (toggle) {
+        toggle.checked = state.kidsNeeded;
+        toggle.addEventListener('change', function () {
+          state.kidsNeeded = toggle.checked;
+          document.getElementById('kidsCountRow').classList.toggle('visible', state.kidsNeeded);
+          save();
+        });
+        if (state.kidsNeeded) document.getElementById('kidsCountRow').classList.add('visible');
+      }
+
+      var kc = document.getElementById('kidsCount');
+      if (kc) kc.value = state.kidsCount;
+
+      /* Restore special requests fields */
+      setField('dietaryRestrictions', state.dietary);
+      setField('foodAllergies', state.allergies);
+      setField('customRequests', state.customRequests);
+    }
+
+    function setField(id, val) {
+      var el = document.getElementById(id);
+      if (el && val) el.value = val;
+    }
+
+    /* ─── STEP 6: ORDER REVIEW ───────────────────────────────────── */
+    function renderReview() {
+      var wrap = document.getElementById('orderSummary');
+      if (!wrap || !window.OrchidMenu) return;
+      wrap.innerHTML = '';
+
+      /* BOOKING DETAILS */
+      var panel1 = reviewPanel('Booking details');
+      var rows1 = [
+        ['Guest', state.guest.name || 'Not provided'],
+        ['Room', state.guest.room || 'Not provided'],
+        ['Arrival', formatDate(state.guest.arrival)]
+      ];
+      rows1.forEach(function (r) { panel1.body.appendChild(reviewRow(r[0], r[1], '')); });
+      wrap.appendChild(panel1.el);
+
+      /* MEALS */
+      var dishKeys = Object.keys(state.cart);
+      var panel2 = reviewPanel('Selected meals');
+      var dishTotal = 0;
+      if (dishKeys.length === 0) {
+        var empty = document.createElement('div');
+        empty.className = 'empty-note';
+        empty.style.padding = '14px 22px';
+        empty.textContent = 'No meals selected.';
+        panel2.body.appendChild(empty);
+      } else {
+        dishKeys.forEach(function (id) {
+          var dish = OrchidMenu.get(id);
+          if (!dish) return;
+          var qty = state.cart[id];
+          var line = dish.price * qty;
+          dishTotal += line;
+          panel2.body.appendChild(reviewRow(
+            dish.name + (qty > 1 ? '  x' + qty : ''),
+            '',
+            '₹' + line
+          ));
+        });
+      }
+      wrap.appendChild(panel2.el);
+
+      /* BEVERAGES */
+      var bevKeys = Object.keys(state.beverages);
+      var panel3 = reviewPanel('Beverages');
+      if (bevKeys.length === 0) {
+        var eb = document.createElement('div');
+        eb.className = 'empty-note';
+        eb.style.padding = '14px 22px';
+        eb.textContent = 'No beverages selected.';
+        panel3.body.appendChild(eb);
+      } else {
+        bevKeys.forEach(function (name) {
+          var qty = state.beverages[name];
+          panel3.body.appendChild(reviewRow(
+            name + (qty > 1 ? '  x' + qty : ''),
+            '', ''
+          ));
+        });
+      }
+      wrap.appendChild(panel3.el);
+
+      /* CELEBRATION ADD-ONS */
+      var panel4 = reviewPanel('Celebration add-ons');
+      if (state.addons.length === 0) {
+        var ea = document.createElement('div');
+        ea.className = 'empty-note';
+        ea.style.padding = '14px 22px';
+        ea.textContent = 'None selected.';
+        panel4.body.appendChild(ea);
+      } else {
+        state.addons.forEach(function (a) {
+          var msg = state.addonMessages[a] ? ': ' + state.addonMessages[a] : '';
+          panel4.body.appendChild(reviewRow(a + msg, '', ''));
+        });
+      }
+      wrap.appendChild(panel4.el);
+
+      /* SPECIAL REQUESTS */
+      var panel5 = reviewPanel('Preferences and requests');
+      var reqRows = [
+        ['Spice', state.spice || 'Not specified'],
+        ['Dietary restrictions', state.dietary || 'None'],
+        ['Allergies', state.allergies || 'None'],
+        ['Kids meals', state.kidsNeeded ? 'Yes, ' + state.kidsCount + (state.kidsCount === 1 ? ' child' : ' children') : 'No'],
+        ['Custom requests', state.customRequests || 'None']
+      ];
+      reqRows.forEach(function (r) { panel5.body.appendChild(reviewRow(r[0], r[1], '')); });
+      wrap.appendChild(panel5.el);
+
+      /* TOTAL */
+      var totalRow = document.createElement('div');
+      totalRow.className = 'review-total-row';
+      totalRow.innerHTML =
+        '<span class="label">Estimated total (meals)</span>' +
+        '<span class="total">₹' + dishTotal + '</span>';
+      wrap.appendChild(totalRow);
+    }
+
+    function reviewPanel(title) {
+      var el = document.createElement('div');
+      el.className = 'review-panel';
+
+      var head = document.createElement('div');
+      head.className = 'review-section-head';
+      head.innerHTML = '<h4>' + title + '</h4>';
+      el.appendChild(head);
+
+      var body = document.createElement('div');
+      body.className = 'review-section-body';
+      el.appendChild(body);
+
+      return { el: el, body: body };
+    }
+
+    function reviewRow(label, value, price) {
+      var row = document.createElement('div');
+      row.className = 'review-row';
+
+      var lbl = document.createElement('span');
+      lbl.className = 'rr-label';
+      lbl.textContent = label;
+      row.appendChild(lbl);
+
+      if (value) {
+        var val = document.createElement('span');
+        val.className = 'rr-value';
+        val.textContent = value;
+        row.appendChild(val);
+      }
+
+      if (price) {
+        var p = document.createElement('span');
+        p.className = 'rr-price';
+        p.textContent = price;
+        row.appendChild(p);
+      }
+
+      return row;
+    }
+
+    /* ─── CONFIRM ORDER (WhatsApp dispatch) ──────────────────────── */
+    window.confirmOrder = function () {
+      /*
+        PRODUCTION NOTE:
+        Replace this WhatsApp dispatch with a POST to your backend/kitchen dashboard.
+        Example: POST /api/pre-orders with the full `state` JSON.
+        The kitchen dashboard should receive and display this order before guest arrival.
+        The WhatsApp message below can remain as a secondary confirmation to the team.
+      */
+
+      var lines = [];
+      lines.push('*Plan Your Dining, Orchid Tree*');
+      lines.push('');
+      lines.push('*Guest:* ' + (state.guest.name || 'Not provided'));
+      lines.push('*Room:* '  + (state.guest.room || 'Not provided'));
+      lines.push('*Arrival:* ' + formatDate(state.guest.arrival));
+      lines.push('');
+
+      /* Meals */
+      var dishKeys = Object.keys(state.cart);
+      if (dishKeys.length > 0) {
+        lines.push('*Meals*');
+        dishKeys.forEach(function (id) {
+          var dish = window.OrchidMenu ? window.OrchidMenu.get(id) : null;
+          var qty = state.cart[id];
+          if (dish) lines.push('  ' + dish.name + ' x' + qty + '  (Rs.' + (dish.price * qty) + ')');
+        });
+        lines.push('');
+      }
+
+      /* Beverages */
+      var bevKeys = Object.keys(state.beverages);
+      if (bevKeys.length > 0) {
+        lines.push('*Beverages*');
+        bevKeys.forEach(function (name) {
+          lines.push('  ' + name + ' x' + state.beverages[name]);
+        });
+        lines.push('');
+      }
+
+      /* Add-ons */
+      if (state.addons.length > 0) {
+        lines.push('*Celebration add-ons*');
+        state.addons.forEach(function (a) {
+          var msg = state.addonMessages[a] ? ' (' + state.addonMessages[a] + ')' : '';
+          lines.push('  ' + a + msg);
+        });
+        lines.push('');
+      }
+
+      /* Preferences */
+      lines.push('*Preferences and requests*');
+      lines.push('  Spice: '        + (state.spice || 'Not specified'));
+      lines.push('  Dietary: '      + (state.dietary || 'None'));
+      lines.push('  Allergies: '    + (state.allergies || 'None'));
+      lines.push('  Kids meals: '   + (state.kidsNeeded ? 'Yes, ' + state.kidsCount : 'No'));
+      if (state.customRequests) lines.push('  Note: ' + state.customRequests);
+
+      var text = lines.join('\n');
+      var url  = 'https://wa.me/918088251913?text=' + encodeURIComponent(text);
+
+      window.open(url, '_blank', 'noopener,noreferrer');
+
+      /* Show confirmation state */
+      var reviewContent = document.getElementById('reviewContent');
+      var confirmState  = document.getElementById('confirmState');
+      if (reviewContent) reviewContent.style.display = 'none';
+      if (confirmState)  confirmState.classList.add('visible');
+
+      /* Clear localStorage after confirm */
+      try { localStorage.removeItem(LS_KEY); } catch (e) {}
+    };
+
+    /* ─── HELPERS ────────────────────────────────────────────────── */
+    function safeId(str) {
+      return str.replace(/[^a-zA-Z0-9]/g, '_');
+    }
+
+    function formatDate(d) {
+      if (!d) return 'Not provided';
+      try {
+        var parts = d.split('-');
+        var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        return parseInt(parts[2], 10) + ' ' + months[parseInt(parts[1], 10) - 1] + ' ' + parts[0];
+      } catch (e) { return d; }
+    }
+
+    /* ─── INIT ───────────────────────────────────────────────────── */
+    function init() {
+      /* Restore step 1 fields */
+      setField('guestName', state.guest.name);
+      setField('roomNumber', state.guest.room);
+      setField('arrivalDate', state.guest.arrival);
+
+      buildPreferenceChips();
+      buildCategoryFilter();
+      renderDishGrid();
+      renderBevList();
+      buildAddonList();
+
+      /* Start on saved step */
+      renderStepUI(state.step || 1);
+    }
+
+    /* Wait for OrchidMenu to be available */
+    if (window.OrchidMenu) {
+      init();
+    } else {
+      window.addEventListener('load', init);
+    }
+
+  }());
+  </script>
+
+</body>
+</html>

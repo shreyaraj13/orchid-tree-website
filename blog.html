@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Journal | Orchid Tree, a boutique resort near Bangalore</title>
+  <meta name="description" content="Stories from a private forest estate near Bangalore. Slow weekends, farm-to-table dining, intimate celebrations, and quiet things to do near Whitefield.">
+  <link rel="canonical" href="https://orchid-sigma.vercel.app/blog.html">
+  <meta name="robots" content="index,follow">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="The Journal | Orchid Tree, a boutique resort near Bangalore">
+  <meta property="og:description" content="Stories from a private forest estate near Bangalore. Slow weekends, farm-to-table dining, intimate celebrations.">
+  <meta property="og:url" content="https://orchid-sigma.vercel.app/blog.html">
+  <meta property="og:image" content="https://orchidtree.in/uploads/Experience_section_jpg_afb1c77479.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Journal | Orchid Tree">
+  <meta name="twitter:description" content="Stories from a private forest estate near Bangalore.">
+  <meta name="twitter:image" content="https://orchidtree.in/uploads/Experience_section_jpg_afb1c77479.webp">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Mulish:wght@400;500;600;700&family=Sacramento&display=swap" rel="stylesheet">
+
+  <!-- Blog collection structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "The Orchid Tree Journal",
+    "description": "Stories from a private forest estate near Bangalore.",
+    "url": "https://orchid-sigma.vercel.app/blog.html",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Orchid Tree",
+      "logo": { "@type": "ImageObject", "url": "https://orchid-sigma.vercel.app/images/logo.png" }
+    },
+    "blogPost": [
+      { "@type": "BlogPosting", "headline": "Weekend Getaways Near Bangalore, the Slow Kind", "url": "https://orchid-sigma.vercel.app/blog-weekend-getaways-near-bangalore.html", "datePublished": "2026-06-13", "image": "https://orchidtree.in/uploads/Experience_section_jpg_afb1c77479.webp" },
+      { "@type": "BlogPosting", "headline": "Farm-to-Table Near Bangalore, From Seed to Table", "url": "https://orchid-sigma.vercel.app/blog-farm-to-table-dining-near-bangalore.html", "datePublished": "2026-06-13", "image": "https://orchidtree.in/uploads/Copy_of_Barbeque_03_cf30f0f667.jpg" },
+      { "@type": "BlogPosting", "headline": "Intimate Wedding Venues Near Bangalore", "url": "https://orchid-sigma.vercel.app/blog-intimate-wedding-venues-near-bangalore.html", "datePublished": "2026-06-13", "image": "https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&q=80&auto=format&fit=crop" }
+    ]
+  }
+  </script>
+
+<style>
+  /* Reuses the Orchid Tree design system. New: .post-card grid + editorial journal hero. */
+  :root{
+    --cream:#f7f3ea; --card:#ffffff; --green:#3c4a16; --ink:#43382b;
+    --body:#6e675d; --gold:#c9a23c; --line:#ece6da;
+    --media:#e7e1d4; --media-tx:#b3a994; --media-dark:#8c8275;
+    --serif:'Cormorant Garamond',Georgia,serif; --sans:'Mulish','Avenir Next',-apple-system,system-ui,sans-serif; --script:'Sacramento',cursive;
+    --radius:12px; --radius-sm:8px; --pad:clamp(24px,6.5vw,110px);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--sans);background:var(--cream);color:var(--body);line-height:1.65;overflow-x:hidden;}
+  img{display:block;}
+  .wrap{max-width:1320px;margin:0 auto;padding-left:var(--pad);padding-right:var(--pad);}
+  .eyebrow{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-weight:700;}
+  h1{font-family:var(--serif);font-weight:600;color:var(--ink);}
+  h2{font-family:var(--serif);font-weight:600;color:var(--ink);}
+  a{color:inherit;}
+
+  /* NAV */
+  .nav{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;justify-content:space-between;padding:24px var(--pad);background:linear-gradient(to bottom,rgba(20,16,12,.55),rgba(20,16,12,0));transition:background .3s ease,padding .3s ease,box-shadow .3s ease;}
+  .nav .logo img{height:72px;width:auto;display:block;filter:brightness(0) invert(1) drop-shadow(0 1px 6px rgba(0,0,0,.4));transition:height .3s ease,filter .3s ease;}
+  .nav.solid .logo img{height:52px;filter:none;}
+  .nav .links{display:flex;gap:30px;align-items:center;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;font-weight:600;}
+  .nav .links a{color:rgba(255,255,255,.9);text-decoration:none;text-shadow:0 1px 8px rgba(0,0,0,.45);transition:opacity .2s,color .3s;}
+  .nav .links a:not(.reserve){position:relative;}
+  .nav .links a:not(.reserve)::after{content:"";position:absolute;left:2px;right:2px;bottom:-5px;height:1.5px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .28s ease;}
+  .nav .links a:not(.reserve):hover::after{transform:scaleX(1);}
+  .nav .links a:hover{opacity:1;}
+  .nav .links .reserve{border:1px solid rgba(255,255,255,.6);padding:9px 18px;border-radius:var(--radius-sm);transition:all .2s;}
+  .nav .links .reserve:hover{background:#fff;color:var(--ink);}
+  .nav.solid{background:rgba(247,243,234,.96);box-shadow:0 2px 22px rgba(67,56,43,.09);padding-top:15px;padding-bottom:15px;backdrop-filter:blur(6px);}
+  .nav.solid .links a{color:var(--ink);text-shadow:none;}
+  .nav.solid .links .reserve{border-color:var(--green);color:var(--green);}
+  .nav.solid .links .reserve:hover{background:var(--green);color:#fff;}
+
+  /* HERO */
+  .jhero{position:relative;padding:170px var(--pad) 70px;background:#1c1813 url('https://orchidtree.in/uploads/Experience_section_jpg_afb1c77479.webp') center/cover no-repeat;}
+  .jhero::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(20,16,12,.5),rgba(20,16,12,.72));}
+  .jhero .inner{position:relative;z-index:2;max-width:760px;}
+  .jhero .eyebrow{color:var(--gold);}
+  .jhero h1{color:#fff;font-size:clamp(40px,6vw,76px);line-height:1.04;margin:16px 0 16px;font-weight:500;}
+  .jhero p{color:rgba(255,255,255,.9);font-size:18px;max-width:560px;line-height:1.7;}
+
+  section{padding:72px 0;}
+
+  /* FEATURED */
+  .feature{display:grid;grid-template-columns:1.15fr 1fr;gap:clamp(28px,4vw,56px);align-items:center;}
+  .feature .fmedia{border-radius:var(--radius);overflow:hidden;aspect-ratio:4/3;background:var(--media);}
+  .feature .fmedia img{width:100%;height:100%;object-fit:cover;transition:transform .8s ease;}
+  .feature:hover .fmedia img{transform:scale(1.04);}
+  .feature .cat{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:700;}
+  .feature h2{font-size:clamp(30px,4vw,46px);line-height:1.1;margin:14px 0 16px;}
+  .feature h2 a{text-decoration:none;}
+  .feature p{font-size:17px;line-height:1.8;color:var(--body);margin-bottom:20px;max-width:460px;}
+  .meta{font-size:12.5px;letter-spacing:.5px;color:var(--media-tx);text-transform:uppercase;}
+  .readmore{display:inline-flex;align-items:center;gap:8px;margin-top:22px;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:var(--green);text-decoration:none;border-bottom:1.5px solid var(--gold);padding-bottom:5px;transition:gap .25s;}
+  .readmore:hover{gap:13px;}
+
+  /* GRID */
+  .grid-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:34px;border-top:1px solid var(--line);padding-top:40px;}
+  .grid-head h2{font-size:26px;}
+  .posts{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;}
+  .post-card{display:flex;flex-direction:column;text-decoration:none;color:inherit;}
+  .post-card .pmedia{border-radius:var(--radius);overflow:hidden;aspect-ratio:3/2;background:var(--media);margin-bottom:18px;}
+  .post-card .pmedia img{width:100%;height:100%;object-fit:cover;transition:transform .7s ease;}
+  .post-card:hover .pmedia img{transform:scale(1.05);}
+  .post-card .cat{font-size:10.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:9px;}
+  .post-card h3{font-family:var(--serif);font-size:25px;font-weight:600;color:var(--ink);line-height:1.15;margin-bottom:10px;}
+  .post-card:hover h3{color:var(--green);}
+  .post-card p{font-size:15px;line-height:1.65;color:var(--body);margin-bottom:14px;}
+  .post-card .meta{margin-top:auto;}
+
+  /* NEWSLETTER / CTA strip */
+  .more{background:var(--card);border-top:1px solid var(--line);text-align:center;}
+  .more .eyebrow{color:var(--gold);}
+  .more h2{font-size:clamp(28px,3.6vw,40px);margin:14px 0 14px;}
+  .more p{font-size:17px;color:var(--body);max-width:520px;margin:0 auto 26px;line-height:1.7;}
+  .more a.cta{display:inline-flex;align-items:center;gap:9px;background:var(--green);color:#fff;text-decoration:none;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;padding:16px 30px;border-radius:var(--radius-sm);transition:background .18s;}
+  .more a.cta:hover{background:#2c3810;}
+
+  /* FOOTER */
+  footer{background:var(--green);color:#fff;padding:72px var(--pad) 36px;}
+  .foot-grid{max-width:1320px;margin:0 auto;display:flex;gap:60px;justify-content:space-between;flex-wrap:wrap;}
+  .foot-logo{height:66px;width:auto;display:block;filter:brightness(0) invert(1);margin-bottom:16px;}
+  .foot-social{display:flex;gap:12px;margin-top:20px;justify-content:center;}
+  .foot-social a{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center;color:#fff;transition:background .18s,border-color .18s,color .18s;}
+  .foot-social a:hover{background:var(--gold);border-color:var(--gold);color:var(--green);}
+  .foot-social svg{width:24px;height:24px;}
+  footer .col h5{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+  footer .col a,footer .col p{display:block;color:rgba(255,255,255,.85);font-size:14px;margin-bottom:10px;text-decoration:none;}
+  footer .col a:hover{color:#fff;}
+  footer .tag{max-width:300px;color:rgba(255,255,255,.85);font-size:14px;}
+  .foot-bottom{max-width:1320px;margin:40px auto 0;padding-top:24px;border-top:1px solid rgba(255,255,255,.2);font-size:12px;color:rgba(255,255,255,.7);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+  .foot-sig{text-align:center;margin:14px 0 16px;line-height:1;}
+  .foot-sig .s{font-family:var(--script);font-size:clamp(30px,4vw,42px);color:var(--gold);line-height:1;}
+  .foot-sig .t{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.6);margin-top:10px;}
+
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s ease;}
+  .reveal.in{opacity:1;transform:none;}
+  @media (prefers-reduced-motion: reduce){.reveal{opacity:1;transform:none;transition:none;}}
+
+  @media (max-width:900px){
+    .feature{grid-template-columns:1fr;}
+    .posts{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:820px){
+    .nav .links{display:none;}
+    section{padding:54px 0;}
+    .posts{grid-template-columns:1fr;}
+    .foot-grid{flex-direction:column;gap:32px;}
+    .foot-bottom{flex-direction:column;gap:10px;}
+  }
+</style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header>
+  <nav class="nav" id="nav">
+    <a class="logo" href="home.html" aria-label="Orchid Tree home"><img src="images/logo.png" alt="Orchid Tree" height="52"></a>
+    <div class="links">
+      <a href="stays.html">Stays</a>
+      <a href="experiences.html">Experiences</a>
+      <a href="restaurant.html">Restaurant</a>
+      <a href="weddings.html">Weddings</a>
+      <a href="corporate.html">Corporate</a>
+      <a href="about.html">About</a>
+      <a href="https://wa.me/918088251913?text=Hi%20Orchid%20Tree%2C%20I%27d%20like%20to%20enquire%20about%20a%20stay." class="reserve" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+  </nav>
+  </header>
+
+  <main>
+
+  <!-- HERO -->
+  <section class="jhero" aria-label="The Orchid Tree Journal">
+    <div class="inner">
+      <div class="eyebrow">The Journal</div>
+      <h1>Stories from the forest</h1>
+      <p>Slow weekends, food grown a kilometre away, small celebrations, and quiet things to do forty-five minutes from Whitefield. Notes from the estate.</p>
+    </div>
+  </section>
+
+  <!-- FEATURED -->
+  <section class="wrap">
+    <article class="feature reveal">
+      <a class="fmedia" href="blog-weekend-getaways-near-bangalore.html" aria-label="Read: Weekend Getaways Near Bangalore">
+        <img src="https://orchidtree.in/uploads/Experience_section_jpg_afb1c77479.webp" alt="The forest at Orchid Tree, a weekend getaway near Bangalore" width="900" height="675" loading="lazy">
+      </a>
+      <div class="ftxt">
+        <div class="cat">Travel</div>
+        <h2><a href="blog-weekend-getaways-near-bangalore.html">Weekend Getaways Near Bangalore, the Slow Kind</a></h2>
+        <p>Forty-five minutes from the city, a forest where the only plan is no plan. How to spend a weekend doing beautifully little, and why your nervous system will thank you.</p>
+        <div class="meta">13 June 2026 &nbsp;·&nbsp; 6 min read</div>
+        <a class="readmore" href="blog-weekend-getaways-near-bangalore.html">Read the story &rarr;</a>
+      </div>
+    </article>
+  </section>
+
+  <!-- GRID -->
+  <section class="wrap" style="padding-top:0;">
+    <div class="grid-head reveal">
+      <h2>More from the Journal</h2>
+      <span class="meta">Travel · Dining · Celebrations</span>
+    </div>
+    <div class="posts reveal">
+
+      <a class="post-card" href="blog-farm-to-table-dining-near-bangalore.html">
+        <div class="pmedia"><img src="https://orchidtree.in/uploads/Copy_of_Barbeque_03_cf30f0f667.jpg" alt="A plated farm-to-table dish at Orchid Tree near Bangalore" width="600" height="400" loading="lazy"></div>
+        <div class="cat">Dining</div>
+        <h3>Farm-to-Table Near Bangalore, From Seed to Table</h3>
+        <p>What it means to eat a meal that began in the garden that morning, and why we cook in small batches, never buffets.</p>
+        <div class="meta">13 June 2026 &nbsp;·&nbsp; 5 min read</div>
+      </a>
+
+      <a class="post-card" href="blog-intimate-wedding-venues-near-bangalore.html">
+        <div class="pmedia"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80&auto=format&fit=crop" alt="An intimate outdoor wedding near Bangalore" width="600" height="400" loading="lazy"></div>
+        <div class="cat">Celebrations</div>
+        <h3>Intimate Wedding Venues Near Bangalore</h3>
+        <p>For couples who want the day small and the feeling large. A private forest estate, up to sixty guests, calm over crowds.</p>
+        <div class="meta">13 June 2026 &nbsp;·&nbsp; 7 min read</div>
+      </a>
+
+      <a class="post-card" href="blog-weekend-getaways-near-bangalore.html">
+        <div class="pmedia"><img src="https://orchidtree.in/uploads/Bodhi_Tree_03_1_35a5ef31e4.webp" alt="A garden cottage among the trees at Orchid Tree" width="600" height="400" loading="lazy"></div>
+        <div class="cat">Travel</div>
+        <h3>Weekend Getaways Near Bangalore, the Slow Kind</h3>
+        <p>A forest where the only plan is no plan, and how to spend two days doing beautifully little.</p>
+        <div class="meta">13 June 2026 &nbsp;·&nbsp; 6 min read</div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="more">
+    <div class="wrap">
+      <div class="eyebrow">Beyond the words</div>
+      <h2>The forest reads better in person</h2>
+      <p>When the stories have done their job, come and live one. Eleven rooms, a living forest, and nowhere you need to be.</p>
+      <a class="cta" href="stays.html">See the stays</a>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="foot-grid">
+      <div class="col" style="flex:1;min-width:240px;">
+        <img class="foot-logo" src="images/logo.png" alt="Orchid Tree">
+        <p class="tag">Boutique is not size, it's soul. Every corner here is designed with intention, not repetition.</p>
+        <div class="foot-social">
+          <a href="https://www.instagram.com/orchidtree.in/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 2c-2.7 0-3.05.01-4.12.06-1.06.05-1.79.22-2.43.47-.66.26-1.22.6-1.77 1.15-.55.55-.89 1.11-1.15 1.77-.25.64-.42 1.37-.47 2.43C2.01 8.95 2 9.3 2 12s.01 3.05.06 4.12c.05 1.06.22 1.79.47 2.43.26.66.6 1.22 1.15 1.77.55.55 1.11.89 1.77 1.15.64.25 1.37.42 2.43.47 1.07.05 1.42.06 4.12.06s3.05-.01 4.12-.06c1.06-.05 1.79-.22 2.43-.47.66-.26 1.22-.6 1.77-1.15.55-.55.89-1.11 1.15-1.77.25-.64.42-1.37.47-2.43.05-1.07.06-1.42.06-4.12s-.01-3.05-.06-4.12c-.05-1.06-.22-1.79-.47-2.43a4.9 4.9 0 0 0-1.15-1.77 4.9 4.9 0 0 0-1.77-1.15c-.64-.25-1.37-.42-2.43-.47C15.05 2.01 14.7 2 12 2zm0 1.8c2.67 0 2.99.01 4.04.06.97.04 1.5.21 1.86.35.47.18.8.4 1.15.75.35.35.57.68.75 1.15.14.36.3.89.35 1.86.05 1.05.06 1.37.06 4.04s-.01 2.99-.06 4.04c-.04.97-.21 1.5-.35 1.86-.18.47-.4.8-.75 1.15-.35.35-.68.57-1.15.75-.36.14-.89.3-1.86.35-1.05.05-1.37.06-4.04.06s-2.99-.01-4.04-.06c-.97-.04-1.5-.21-1.86-.35a3.1 3.1 0 0 1-1.15-.75 3.1 3.1 0 0 1-.75-1.15c-.14-.36-.3-.89-.35-1.86-.05-1.05-.06-1.37-.06-4.04s.01-2.99.06-4.04c.04-.97.21-1.5.35-1.86.18-.47.4-.8.75-1.15.35-.35.68-.57 1.15-.75.36-.14.89-.3 1.86-.35C9.01 3.81 9.33 3.8 12 3.8zm0 3.06A5.14 5.14 0 1 0 12 17.14 5.14 5.14 0 0 0 12 6.86zm0 8.48A3.34 3.34 0 1 1 12 8.66a3.34 3.34 0 0 1 0 6.68zm6.54-8.69a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></svg></a>
+          <a href="https://www.facebook.com/orchidtree.in" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.5h2.52l.38-2.93H13.5V9.7c0-.85.24-1.43 1.45-1.43h1.55V5.65c-.27-.04-1.19-.12-2.27-.12-2.25 0-3.79 1.37-3.79 3.89v1.65H8.4v2.93h2.59V21z"/></svg></a>
+          <a href="https://www.linkedin.com/company/orchid-tree-wellness-retreat/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 8.6V19H3.66V8.6zM5.3 3.7a1.9 1.9 0 1 1 0 3.8 1.9 1.9 0 0 1 0-3.8zM9 8.6h3.14v1.42h.04c.44-.82 1.5-1.69 3.1-1.69 3.32 0 3.93 2.18 3.93 5.02V19h-3.27v-4.62c0-1.1-.02-2.52-1.54-2.52-1.54 0-1.78 1.2-1.78 2.44V19H9z"/></svg></a>
+        </div>
+      </div>
+      <div class="col">
+        <h5>Explore</h5>
+        <a href="stays.html">Our Stays</a><a href="experiences.html">Experiences</a><a href="restaurant.html">Restaurant</a><a href="weddings.html">Weddings</a><a href="about.html">About</a><a href="corporate.html">Corporate</a><a href="host-with-us.html">Host with Us</a><a href="blog.html">Journal</a><a href="faq.html">FAQ</a>
+      </div>
+      <div class="col">
+        <h5>Connect</h5>
+        <p>Survey No. 7/2, Yelachamanahalli Village, Hoskote, Karnataka 562114</p>
+        <a href="mailto:orchidtree.blr@gmail.com">orchidtree.blr@gmail.com</a>
+        <a href="https://wa.me/918088251913" target="_blank" rel="noopener">+91 80882 51913</a>
+      </div>
+    </div>
+    <div class="foot-sig"><div class="s">Orchid Tree</div><div class="t">The art of doing nothing</div></div>
+    <div class="foot-bottom">
+      <span>© 2026 Orchid Tree. All rights reserved.</span>
+      <span><a href="privacy-policy.html" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.35);">Privacy Policy</a> · <a href="privacy-policy.html#terms" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.35);">Terms of Service</a></span>
+    </div>
+  </footer>
+
+  <script>
+  (function(){
+    var nav=document.getElementById('nav');
+    function navScroll(){ if(window.scrollY>60) nav.classList.add('solid'); else nav.classList.remove('solid'); }
+    window.addEventListener('scroll',navScroll,{passive:true}); navScroll();
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.12});
+    document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+  })();
+  </script>
+</body>
+</html>

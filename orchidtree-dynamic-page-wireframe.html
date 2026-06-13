@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orchid Tree - Dynamic Booking Page</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Mulish:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#f7f3ea; --card:#ffffff; --green:#15583a; --ink:#43382b;
+    --body:#6e675d; --gold:#e0a23c; --line:#ece6da;
+    --media:#e7e1d4; --media-tx:#b3a994; --media-dark:#8c8275;
+    --serif:'Lora',Georgia,serif; --sans:'Mulish',-apple-system,system-ui,sans-serif;
+    --radius:12px; --radius-sm:8px;
+    --img:url('https://orchidtree.in/uploads/bodhi_tree_3_png_eedb89acdf.webp');
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--sans);background:var(--cream);color:var(--body);line-height:1.6;}
+
+  .media{background:#e7e1d4 var(--img) center/cover no-repeat;display:flex;align-items:center;justify-content:center;color:transparent;font-size:0;}
+  .media.dark{background:#8c8275 var(--img) center/cover no-repeat;color:transparent;}
+
+  .wrap{max-width:1320px;margin:0 auto;padding:0 clamp(24px,6.5vw,110px);}
+  .controls{padding:24px 0;}
+  .note{font-size:12px;line-height:1.6;color:var(--body);background:var(--card);padding:16px 18px;margin-bottom:16px;border:1px solid var(--line);border-radius:var(--radius);}
+  .toggle{display:flex;gap:10px;max-width:440px;}
+  .toggle button{flex:1;padding:13px;border:1px solid #d6cfc0;background:var(--card);color:var(--green);cursor:pointer;font-size:11px;letter-spacing:1.3px;text-transform:uppercase;font-family:var(--sans);font-weight:600;border-radius:var(--radius-sm);transition:all .18s;}
+  .toggle button.active{background:var(--green);color:#fff;border-color:var(--green);}
+
+  .eyebrow{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:16px;}
+  h1{font-family:var(--serif);font-size:48px;font-weight:500;color:var(--ink);line-height:1.1;}
+  h2{font-family:var(--serif);font-size:28px;font-weight:500;color:var(--ink);margin-bottom:8px;}
+  .muted{color:var(--body);font-size:15px;}
+
+  .hero{position:relative;width:100%;height:78vh;min-height:520px;}
+  .hero .media{position:absolute;inset:0;height:100%;}
+  .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#8c8275;}
+  .hero .scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(40,33,25,.72),rgba(40,33,25,.05) 55%,transparent);}
+  .hero .cap{position:absolute;left:0;right:0;bottom:0;padding:0 0 64px;}
+  .hero .cap .inner{max-width:1320px;margin:0 auto;padding:0 clamp(24px,6.5vw,110px);}
+  .hero .eyebrow{color:var(--gold);}
+  .hero h1{color:#fff;font-size:60px;}
+  .hero .dates{color:rgba(255,255,255,.9);margin-top:14px;font-size:16px;letter-spacing:1px;}
+
+  .summary{display:flex;justify-content:center;gap:70px;padding:46px 0;border-bottom:1px solid var(--line);flex-wrap:wrap;}
+  .summary div{text-align:center;}
+  .summary .n{font-family:var(--serif);font-size:36px;color:var(--ink);}
+  .summary .t{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-top:6px;}
+
+  /* rooms beside the booking card only */
+  .rooms-row{display:flex;align-items:flex-start;gap:48px;padding:60px 0 30px;}
+  .rooms-col{flex:0 0 64%;max-width:64%;}
+  .side{flex:1;position:sticky;top:24px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;}
+
+  .group-line{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--body);margin:6px 0 16px;}
+  .mix{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px;}
+  .mix .chip{font-size:12px;font-weight:600;color:var(--ink);background:var(--card);border:1px solid var(--line);padding:7px 14px;border-radius:var(--radius-sm);}
+  .mix .chip b{color:var(--green);}
+
+  .room-band{position:relative;height:420px;cursor:pointer;margin-bottom:24px;overflow:hidden;border-radius:var(--radius);}
+  .room-band:last-child{margin-bottom:0;}
+  .room-band .media{position:absolute;inset:0;height:100%;}
+  .room-band .scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(40,33,25,.82),transparent 62%);}
+  .room-band .cap{position:absolute;left:0;right:0;bottom:0;padding:30px;color:#fff;}
+  .room-band .rn{font-family:var(--serif);font-size:28px;color:#fff;}
+  .room-band .rt{color:rgba(255,255,255,.88);font-size:14px;margin-top:4px;}
+  .room-band .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
+  .room-band .tag{font-size:10px;letter-spacing:1px;text-transform:uppercase;font-weight:700;color:#fff;border:1px solid rgba(255,255,255,.55);padding:5px 11px;border-radius:var(--radius-sm);}
+  .room-band .tag.pet{border-color:var(--gold);color:var(--gold);}
+  .room-band .tag.nopet{border-color:rgba(255,255,255,.4);color:rgba(255,255,255,.7);}
+  .room-band .view{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-top:16px;}
+  .room-hero .room-band{height:520px;}
+
+  /* booking card, compact */
+  .side .block{padding:26px 28px;border-bottom:1px solid var(--line);}
+  .side .block:last-child{border-bottom:none;}
+  .guest-row{font-size:14px;display:flex;justify-content:space-between;padding:7px 0;}
+  .guest-row span{color:var(--media-tx);}
+  .guest-row strong{color:var(--ink);font-weight:600;}
+  .row{display:flex;justify-content:space-between;padding:8px 0;font-size:14px;}
+  .row span:last-child{color:var(--ink);font-weight:600;}
+  .row.total{font-family:var(--serif);font-size:20px;border-top:1px solid var(--line);margin-top:8px;padding-top:14px;color:var(--ink);}
+  .row.total span:last-child{color:var(--green);}
+  .foodcredit{margin:16px 0 4px;background:rgba(21,88,58,.06);border:1px solid rgba(21,88,58,.18);border-radius:var(--radius-sm);padding:16px;text-align:center;}
+  .foodcredit .fc-amt{font-family:var(--serif);font-size:21px;color:var(--green);}
+  .foodcredit .fc-lbl{font-size:12px;color:var(--body);margin-top:3px;line-height:1.4;}
+  .deadline{text-align:center;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--body);margin:18px 0;}
+  .btn{display:block;width:100%;text-align:center;padding:15px 18px;font-size:12px;letter-spacing:1.3px;text-transform:uppercase;font-weight:600;cursor:pointer;margin-bottom:10px;background:transparent;border:1px solid #d6cfc0;color:var(--green);border-radius:var(--radius-sm);transition:background .18s,border-color .18s,color .18s;}
+  .btn:hover{border-color:var(--green);}
+  .btn.primary{background:var(--green);color:#fff;border-color:var(--green);font-weight:700;letter-spacing:1.6px;}
+  .btn.primary:hover{background:#0f4730;border-color:#0f4730;}
+  .btn.link{border:none;color:var(--body);letter-spacing:.3px;text-transform:none;font-size:13px;padding:8px;font-weight:600;margin-top:2px;}
+  .btn.link:hover{color:var(--green);text-decoration:underline;}
+  .policies{list-style:none;}
+  .policies li{font-size:12px;color:var(--body);padding:5px 0 5px 16px;position:relative;}
+  .policies li:before{content:"";position:absolute;left:0;top:11px;width:6px;height:6px;border-radius:50%;background:var(--gold);}
+
+  /* FULL-WIDTH content below the rooms row */
+  .fullwrap{padding-bottom:96px;}
+  .fullsec{padding:54px 0;border-top:1px solid var(--line);}
+  .fullsec .lead{max-width:560px;}
+  .amen-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:24px;}
+  .tile{position:relative;height:240px;border-radius:var(--radius);overflow:hidden;}
+  /* shorts-style horizontal carousel: tall cards, one row, scroll past 4 */
+  .shorts{display:flex;gap:18px;margin-top:24px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px;scrollbar-width:thin;scrollbar-color:#cdc4b2 transparent;}
+  .shorts::-webkit-scrollbar{height:8px;}
+  .shorts::-webkit-scrollbar-thumb{background:#cdc4b2;border-radius:8px;}
+  .shorts::-webkit-scrollbar-track{background:transparent;}
+  .shorts .tile{flex:0 0 262px;height:460px;scroll-snap-align:start;}
+  .tile .media{position:absolute;inset:0;height:100%;}
+  .tile .scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(40,33,25,.6),transparent 60%);}
+  .tile .lbl{position:absolute;left:0;bottom:0;padding:18px;color:#fff;font-size:13px;letter-spacing:2px;text-transform:uppercase;font-weight:600;}
+
+  .rest-band{position:relative;height:480px;margin-top:24px;border-radius:var(--radius);overflow:hidden;}
+  .rest-band .media{position:absolute;inset:0;height:100%;}
+  .rest-band .scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(40,33,25,.78),transparent 60%);}
+  .rest-band .cap{position:absolute;left:0;bottom:0;padding:40px;color:#fff;}
+  .rest-band .cap .fc{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:10px;}
+  .rest-band .cap h3{font-family:var(--serif);font-size:30px;font-weight:500;color:#fff;margin-bottom:8px;}
+  .rest-band .cap p{color:rgba(255,255,255,.9);max-width:520px;}
+
+  .overlay{display:none;position:fixed;inset:0;background:rgba(67,56,43,.5);z-index:50;align-items:center;justify-content:center;padding:24px;}
+  .overlay.open{display:flex;}
+  .modal{background:var(--card);max-width:640px;width:100%;max-height:90vh;overflow:auto;border-radius:var(--radius);}
+  .modal .media{height:300px;}
+  .modal-body{padding:40px;}
+  .close{float:right;cursor:pointer;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:8px 16px;font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:700;border-radius:var(--radius-sm);}
+  .petline{display:inline-block;font-size:11px;letter-spacing:1px;text-transform:uppercase;font-weight:700;padding:6px 12px;border-radius:var(--radius-sm);margin:14px 0 4px;}
+  .petline.yes{background:rgba(224,162,60,.15);color:#b9802a;}
+  .petline.no{background:#f1ede4;color:var(--media-tx);}
+  .amen-list{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px;}
+  .amen-list .a{font-size:12px;color:var(--ink);background:var(--cream);border:1px solid var(--line);padding:8px 13px;border-radius:var(--radius-sm);}
+
+  .mobilebar{display:none;}
+
+  @media (max-width:820px){
+    .hero{height:56vh;min-height:380px;}
+    .hero h1{font-size:38px;}
+    .rooms-row{flex-direction:column;gap:0;padding:40px 0 10px;}
+    .rooms-col,.side{flex:0 0 100%;max-width:100%;}
+    .side{position:static;margin-top:34px;}
+    .toggle{max-width:none;}
+    .summary{gap:34px;padding:32px 0;}
+    .room-band{height:300px;} .room-hero .room-band{height:340px;}
+    .amen-grid.wide{grid-template-columns:1fr 1fr;}
+    .shorts .tile{flex:0 0 200px;height:360px;}
+    .tile{height:160px;}
+    .rest-band{height:320px;}
+    .mobilebar{display:flex;position:fixed;bottom:0;left:0;right:0;background:var(--green);color:#fff;padding:16px 20px;justify-content:space-between;align-items:center;z-index:40;}
+    .mobilebar .amt{font-family:var(--serif);font-size:18px;}
+    .mobilebar button{background:#fff;color:var(--green);border:none;padding:12px 24px;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;border-radius:var(--radius-sm);}
+  }
+</style>
+</head>
+<body>
+
+  <div class="wrap controls">
+    <div class="note">
+      <strong>Wireframe v7.</strong> Booking card is now compact and sits beside the rooms only; everything below runs full width. Guests block removed from the card (no longer repeated), and the invoice now leads with the free food credit. Toggle room count, tap a room, resize for mobile.
+    </div>
+    <div class="toggle">
+      <button id="b1" class="active" onclick="setMode(1)">1 room (couple)</button>
+      <button id="b6" onclick="setMode(6)">6 rooms (group of 15)</button>
+    </div>
+  </div>
+
+  <div class="hero">
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="https://orchidtree.in/uploads/ORCHID_WEBISTE_9febd4b485.mov" type="video/quicktime">
+    </video>
+    <div class="scrim"></div>
+    <div class="cap"><div class="inner">
+      <div class="eyebrow">Orchid Tree, prepared for you</div>
+      <h1 id="welcomeLine">Your stay for two</h1>
+      <div class="dates">12 to 14 December, two nights</div>
+    </div></div>
+  </div>
+
+  <div class="wrap"><div class="summary" id="summary"></div></div>
+
+  <!-- ROOMS + BOOKING CARD -->
+  <div class="wrap">
+    <div class="rooms-row">
+      <div class="rooms-col">
+        <div class="eyebrow">Your room<span id="rmplural"></span></div>
+        <div class="group-line" id="groupLine"></div>
+        <div class="mix" id="mix"></div>
+        <div id="roomsArea"></div>
+      </div>
+
+      <div class="side">
+        <div class="block">
+          <div class="eyebrow">Booking for</div>
+          <div class="guest-row"><span>Name</span><strong>Rohan Mehta</strong></div>
+          <div class="guest-row"><span>WhatsApp</span><strong>+91 9XXXX XXXXX</strong></div>
+          <div class="guest-row"><span>Dates</span><strong>12 to 14 Dec</strong></div>
+        </div>
+        <div class="block">
+          <div class="eyebrow">Invoice</div>
+          <div id="totalRows"></div>
+          <div class="foodcredit">
+            <div class="fc-amt">Rs 5,000 food credit</div>
+            <div class="fc-lbl">complimentary, included free with your stay to spend at the restaurant</div>
+          </div>
+          <div class="deadline">Confirm by 14 Nov, 6 PM</div>
+          <span class="btn primary">Agree to invoice &amp; confirm</span>
+          <span class="btn">Book meals on WhatsApp</span>
+          <span class="btn link">Decline or ask a question</span>
+        </div>
+        <div class="block">
+          <div class="eyebrow">Good to know</div>
+          <ul class="policies">
+            <li>100% refund if cancelled 48+ hrs before</li>
+            <li>Pet policy varies by room type</li>
+            <li>Smoking in designated zones only</li>
+            <li>BYOB, no outside food</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FULL-WIDTH CONTENT -->
+  <div class="wrap fullwrap">
+
+    <div class="fullsec">
+      <div class="eyebrow">Included, every stay</div>
+      <h2>What your stay holds</h2>
+      <p class="muted lead">Every Orchid Tree stay is all-inclusive. These come with your booking, at no extra cost.</p>
+      <div class="shorts">
+        <div class="tile"><div class="media dark"></div><div class="scrim"></div><div class="lbl">Ozone pool</div></div>
+        <div class="tile"><div class="media dark"></div><div class="scrim"></div><div class="lbl">Daily massage ritual</div></div>
+        <div class="tile"><div class="media dark"></div><div class="scrim"></div><div class="lbl">The farm</div></div>
+        <div class="tile"><div class="media dark"></div><div class="scrim"></div><div class="lbl">Steam &amp; shower</div></div>
+        <div class="tile"><div class="media dark"></div><div class="scrim"></div><div class="lbl">Indoor games</div></div>
+        <div class="tile"><div class="media dark"></div><div class="scrim"></div><div class="lbl">BYOB evenings</div></div>
+      </div>
+    </div>
+
+    <div class="fullsec">
+      <div class="eyebrow">At the table</div>
+      <h2>The restaurant</h2>
+      <div class="rest-band">
+        <div class="media dark"></div>
+        <div class="scrim"></div>
+        <div class="cap">
+          <div class="fc">Rs 5,000 food credit included</div>
+          <h3>Plated, farm to table</h3>
+          <p>Nepali and North Indian cuisine grown on the estate. Your complimentary food credit is waiting here.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="mobilebar">
+    <div><div style="font-size:9px;letter-spacing:1px;text-transform:uppercase;opacity:.85;">Total</div><div class="amt" id="mobileAmt">Rs 15,340</div></div>
+    <button>Confirm</button>
+  </div>
+
+  <div class="overlay" id="overlay" onclick="if(event.target===this)closeModal()">
+    <div class="modal">
+      <div class="media dark"></div>
+      <div class="modal-body">
+        <button class="close" onclick="closeModal()">Close</button>
+        <div class="eyebrow" id="mCat">Couple Room by the Pool</div>
+        <h2 id="mTitle">Bael</h2>
+        <p class="muted" id="mSub">Sleeps 2 adults + 1 child</p>
+        <div id="mPet"></div>
+        <div class="media dark" style="height:160px;margin:18px 0;border-radius:var(--radius);"></div>
+        <div class="eyebrow">What this room offers</div>
+        <div class="amen-list" id="mAmen"></div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const A_COUPLE=["Air conditioned","Pool view","Skylight bathroom","Hot water kettle","Instant tea/coffee","Copper water jug","Millet snack station","Common steam & shower","Pool access","Indoor games"];
+  const A_COUPLE_COTTAGE=["Air conditioned","Private steam & shower","Sit-out patio","Open-to-sky bath","Hot water kettle","Copper water jug","Millet snack station","Pool access","Indoor games"];
+  const A_FAMILY=["Air conditioned","Pool view","Skylight bathroom","Pullout bedding","Hot water kettle","Instant tea/coffee","Common steam & shower","Pool access","Indoor games"];
+  const A_FAMILY_COTTAGE=["Air conditioned","Private steam & shower","Sit-out patio","Open-to-sky bath","Spacious living area","Hot water kettle","Pool access","Indoor games"];
+
+  const ALL={
+    Bael:{cat:"Couple Room by the Pool",sleeps:"2 adults + 1 child under 8",pet:false,sig:"Pool view",amen:A_COUPLE},
+    Bilva:{cat:"Couple Room by the Pool",sleeps:"2 adults + 1 child under 8",pet:false,sig:"Skylight bath",amen:A_COUPLE},
+    Tulsi:{cat:"Couple Room by the Pool",sleeps:"2 adults + 1 child under 8",pet:false,sig:"Pool view",amen:A_COUPLE},
+    Bodhi:{cat:"Couple Garden Cottage",sleeps:"2 adults + 1 child under 8",pet:true,sig:"Private steam",amen:A_COUPLE_COTTAGE},
+    Ashoka:{cat:"Family Room by the Pool",sleeps:"up to 4 guests",pet:true,sig:"Pullout bedding",amen:A_FAMILY},
+    Chandana:{cat:"Family Garden Cottage",sleeps:"up to 6 guests",pet:true,sig:"Open-to-sky bath",amen:A_FAMILY_COTTAGE}
+  };
+  const BUNDLE=["Chandana","Ashoka","Bodhi","Bael","Bilva","Tulsi"];
+
+  function openRoom(name){
+    const r=ALL[name];
+    document.getElementById('mCat').textContent=r.cat;
+    document.getElementById('mTitle').textContent=name;
+    document.getElementById('mSub').textContent="Sleeps "+r.sleeps;
+    document.getElementById('mPet').innerHTML = r.pet
+      ? '<span class="petline yes">Pet friendly</span>'
+      : '<span class="petline no">Not pet friendly</span>';
+    document.getElementById('mAmen').innerHTML=r.amen.map(a=>`<span class="a">${a}</span>`).join("");
+    document.getElementById('overlay').classList.add('open');
+  }
+  function closeModal(){document.getElementById('overlay').classList.remove('open');}
+
+  function band(name){
+    const r=ALL[name];
+    const petTag = r.pet ? '<span class="tag pet">Pet friendly</span>' : '<span class="tag nopet">No pets</span>';
+    return `
+      <div class="room-band" onclick="openRoom('${name}')">
+        <div class="media dark"></div>
+        <div class="scrim"></div>
+        <div class="cap">
+          <div class="rn">${name}</div>
+          <div class="rt">${r.cat} · sleeps ${r.sleeps}</div>
+          <div class="tags"><span class="tag">${r.sig}</span>${petTag}</div>
+          <div class="view">tap to view all amenities</div>
+        </div>
+      </div>`;
+  }
+
+  function setMode(n){
+    document.getElementById('b1').classList.toggle('active',n===1);
+    document.getElementById('b6').classList.toggle('active',n===6);
+
+    const nights=2, rooms=n;
+    const adults=n===1?2:12, children=n===1?0:3, pets=n===1?0:1;
+    const guests=adults+children;
+
+    document.getElementById('welcomeLine').textContent=n===1?'Your stay for two':'Your stay for fifteen';
+    document.getElementById('rmplural').textContent=rooms>1?'s':'';
+
+    document.getElementById('summary').innerHTML=`
+      <div><div class="n">${guests}</div><div class="t">Guests</div></div>
+      <div><div class="n">${rooms}</div><div class="t">Room${rooms>1?'s':''}</div></div>
+      <div><div class="n">${nights}</div><div class="t">Nights</div></div>
+      <div><div class="n">${pets}</div><div class="t">Pet${pets===1?'':'s'}</div></div>`;
+
+    let chips=`<span class="chip"><b>${adults}</b> adults</span>`;
+    if(children>0) chips+=`<span class="chip"><b>${children}</b> children</span>`;
+    if(pets>0) chips+=`<span class="chip"><b>${pets}</b> pet</span>`;
+    document.getElementById('mix').innerHTML=chips;
+
+    const area=document.getElementById('roomsArea'),gl=document.getElementById('groupLine');
+    if(n===1){
+      gl.textContent="Your private room for the stay";
+      area.className="room-hero";
+      area.innerHTML=band("Bael");
+    } else {
+      gl.textContent="Sleeps 18 across 6 rooms, arranged for your group of 15";
+      area.className="";
+      area.innerHTML=BUNDLE.map(band).join("");
+    }
+
+    const roomTotal=n===1?13000:72000,tax=Math.round(roomTotal*0.18),grand=roomTotal+tax;
+    document.getElementById('totalRows').innerHTML=`
+      <div class="row"><span>${rooms} room${rooms>1?'s':''}, ${nights} nights</span><span>Rs ${roomTotal.toLocaleString('en-IN')}</span></div>
+      <div class="row"><span>Taxes (18%)</span><span>Rs ${tax.toLocaleString('en-IN')}</span></div>
+      <div class="row total"><span>Total</span><span>Rs ${grand.toLocaleString('en-IN')}</span></div>`;
+    document.getElementById('mobileAmt').textContent=`Rs ${grand.toLocaleString('en-IN')}`;
+  }
+  setMode(1);
+</script>
+</body>
+</html>

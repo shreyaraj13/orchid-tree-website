@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Stays | Orchid Tree, a boutique resort near Bangalore</title>
+  <meta name="description" content="Eleven rooms in a living forest near Whitefield. Sun-lit pool rooms and garden cottages with open-to-sky baths, breakfast included and the run of the estate. See the stays at Orchid Tree.">
+  <link rel="canonical" href="https://orchid-sigma.vercel.app/stays.html">
+  <meta name="robots" content="index,follow">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="The Stays | Orchid Tree, a boutique resort near Bangalore">
+  <meta property="og:description" content="Eleven rooms in a living forest near Whitefield. Sun-lit pool rooms and garden cottages with open-to-sky baths.">
+  <meta property="og:url" content="https://orchid-sigma.vercel.app/stays.html">
+  <meta property="og:image" content="https://orchidtree.in/uploads/Bodhi_Tree_03_1_35a5ef31e4.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Stays | Orchid Tree, a boutique resort near Bangalore">
+  <meta name="twitter:description" content="Eleven rooms in a living forest near Whitefield. Sun-lit pool rooms and garden cottages with open-to-sky baths.">
+  <meta name="twitter:image" content="https://orchidtree.in/uploads/Bodhi_Tree_03_1_35a5ef31e4.webp">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Mulish:wght@400;500;600;700&family=Sacramento&display=swap" rel="stylesheet">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": ["Resort", "LodgingBusiness"],
+    "name": "Orchid Tree",
+    "description": "A boutique nature estate and private retreat about 45 minutes from Whitefield, Bengaluru. Eleven rooms set in a living forest, with sun-lit pool rooms and garden cottages.",
+    "url": "https://orchid-sigma.vercel.app/stays.html",
+    "telephone": "+91 80882 51913",
+    "email": "orchidtree.blr@gmail.com",
+    "image": "https://orchidtree.in/uploads/Bodhi_Tree_03_1_35a5ef31e4.webp",
+    "numberOfRooms": 11,
+    "checkinTime": "14:00",
+    "checkoutTime": "11:00",
+    "petsAllowed": true,
+    "priceRange": "₹₹₹",
+    "address": { "@type": "PostalAddress", "streetAddress": "Survey No. 7/2, Yelachamanahalli Village, Hoskote", "addressLocality": "Bangalore Rural", "addressRegion": "Karnataka", "postalCode": "562114", "addressCountry": "IN" },
+    "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.4", "reviewCount": "615" }
+  }
+  </script>
+
+<style>
+  /* ════════════════════════════════════════════════════════════════════
+     ORCHID TREE — THE STAYS
+     A cinematic, editorial treatment of the rooms. On-brand palette and type
+     (cream / olive / gold, Cormorant Garamond, Sacramento script) pushed to
+     atmosphere: full-bleed parallax imagery, frosted floating panels, film
+     grain, gold hairlines, oversized italic serif, slow Ken Burns motion.
+
+     PHOTOGRAPHY: room and estate photos are Orchid Tree's own licensed images.
+     A few warm lifestyle frames are temporary free-licensed Unsplash placeholders,
+     to be replaced with real photos of real guests.
+     ════════════════════════════════════════════════════════════════════ */
+  :root{
+    --cream:#f7f3ea; --cream-deep:#efe7d6; --card:#ffffff; --green:#3c4a16; --ink:#43382b;
+    --body:#6e675d; --gold:#c9a23c; --gold-soft:#d8bd76; --line:#e6ddcb;
+    --media:#e7e1d4; --media-tx:#b3a994; --media-dark:#8c8275;
+    --serif:'Cormorant Garamond',Georgia,serif; --sans:'Mulish','Avenir Next',-apple-system,system-ui,sans-serif; --script:'Sacramento',cursive;
+    --radius:4px; --pad:clamp(24px,6.5vw,120px);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:var(--sans);background:var(--cream);color:var(--body);line-height:1.65;overflow-x:hidden;}
+  img{display:block;}
+
+  /* film grain over everything */
+  .grain{position:fixed;inset:0;z-index:200;pointer-events:none;opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+
+  .wrap{max-width:1340px;margin:0 auto;padding-left:var(--pad);padding-right:var(--pad);}
+
+  /* eyebrow with leading hairline */
+  .eyebrow{display:inline-flex;align-items:center;gap:14px;font-size:11px;letter-spacing:4.5px;text-transform:uppercase;color:var(--gold);font-weight:700;}
+  .eyebrow::before{content:"";width:34px;height:1px;background:var(--gold);opacity:.8;}
+  .eyebrow.center{justify-content:center;}
+
+  h1,h2,h3{font-family:var(--serif);font-weight:500;color:var(--ink);line-height:1.04;}
+
+  /* ───────────── NAV ───────────── */
+  .nav{position:fixed;top:0;left:0;right:0;z-index:90;display:flex;align-items:center;justify-content:space-between;padding:24px var(--pad);background:linear-gradient(to bottom,rgba(20,16,12,.5),rgba(20,16,12,0));transition:background .4s ease,padding .4s ease,box-shadow .4s ease;}
+  .nav .logo img{height:70px;width:auto;display:block;filter:brightness(0) invert(1) drop-shadow(0 1px 6px rgba(0,0,0,.4));transition:height .4s ease,filter .4s ease;}
+  .nav.solid .logo img{height:50px;filter:none;}
+  .nav .links{display:flex;gap:32px;align-items:center;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;font-weight:600;}
+  .nav .links a{color:rgba(255,255,255,.92);text-decoration:none;text-shadow:0 1px 8px rgba(0,0,0,.45);transition:opacity .2s,color .4s;}
+  .nav .links a:not(.reserve){position:relative;}
+  .nav .links a:not(.reserve)::after{content:"";position:absolute;left:2px;right:2px;bottom:-5px;height:1.5px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .3s ease;}
+  .nav .links a:not(.reserve):hover::after{transform:scaleX(1);}
+  .nav .links a:hover{opacity:1;}
+  .nav .links a[aria-current="page"]{color:var(--gold);}
+  .nav .links .reserve{border:1px solid rgba(255,255,255,.6);padding:9px 18px;border-radius:var(--radius);transition:all .2s;}
+  .nav .links .reserve:hover{background:#fff;color:var(--ink);}
+  .nav.solid{background:rgba(247,243,234,.95);box-shadow:0 1px 24px rgba(67,56,43,.1);padding-top:14px;padding-bottom:14px;backdrop-filter:blur(8px);}
+  .nav.solid .links a{color:var(--ink);text-shadow:none;}
+  .nav.solid .links a[aria-current="page"]{color:var(--green);}
+  .nav.solid .links .reserve{border-color:var(--green);color:var(--green);}
+  .nav.solid .links .reserve:hover{background:var(--green);color:#fff;}
+
+  /* ───────────── HERO ───────────── */
+  .hero{position:relative;height:100vh;min-height:640px;overflow:hidden;background:#1c1813;}
+  .hero .kb{position:absolute;inset:-4%;width:108%;height:108%;}
+  .hero .kb img{width:100%;height:100%;object-fit:cover;animation:kenburns 26s ease-in-out infinite alternate;}
+  @keyframes kenburns{from{transform:scale(1.02) translate(0,0);}to{transform:scale(1.14) translate(-1.5%,-2%);}}
+  .hero .veil{position:absolute;inset:0;background:
+    radial-gradient(120% 90% at 70% 18%,rgba(20,16,12,0) 30%,rgba(20,16,12,.5) 100%),
+    linear-gradient(to bottom,rgba(20,16,12,.42) 0%,rgba(20,16,12,.05) 30%,rgba(20,16,12,.35) 62%,rgba(20,16,12,.86) 100%);}
+  .hero-inner{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:0 var(--pad) clamp(72px,12vh,140px);}
+  .hero-inner>*{max-width:900px;}
+  .hero .kicker{font-family:var(--script);font-size:clamp(34px,5vw,58px);color:var(--gold-soft);line-height:.9;margin-bottom:8px;}
+  .hero h1{color:#fff;font-size:clamp(54px,9.5vw,138px);font-weight:400;letter-spacing:-.5px;line-height:.96;}
+  .hero h1 em{font-style:italic;color:#fff;}
+  .hero .sub{color:rgba(255,255,255,.9);font-size:clamp(16px,1.6vw,20px);margin-top:26px;max-width:540px;line-height:1.7;font-weight:400;}
+  .hero .rule{width:64px;height:1px;background:var(--gold);margin:30px 0 0;opacity:.85;}
+  .scrolltip{position:absolute;left:50%;transform:translateX(-50%);bottom:30px;z-index:5;display:flex;flex-direction:column;align-items:center;gap:9px;color:rgba(255,255,255,.8);text-decoration:none;animation:bob 2.4s ease-in-out infinite;}
+  .scrolltip .ln{width:1px;height:42px;background:linear-gradient(to bottom,rgba(255,255,255,0),rgba(255,255,255,.8));}
+  .scrolltip span{font-size:9px;letter-spacing:3px;text-transform:uppercase;}
+  @keyframes bob{0%,100%{transform:translate(-50%,0);}50%{transform:translate(-50%,8px);}}
+
+  /* fade-up load */
+  @keyframes rise{from{opacity:0;transform:translateY(26px);}to{opacity:1;transform:none;}}
+  .hero .kicker{animation:rise 1s ease .1s both;}
+  .hero h1{animation:rise 1.1s ease .26s both;}
+  .hero .sub{animation:rise 1.1s ease .5s both;}
+  .hero .rule{animation:rise 1.1s ease .7s both;}
+
+  /* ───────────── OVERTURE ───────────── */
+  .overture{position:relative;background:var(--cream);
+    background-image:radial-gradient(80% 60% at 15% 10%,rgba(201,162,60,.07),transparent 60%);
+    padding:clamp(110px,18vh,220px) 0;overflow:hidden;}
+  .overture .grid{display:grid;grid-template-columns:1.5fr 1fr;gap:clamp(40px,6vw,90px);align-items:end;}
+  .overture .say{font-family:var(--serif);font-weight:400;color:var(--ink);font-size:clamp(38px,6.6vw,96px);line-height:1.02;letter-spacing:-1px;}
+  .overture .say em{font-style:italic;color:var(--green);}
+  .overture .say .sig{font-family:var(--script);font-style:normal;color:var(--gold);font-size:1.12em;}
+  .overture .aside{padding-bottom:14px;}
+  .overture .aside .num{font-family:var(--serif);font-size:clamp(44px,5vw,72px);color:var(--gold);line-height:1;}
+  .overture .aside p{margin-top:16px;font-size:16px;line-height:1.85;color:var(--body);max-width:320px;}
+  .overture .hr{height:1px;background:linear-gradient(to right,var(--gold),rgba(201,162,60,0));margin-top:18px;}
+
+  /* ───────────── ROOM CHAPTERS ───────────── */
+  .chapters{background:#1c1813;}
+  .chapter{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;
+    padding:clamp(90px,12vh,140px) 0;}
+  .chapter .ch-bg{position:absolute;inset:-14% 0;will-change:transform;}
+  .chapter .ch-bg img{width:100%;height:128%;object-fit:cover;}
+  .chapter .ch-veil{position:absolute;inset:0;}
+  .chapter.left .ch-veil{background:linear-gradient(105deg,rgba(20,16,12,.8) 0%,rgba(20,16,12,.45) 42%,rgba(20,16,12,.08) 72%);}
+  .chapter.right .ch-veil{background:linear-gradient(255deg,rgba(20,16,12,.8) 0%,rgba(20,16,12,.45) 42%,rgba(20,16,12,.08) 72%);}
+  .chapter .ch-wrap{position:relative;z-index:3;width:100%;max-width:1340px;margin:0 auto;padding:0 var(--pad);display:flex;}
+  .chapter.right .ch-wrap{justify-content:flex-end;}
+  .ch-panel{position:relative;width:min(500px,100%);
+    background:rgba(247,243,234,.975);
+    border:1px solid rgba(201,162,60,.4);border-radius:6px;
+    padding:clamp(34px,4vw,56px);box-shadow:0 40px 80px rgba(0,0,0,.4);}
+  .ch-panel .ch-num{position:absolute;top:-46px;left:clamp(34px,4vw,56px);font-family:var(--serif);font-style:italic;
+    font-size:120px;line-height:1;color:rgba(247,243,234,.16);font-weight:300;letter-spacing:-4px;pointer-events:none;}
+  .ch-panel .ch-setting{font-size:10.5px;letter-spacing:3px;text-transform:uppercase;font-weight:700;color:var(--gold);}
+  .ch-panel h2{font-size:clamp(34px,4.4vw,56px);color:var(--ink);margin:14px 0 4px;font-weight:500;letter-spacing:-.5px;}
+  .ch-panel .ch-tag{font-family:var(--script);font-size:clamp(26px,3vw,38px);color:var(--green);line-height:1;margin-bottom:22px;}
+  .ch-panel .ch-story{font-size:16px;line-height:1.8;color:var(--body);margin-bottom:26px;}
+  .ch-facts{list-style:none;margin-bottom:28px;}
+  .ch-facts li{display:flex;justify-content:space-between;gap:18px;padding:12px 0;border-top:1px solid var(--line);font-size:13.5px;}
+  .ch-facts li:last-child{border-bottom:1px solid var(--line);}
+  .ch-facts li .k{color:var(--media-tx);letter-spacing:.4px;text-transform:uppercase;font-size:11px;font-weight:700;align-self:center;}
+  .ch-facts li .v{color:var(--ink);font-family:var(--serif);font-size:18px;font-style:italic;text-align:right;}
+  .ch-facts li .v.price{color:var(--green);font-style:normal;font-weight:700;font-family:var(--sans);font-size:15px;align-self:center;}
+  .ch-rooms{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--media-tx);margin-bottom:26px;}
+  .ch-rooms b{color:var(--ink);}
+  .ch-cta{display:inline-flex;align-items:center;gap:10px;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;font-weight:700;
+    color:var(--green);text-decoration:none;padding-bottom:6px;border-bottom:1.5px solid var(--gold);transition:gap .25s,color .2s;}
+  .ch-cta:hover{gap:16px;color:var(--ink);}
+
+  /* ───────────── INCLUDED — editorial list ───────────── */
+  .incl{background:var(--cream-deep);background-image:radial-gradient(70% 60% at 85% 20%,rgba(60,74,22,.06),transparent 60%);padding:clamp(90px,14vh,160px) 0;}
+  .incl .head{max-width:620px;margin-bottom:clamp(48px,7vh,86px);}
+  .incl .head h2{font-size:clamp(32px,4.6vw,56px);margin-top:18px;font-weight:500;letter-spacing:-.5px;}
+  .incl-list{display:grid;grid-template-columns:1fr 1fr;gap:0 clamp(40px,6vw,90px);}
+  .incl-row{display:flex;gap:22px;padding:30px 0;border-top:1px solid var(--line);align-items:flex-start;}
+  .incl-row .ir-ic{flex:0 0 auto;width:44px;height:44px;border-radius:50%;border:1px solid var(--gold);color:var(--green);display:flex;align-items:center;justify-content:center;}
+  .incl-row .ir-ic svg{width:21px;height:21px;}
+  .incl-row h3{font-size:23px;font-weight:500;margin-bottom:5px;}
+  .incl-row p{font-size:14.5px;line-height:1.65;color:var(--body);}
+  .incl-foot{text-align:center;font-family:var(--serif);font-style:italic;font-size:clamp(18px,2.4vw,26px);color:var(--green);margin-top:clamp(40px,6vh,70px);}
+
+  /* ───────────── TWO SETTINGS ───────────── */
+  .settings{background:#1c1813;color:#fff;padding:clamp(90px,14vh,160px) 0;}
+  .settings .head{text-align:center;max-width:640px;margin:0 auto clamp(46px,7vh,80px);}
+  .settings .head h2{color:#fff;font-size:clamp(32px,4.6vw,56px);margin-top:18px;font-weight:500;}
+  .settings .two{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .setcard{position:relative;min-height:clamp(380px,56vh,560px);border-radius:6px;overflow:hidden;display:flex;align-items:flex-end;}
+  .setcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.1s ease;}
+  .setcard:hover img{transform:scale(1.06);}
+  .setcard .sc-veil{position:absolute;inset:0;background:linear-gradient(to top,rgba(20,16,12,.9),rgba(20,16,12,.1) 62%);}
+  .setcard .sc-txt{position:relative;z-index:2;padding:clamp(28px,3vw,44px);}
+  .setcard .sc-k{font-size:10.5px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:700;}
+  .setcard .sc-txt h3{color:#fff;font-size:clamp(28px,3.4vw,42px);margin:10px 0 10px;font-weight:500;}
+  .setcard .sc-txt p{color:rgba(255,255,255,.88);font-size:15px;line-height:1.65;max-width:380px;}
+
+  /* ───────────── SLOW DAY — full-bleed quote ───────────── */
+  .slowday{position:relative;min-height:90vh;display:flex;align-items:center;justify-content:center;overflow:hidden;text-align:center;}
+  .slowday .sd-bg{position:absolute;inset:-14% 0;will-change:transform;}
+  .slowday .sd-bg img{width:100%;height:128%;object-fit:cover;}
+  .slowday .sd-veil{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(20,16,12,.5),rgba(20,16,12,.5));}
+  .slowday .sd-txt{position:relative;z-index:3;padding:0 var(--pad);max-width:920px;}
+  .slowday .sd-k{font-family:var(--script);font-size:clamp(30px,4vw,48px);color:var(--gold-soft);line-height:1;margin-bottom:18px;}
+  .slowday .sd-txt p{font-family:var(--serif);font-style:italic;color:#fff;font-size:clamp(26px,4.2vw,56px);line-height:1.18;font-weight:400;text-shadow:0 2px 30px rgba(0,0,0,.4);}
+
+  /* ───────────── GALLERY — mosaic ───────────── */
+  .gallery{background:var(--cream);padding:clamp(90px,14vh,160px) 0;}
+  .gallery .head{text-align:center;max-width:620px;margin:0 auto clamp(46px,7vh,80px);}
+  .gallery .head h2{font-size:clamp(32px,4.6vw,56px);margin-top:18px;font-weight:500;}
+  .mosaic{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:148px;gap:16px;}
+  .mosaic figure{position:relative;overflow:hidden;border-radius:5px;background:var(--media);}
+  .mosaic img{width:100%;height:100%;object-fit:cover;transition:transform 1s ease;}
+  .mosaic figure:hover img{transform:scale(1.07);}
+  .mosaic figcaption{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:30px 18px 14px;color:#fff;font-family:var(--serif);font-style:italic;font-size:16px;
+    background:linear-gradient(to top,rgba(20,16,12,.78),transparent);opacity:0;transform:translateY(8px);transition:opacity .4s,transform .4s;}
+  .mosaic figure:hover figcaption{opacity:1;transform:none;}
+  .mosaic .m1{grid-column:span 3;grid-row:span 3;}
+  .mosaic .m2{grid-column:span 3;grid-row:span 2;}
+  .mosaic .m3{grid-column:span 2;grid-row:span 2;}
+  .mosaic .m4{grid-column:span 2;grid-row:span 2;}
+  .mosaic .m5{grid-column:span 2;grid-row:span 3;}
+
+  /* ───────────── REVIEW — single feature ───────────── */
+  .voice{background:var(--green);color:#fff;padding:clamp(90px,14vh,160px) 0;text-align:center;position:relative;overflow:hidden;}
+  .voice::before{content:"\201C";position:absolute;top:-.18em;left:50%;transform:translateX(-50%);font-family:var(--serif);font-size:clamp(220px,30vw,420px);color:rgba(255,255,255,.06);line-height:1;pointer-events:none;}
+  .voice .stars{color:var(--gold-soft);letter-spacing:5px;font-size:15px;margin-bottom:26px;}
+  .voice blockquote{font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(26px,3.6vw,46px);line-height:1.32;max-width:920px;margin:0 auto 28px;}
+  .voice .who{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.78);font-weight:700;}
+  .voice .rating{margin-top:30px;font-family:var(--serif);font-size:18px;color:var(--gold-soft);font-style:italic;}
+
+  /* ───────────── CTA — full bleed ───────────── */
+  .closer{position:relative;min-height:88vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;}
+  .closer .cl-bg{position:absolute;inset:-12% 0;will-change:transform;}
+  .closer .cl-bg img{width:100%;height:124%;object-fit:cover;}
+  .closer .cl-veil{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(20,16,12,.55),rgba(20,16,12,.7));}
+  .closer .cl-txt{position:relative;z-index:3;padding:0 var(--pad);max-width:760px;}
+  .closer .cl-k{font-family:var(--script);font-size:clamp(30px,4vw,50px);color:var(--gold-soft);line-height:1;margin-bottom:10px;}
+  .closer h2{color:#fff;font-size:clamp(40px,7vw,92px);font-weight:400;line-height:1;margin-bottom:22px;}
+  .closer p{color:rgba(255,255,255,.9);font-size:clamp(16px,1.7vw,20px);max-width:520px;margin:0 auto 36px;line-height:1.7;}
+  .closer .btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+  .closer a.btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;font-weight:700;padding:17px 32px;border-radius:var(--radius);transition:all .2s;}
+  .closer a.primary{background:var(--gold);color:var(--ink);}
+  .closer a.primary:hover{background:#fff;}
+  .closer a.ghost{border:1px solid rgba(255,255,255,.65);color:#fff;}
+  .closer a.ghost:hover{background:#fff;color:var(--ink);}
+  .closer a.btn svg{width:18px;height:18px;}
+
+  /* ───────────── FOOTER ───────────── */
+  footer{background:var(--ink);color:#fff;padding:72px var(--pad) 36px;}
+  .foot-grid{max-width:1340px;margin:0 auto;display:flex;gap:60px;justify-content:space-between;flex-wrap:wrap;}
+  .foot-logo{height:64px;width:auto;display:block;filter:brightness(0) invert(1);margin-bottom:16px;}
+  .foot-social{display:flex;gap:12px;margin-top:20px;justify-content:center;}
+  .foot-social a{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;color:#fff;transition:background .18s,border-color .18s,color .18s;}
+  .foot-social a:hover{background:var(--gold);border-color:var(--gold);color:var(--ink);}
+  .foot-social svg{width:23px;height:23px;}
+  footer .col h5{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+  footer .col a,footer .col p{display:block;color:rgba(255,255,255,.82);font-size:14px;margin-bottom:10px;text-decoration:none;}
+  footer .col a:hover{color:#fff;}
+  footer .tag{max-width:300px;color:rgba(255,255,255,.82);font-size:14px;}
+  .foot-bottom{max-width:1340px;margin:40px auto 0;padding-top:24px;border-top:1px solid rgba(255,255,255,.16);font-size:12px;color:rgba(255,255,255,.62);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+  .foot-sig{text-align:center;margin:14px 0 16px;line-height:1;}
+  .foot-sig .s{font-family:var(--script);font-size:clamp(30px,4vw,42px);color:var(--gold);line-height:1;}
+  .foot-sig .t{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.6);margin-top:10px;}
+
+  /* book-fab */
+  .book-fab{position:fixed;right:24px;bottom:24px;z-index:80;display:inline-flex;align-items:center;gap:9px;background:var(--green);color:#fff;font-size:12px;letter-spacing:1.6px;text-transform:uppercase;font-weight:700;padding:14px 24px;border-radius:40px;text-decoration:none;box-shadow:0 8px 26px rgba(0,0,0,.25);opacity:0;transform:translateY(16px);pointer-events:none;transition:opacity .3s,transform .3s,background .18s;}
+  .book-fab.show{opacity:1;transform:none;pointer-events:auto;}
+  .book-fab:hover{background:#2c3810;}
+  .book-fab svg{width:18px;height:18px;}
+
+  /* perf: skip painting offscreen image-heavy sections; hint the compositor */
+  .gallery,.settings{content-visibility:auto;contain-intrinsic-size:1px 760px;}
+  .hero .kb{will-change:transform;}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(34px);transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1s cubic-bezier(.2,.7,.2,1);}
+  .reveal.in{opacity:1;transform:none;}
+
+  /* ── extended motion layer ── */
+  /* scroll progress */
+  .progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:300;background:linear-gradient(to right,var(--gold-soft),var(--gold));box-shadow:0 0 10px rgba(201,162,60,.5);}
+  /* staggered children (delays set in JS) */
+  [data-stagger] > *{opacity:0;transform:translateY(26px);transition:opacity .95s cubic-bezier(.2,.7,.2,1),transform .95s cubic-bezier(.2,.7,.2,1);}
+  [data-stagger].in > *{opacity:1;transform:none;}
+  /* directional room panel slide-in */
+  .chapter.left .ch-panel.reveal{transform:translate(-38px,32px);}
+  .chapter.right .ch-panel.reveal{transform:translate(38px,32px);}
+  .chapter .ch-panel.reveal.in{transform:none;}
+  /* animated chapter number */
+  .ch-panel .ch-num{opacity:0;transform:translateY(18px) scale(.9);transition:opacity 1.1s ease .3s,transform 1.2s cubic-bezier(.2,.7,.2,1) .3s;}
+  .ch-panel.in .ch-num{opacity:1;transform:none;}
+  /* draw-in hairline */
+  .draw{transform:scaleX(0);transform-origin:left;transition:transform .9s cubic-bezier(.2,.7,.2,1) .15s;}
+  .draw.in{transform:scaleX(1);}
+  /* clip-wipe heading */
+  .wipe{clip-path:inset(0 0 108% 0);transition:clip-path 1.2s cubic-bezier(.2,.7,.2,1);}
+  .wipe.in{clip-path:inset(0 0 -12% 0);}
+  @media (prefers-reduced-motion: reduce){
+    [data-stagger] > *,.chapter .ch-panel.reveal,.ch-panel .ch-num,.draw{opacity:1 !important;transform:none !important;}
+    .wipe{clip-path:none !important;}
+    .progress{display:none;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{scroll-behavior:auto;}
+    .hero .kb img{animation:none;transform:scale(1.06);}
+    .reveal{opacity:1;transform:none;transition:none;}
+    .hero .kicker,.hero h1,.hero .sub,.hero .rule{animation:none;}
+    [data-parallax]{transform:none !important;}
+  }
+
+  @media (max-width:1000px){
+    .overture .grid{grid-template-columns:1fr;gap:36px;}
+    .incl-list{grid-template-columns:1fr;}
+    .settings .two{grid-template-columns:1fr;}
+    .mosaic{grid-template-columns:repeat(2,1fr);grid-auto-rows:160px;}
+    .mosaic .m1{grid-column:span 2;grid-row:span 2;}
+    .mosaic .m2,.mosaic .m3,.mosaic .m4,.mosaic .m5{grid-column:span 1;grid-row:span 2;}
+  }
+  @media (max-width:820px){
+    .nav .links{display:none;}
+    .chapter{min-height:auto;padding:80px 0;}
+    .chapter .ch-bg{inset:0;}
+    .chapter .ch-bg img{height:100%;}
+    .chapter.left .ch-veil,.chapter.right .ch-veil{background:linear-gradient(to top,rgba(20,16,12,.82),rgba(20,16,12,.3));}
+    .chapter .ch-wrap,.chapter.right .ch-wrap{justify-content:center;}
+    .ch-panel{width:100%;}
+    .ch-panel .ch-num{font-size:90px;top:-36px;}
+  }
+</style>
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
+  <!-- NAV -->
+  <header>
+  <nav class="nav" id="nav">
+    <a class="logo" href="home.html" aria-label="Orchid Tree home"><img src="images/logo.png" alt="Orchid Tree" height="50"></a>
+    <div class="links">
+      <a href="stays.html" aria-current="page">Stays</a>
+      <a href="experiences.html">Experiences</a>
+      <a href="restaurant.html">Restaurant</a>
+      <a href="weddings.html">Weddings</a>
+      <a href="corporate.html">Corporate</a>
+      <a href="about.html">About</a>
+      <a href="https://wa.me/918088251913?text=Hi%20Orchid%20Tree%2C%20I%27d%20like%20to%20enquire%20about%20a%20stay." class="reserve" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+  </nav>
+  </header>
+
+  <main>
+
+  <!-- HERO -->
+  <section class="hero" aria-label="The stays at Orchid Tree">
+    <div class="kb" data-parallax data-speed="0.12"><img src="https://orchidtree.in/uploads/Bodhi_Tree_03_1_35a5ef31e4.webp" alt="A garden cottage at Orchid Tree, built among living trees near Bangalore" width="1600" height="1000" fetchpriority="high"></div>
+    <div class="veil"></div>
+    <div class="hero-inner">
+      <div class="kicker">where you'll stay</div>
+      <h1>Wake up inside<br>the <em>forest</em></h1>
+      <p class="sub">Eleven rooms across a living forest, forty-five minutes from Whitefield. No two are the same, and for two days, every one of them is yours.</p>
+      <div class="rule"></div>
+    </div>
+    <a class="scrolltip" href="#overture" aria-label="Scroll"><span>Enter</span><span class="ln"></span></a>
+  </section>
+
+  <!-- OVERTURE -->
+  <section class="overture" id="overture">
+    <div class="wrap">
+      <div class="grid">
+        <p class="say reveal">Eleven rooms.<br>One <em>living forest.</em><br>And a name to<br>remember it by, <span class="sig">Orchid Tree.</span></p>
+        <div class="aside reveal">
+          <div class="num">Eleven</div>
+          <div class="hr draw"></div>
+          <p>Four kinds of room across four acres of standing forest. Some bright by the pool, some deep in the trees, each named after a tree that grows here.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROOM CHAPTERS -->
+  <section class="chapters" aria-label="The rooms">
+
+    <article class="chapter left">
+      <div class="ch-bg" data-parallax data-speed="0.16"><img src="https://orchidtree.in/uploads/bael_1_2b4731913c.png" alt="A sun-lit Couple Room by the pool at Orchid Tree, with a skylight bath" loading="lazy"></div>
+      <div class="ch-veil"></div>
+      <div class="ch-wrap">
+        <div class="ch-panel reveal">
+          <span class="ch-num">01</span>
+          <div class="ch-setting">By the pool</div>
+          <h2>Couple Room</h2>
+          <div class="ch-tag">your sun-lit sanctuary</div>
+          <p class="ch-story">Wake to the pool and a skylight full of morning. Cool, quiet and made for sleeping in. Our only pet-free rooms, kept clear for guests with allergies.</p>
+          <ul class="ch-facts" data-stagger>
+            <li><span class="k">Sleeps</span><span class="v">2 + 1 child (to 6)</span></li>
+            <li><span class="k">Bath</span><span class="v">Sun-lit skylight</span></li>
+            <li><span class="k">Setting</span><span class="v">Pool view</span></li>
+          </ul>
+          <div class="ch-rooms"><b>4 rooms</b> &nbsp;·&nbsp; Bael · Bilva · Datura · Tulsi</div>
+          <a class="ch-cta" href="home.html#rooms">Check availability &rarr;</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="chapter right">
+      <div class="ch-bg" data-parallax data-speed="0.16"><img src="https://orchidtree.in/uploads/Bodhi_Tree_03_1_35a5ef31e4.webp" alt="The Couple Garden Cottage at Orchid Tree, built around a living tree with an open-to-sky bath" loading="lazy"></div>
+      <div class="ch-veil"></div>
+      <div class="ch-wrap">
+        <div class="ch-panel reveal">
+          <span class="ch-num">02</span>
+          <div class="ch-setting">Garden cottage</div>
+          <h2>Couple Cottage</h2>
+          <div class="ch-tag">our signature escape</div>
+          <p class="ch-story">Built around a living tree, with a private steam room and a bath open to the sky. A patio sits among the leaves, and the forest is the fourth wall. Our most romantic room.</p>
+          <ul class="ch-facts" data-stagger>
+            <li><span class="k">Sleeps</span><span class="v">2 + 1 child (to 6)</span></li>
+            <li><span class="k">Bath</span><span class="v">Open to the sky</span></li>
+            <li><span class="k">Steam</span><span class="v">Private</span></li>
+            <li><span class="k">From</span><span class="v price">₹13,000 a night</span></li>
+          </ul>
+          <div class="ch-rooms"><b>2 cottages</b> &nbsp;·&nbsp; Hattimara · Bodhi Tree</div>
+          <a class="ch-cta" href="home.html#rooms">Check availability &rarr;</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="chapter left">
+      <div class="ch-bg" data-parallax data-speed="0.16"><img src="https://orchidtree.in/uploads/mallige_1_2da2180d1a.png" alt="A Family Room by the pool at Orchid Tree, with pull-out bedding and pool views" loading="lazy"></div>
+      <div class="ch-veil"></div>
+      <div class="ch-wrap">
+        <div class="ch-panel reveal">
+          <span class="ch-num">03</span>
+          <div class="ch-setting">By the pool</div>
+          <h2>Family Room</h2>
+          <div class="ch-tag">spacious comfort</div>
+          <p class="ch-story">Room for everyone, with flexible pull-out bedding and the same skylit calm, the pool just outside the window. The easy home base for a family or a group of friends.</p>
+          <ul class="ch-facts" data-stagger>
+            <li><span class="k">Sleeps</span><span class="v">Up to 4</span></li>
+            <li><span class="k">Bath</span><span class="v">Skylight</span></li>
+            <li><span class="k">Setting</span><span class="v">Pool view</span></li>
+          </ul>
+          <div class="ch-rooms"><b>4 rooms</b> &nbsp;·&nbsp; Ashoka · Mallige · Parijata · Spatika</div>
+          <a class="ch-cta" href="home.html#rooms">Check availability &rarr;</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="chapter right">
+      <div class="ch-bg" data-parallax data-speed="0.16"><img src="https://orchidtree.in/uploads/chandana_1_07f1342c80.png" alt="Chandana, the Family Garden Cottage at Orchid Tree, the largest space on the estate" loading="lazy"></div>
+      <div class="ch-veil"></div>
+      <div class="ch-wrap">
+        <div class="ch-panel reveal">
+          <span class="ch-num">04</span>
+          <div class="ch-setting">Garden cottage</div>
+          <h2>Chandana</h2>
+          <div class="ch-tag">the whole family, together</div>
+          <p class="ch-story">The largest space on the estate and the only one of its kind. Built around living trees, with a living area, a private patio, a private steam room and a bath open to the sky. A vacation home in the forest.</p>
+          <ul class="ch-facts" data-stagger>
+            <li><span class="k">Sleeps</span><span class="v">Up to 6</span></li>
+            <li><span class="k">Bath</span><span class="v">Open to the sky</span></li>
+            <li><span class="k">Steam</span><span class="v">Private</span></li>
+          </ul>
+          <div class="ch-rooms"><b>1 cottage</b> &nbsp;·&nbsp; the largest on the estate</div>
+          <a class="ch-cta" href="home.html#rooms">Check availability &rarr;</a>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- INCLUDED -->
+  <section class="incl">
+    <div class="wrap">
+      <div class="head reveal">
+        <div class="eyebrow">With every stay</div>
+        <h2>The good things,<br>already yours</h2>
+      </div>
+      <div class="incl-list" data-stagger>
+        <div class="incl-row"><span class="ir-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h12a4 4 0 0 1 0 8H4z"/><path d="M4 8V5M8 8V5M12 8V5"/></svg></span><div><h3>Breakfast, included</h3><p>Cooked fresh each morning and plated, never a buffet. Lunch and dinner are pre-ordered from the restaurant.</p></div></div>
+        <div class="incl-row"><span class="ir-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 12c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg></span><div><h3>Pool, steam and the run of it</h3><p>The ozone pool, the common steam room, the open-air gym, billiards and games, all part of the stay.</p></div></div>
+        <div class="incl-row"><span class="ir-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 8c0-3 3-5 7-5M19 8c0-3-3-5-7-5"/><path d="M5 8c0 4 3 6 7 6s7-2 7-6"/></svg></span><div><h3>The whole estate</h3><p>Forest trails, the farm and buggy, the bonfire and a sky full of stars. Activities across the grounds, on the house.</p></div></div>
+        <div class="incl-row"><span class="ir-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-5.7 7-11a7 7 0 1 0-14 0c0 5.3 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span><div><h3>Thoughtful rooms</h3><p>Air conditioned, sun-lit baths, copper water jugs, millet snacks, a kettle and fresh linen. Pets welcome in most.</p></div></div>
+        <div class="incl-row"><span class="ir-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10l-1 7a4 4 0 0 1-8 0z"/><path d="M17 6h2a2 2 0 0 1 0 4h-2"/></svg></span><div><h3>Proudly BYOB</h3><p>Bring your own bottle and pour it slowly in the outdoor lounge, under the stars when the bonfire catches.</p></div></div>
+        <div class="incl-row"><span class="ir-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><div><h3>No clock, no crowd</h3><p>An estate kept small on purpose. No itinerary, no day visitors, no rush. The day is yours to waste beautifully.</p></div></div>
+      </div>
+      <p class="incl-foot reveal">A massage, whenever you like.</p>
+    </div>
+  </section>
+
+  <!-- TWO SETTINGS -->
+  <section class="settings">
+    <div class="wrap">
+      <div class="head reveal">
+        <div class="eyebrow center">Two settings</div>
+        <h2>Bright by the water,<br>or deep in the trees</h2>
+      </div>
+      <div class="two" data-stagger>
+        <div class="setcard">
+          <img src="https://orchidtree.in/uploads/Copy_of_Pool_37_958d54313f.jpg" alt="The poolside rooms at Orchid Tree, bright and a few steps from the water" loading="lazy">
+          <div class="sc-veil"></div>
+          <div class="sc-txt"><div class="sc-k">By the pool</div><h3>Bright and easy</h3><p>Skylit baths, easy mornings, the pool the first thing you see. A few steps from the water.</p></div>
+        </div>
+        <div class="setcard">
+          <img src="https://orchidtree.in/uploads/bodhi_tree_5c9ce0f7ce.webp" alt="The garden cottages at Orchid Tree, built around living trees with open-to-sky baths" loading="lazy">
+          <div class="sc-veil"></div>
+          <div class="sc-txt"><div class="sc-k">Garden cottages</div><h3>A world of their own</h3><p>Built around living trees, with open-to-sky baths and private steam. The guests who choose them rarely leave.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLOW DAY -->
+  <section class="slowday" aria-label="A slow day">
+    <!-- PLACEHOLDER: temporary licensed photo (Unsplash). Replace with a real guest moment at Orchid Tree. Mood: "slow morning, deck at sunrise" -->
+    <div class="sd-bg" data-parallax data-speed="0.14"><img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1600&q=80&auto=format&fit=crop" alt="A guest sitting quietly on a wooden deck at sunrise among the trees" loading="lazy"></div>
+    <div class="sd-veil"></div>
+    <div class="sd-txt reveal">
+      <div class="sd-k">a day in your room</div>
+      <p>Float in the pool until your fingers wrinkle. Lose an afternoon to a paperback on the patio. Do all of it, or none of it, and call it a holiday.</p>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery">
+    <div class="wrap">
+      <div class="head reveal">
+        <div class="eyebrow center">A look inside</div>
+        <h2>The rooms, and the<br>hours in them</h2>
+      </div>
+      <div class="mosaic" data-stagger>
+        <figure class="m1"><img src="https://orchidtree.in/uploads/tulsi_1_9846f07961.png" alt="Inside a sun-lit couple room at Orchid Tree" loading="lazy"><figcaption>A room to sleep in</figcaption></figure>
+        <!-- PLACEHOLDER: temporary licensed photo. Replace with a real guest moment. -->
+        <figure class="m2"><img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=900&q=80&auto=format&fit=crop" alt="A couple walking and laughing on the estate lawn at dusk" loading="lazy"><figcaption>The hours are yours</figcaption></figure>
+        <figure class="m3"><img src="https://orchidtree.in/uploads/chandana_2_00966a14a0.png" alt="The Chandana family cottage interior at Orchid Tree" loading="lazy"><figcaption>Room for everyone</figcaption></figure>
+        <!-- PLACEHOLDER: temporary licensed photo. Replace with a real guest moment. -->
+        <figure class="m4"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=700&q=80&auto=format&fit=crop" alt="Warm cups of coffee shared over a small table in the morning" loading="lazy"><figcaption>Slow mornings</figcaption></figure>
+        <figure class="m5"><img src="https://orchidtree.in/uploads/Copy_of_Pool_37_958d54313f.jpg" alt="The ozone pool set within the greenery at Orchid Tree" loading="lazy"><figcaption>The pool, just outside</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOICE -->
+  <section class="voice">
+    <div class="wrap reveal">
+      <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+      <blockquote>A calm staycation close to the city. Mary was a wonderful host to the kids and to us. A relaxing massage, and homely food made with heart.</blockquote>
+      <div class="who">Aditi Verma · Verified Guest</div>
+      <div class="rating">4.4 from 615 guests, and counting</div>
+    </div>
+  </section>
+
+  <!-- CLOSER -->
+  <section class="closer">
+    <div class="cl-bg" data-parallax data-speed="0.12"><img src="https://orchidtree.in/uploads/Experience_section_jpg_afb1c77479.webp" alt="The forest at Orchid Tree at dusk" loading="lazy"></div>
+    <div class="cl-veil"></div>
+    <div class="cl-txt reveal">
+      <div class="cl-k">your room is waiting</div>
+      <h2>Book your stay</h2>
+      <p>Tell us your dates and who is coming, and we will hold the room for you. The forest does the rest.</p>
+      <div class="btns">
+        <a class="btn primary" href="home.html#rooms">Check availability</a>
+        <a class="btn ghost" href="https://wa.me/918088251913?text=Hi%20Orchid%20Tree%2C%20I%27d%20like%20to%20book%20a%20stay.%20Preferred%20dates%3A%20___.%20Guests%3A%20___." target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm5.2 14.1c-.2.6-1.2 1.1-1.7 1.2-.4.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.5-2.6-1.1-4.3-3.8-4.5-4-.1-.2-1-1.4-1-2.6 0-1.2.6-1.8.9-2.1.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5.2.5.7 1.7.7 1.8.1.1.1.3 0 .4l-.3.5c-.1.2-.3.4-.1.7.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.2.1.4.1.5-.1l.7-.8c.2-.2.4-.2.6-.1l1.6.8c.2.1.4.2.5.3.1.2.1.5-.1 1z"/></svg>
+          Book on WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="foot-grid">
+      <div class="col" style="flex:1;min-width:240px;">
+        <img class="foot-logo" src="images/logo.png" alt="Orchid Tree">
+        <p class="tag">Boutique is not size, it's soul. Every corner here is designed with intention, not repetition.</p>
+        <div class="foot-social">
+          <a href="https://www.instagram.com/orchidtree.in/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 2c-2.7 0-3.05.01-4.12.06-1.06.05-1.79.22-2.43.47-.66.26-1.22.6-1.77 1.15-.55.55-.89 1.11-1.15 1.77-.25.64-.42 1.37-.47 2.43C2.01 8.95 2 9.3 2 12s.01 3.05.06 4.12c.05 1.06.22 1.79.47 2.43.26.66.6 1.22 1.15 1.77.55.55 1.11.89 1.77 1.15.64.25 1.37.42 2.43.47 1.07.05 1.42.06 4.12.06s3.05-.01 4.12-.06c1.06-.05 1.79-.22 2.43-.47.66-.26 1.22-.6 1.77-1.15.55-.55.89-1.11 1.15-1.77.25-.64.42-1.37.47-2.43.05-1.07.06-1.42.06-4.12s-.01-3.05-.06-4.12c-.05-1.06-.22-1.79-.47-2.43a4.9 4.9 0 0 0-1.15-1.77 4.9 4.9 0 0 0-1.77-1.15c-.64-.25-1.37-.42-2.43-.47C15.05 2.01 14.7 2 12 2zm0 1.8c2.67 0 2.99.01 4.04.06.97.04 1.5.21 1.86.35.47.18.8.4 1.15.75.35.35.57.68.75 1.15.14.36.3.89.35 1.86.05 1.05.06 1.37.06 4.04s-.01 2.99-.06 4.04c-.04.97-.21 1.5-.35 1.86-.18.47-.4.8-.75 1.15-.35.35-.68.57-1.15.75-.36.14-.89.3-1.86.35-1.05.05-1.37.06-4.04.06s-2.99-.01-4.04-.06c-.97-.04-1.5-.21-1.86-.35a3.1 3.1 0 0 1-1.15-.75 3.1 3.1 0 0 1-.75-1.15c-.14-.36-.3-.89-.35-1.86-.05-1.05-.06-1.37-.06-4.04s.01-2.99.06-4.04c.04-.97.21-1.5.35-1.86.18-.47.4-.8.75-1.15.35-.35.68-.57 1.15-.75.36-.14.89-.3 1.86-.35C9.01 3.81 9.33 3.8 12 3.8zm0 3.06A5.14 5.14 0 1 0 12 17.14 5.14 5.14 0 0 0 12 6.86zm0 8.48A3.34 3.34 0 1 1 12 8.66a3.34 3.34 0 0 1 0 6.68zm6.54-8.69a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></svg></a>
+          <a href="https://www.facebook.com/orchidtree.in" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.5h2.52l.38-2.93H13.5V9.7c0-.85.24-1.43 1.45-1.43h1.55V5.65c-.27-.04-1.19-.12-2.27-.12-2.25 0-3.79 1.37-3.79 3.89v1.65H8.4v2.93h2.59V21z"/></svg></a>
+          <a href="https://www.linkedin.com/company/orchid-tree-wellness-retreat/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 8.6V19H3.66V8.6zM5.3 3.7a1.9 1.9 0 1 1 0 3.8 1.9 1.9 0 0 1 0-3.8zM9 8.6h3.14v1.42h.04c.44-.82 1.5-1.69 3.1-1.69 3.32 0 3.93 2.18 3.93 5.02V19h-3.27v-4.62c0-1.1-.02-2.52-1.54-2.52-1.54 0-1.78 1.2-1.78 2.44V19H9z"/></svg></a>
+        </div>
+      </div>
+      <div class="col">
+        <h5>Explore</h5>
+        <a href="stays.html">Our Stays</a><a href="experiences.html">Experiences</a><a href="restaurant.html">Restaurant</a><a href="weddings.html">Weddings</a><a href="about.html">About</a><a href="corporate.html">Corporate</a><a href="host-with-us.html">Host with Us</a><a href="blog.html">Journal</a><a href="faq.html">FAQ</a>
+      </div>
+      <div class="col">
+        <h5>Connect</h5>
+        <p>Survey No. 7/2, Yelachamanahalli Village, Hoskote, Karnataka 562114</p>
+        <a href="mailto:orchidtree.blr@gmail.com">orchidtree.blr@gmail.com</a>
+        <a href="https://wa.me/918088251913" target="_blank" rel="noopener">+91 80882 51913</a>
+      </div>
+    </div>
+    <div class="foot-sig"><div class="s">Orchid Tree</div><div class="t">The art of doing nothing</div></div>
+    <div class="foot-bottom">
+      <span>© 2026 Orchid Tree. All rights reserved.</span>
+      <span><a href="privacy-policy.html" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.35);">Privacy Policy</a> · <a href="privacy-policy.html#terms" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.35);">Terms of Service</a></span>
+    </div>
+  </footer>
+
+  <a class="book-fab" id="bookFab" href="https://wa.me/918088251913?text=Hi%20Orchid%20Tree%2C%20I%27d%20like%20to%20book%20a%20stay." target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm5.2 14.1c-.2.6-1.2 1.1-1.7 1.2-.4.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.5-2.6-1.1-4.3-3.8-4.5-4-.1-.2-1-1.4-1-2.6 0-1.2.6-1.8.9-2.1.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5.2.5.7 1.7.7 1.8.1.1.1.3 0 .4l-.3.5c-.1.2-.3.4-.1.7.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.2.1.4.1.5-.1l.7-.8c.2-.2.4-.2.6-.1l1.6.8c.2.1.4.2.5.3.1.2.1.5-.1 1z"/></svg>
+    WhatsApp
+  </a>
+
+  <script>
+  (function(){
+    var nav = document.getElementById('nav'), fab = document.getElementById('bookFab'), prog = document.getElementById('progress');
+    var doc = document.documentElement;
+    document.querySelectorAll('img').forEach(function(i){ i.decoding = 'async'; });
+    function navScroll(){ if(window.scrollY > 60) nav.classList.add('solid'); else nav.classList.remove('solid'); }
+    function toggleFab(){ if(fab){ if(window.scrollY > window.innerHeight * 0.9) fab.classList.add('show'); else fab.classList.remove('show'); } }
+    function setProgress(){ if(prog){ var d = doc.scrollHeight - doc.clientHeight; prog.style.width = (d > 0 ? (doc.scrollTop / d * 100) : 0) + '%'; } }
+
+    // reveal + staggered cascades
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(!e.isIntersecting) return;
+        var el = e.target;
+        if(el.hasAttribute('data-stagger')){
+          var k = el.children;
+          for(var i=0;i<k.length;i++){ k[i].style.transitionDelay = (i*0.09)+'s'; }
+        }
+        el.classList.add('in');
+        io.unobserve(el);
+      });
+    }, {threshold:0.05, rootMargin:'0px 0px -6% 0px'});
+    function revealEl(el){
+      if(el.classList.contains('in')) return;
+      if(el.hasAttribute('data-stagger')){ var k=el.children; for(var i=0;i<k.length;i++){ k[i].style.transitionDelay=(i*0.09)+'s'; } }
+      el.classList.add('in');
+    }
+    document.querySelectorAll('.reveal,.wipe,.draw,[data-stagger]').forEach(function(el){ io.observe(el); });
+    // failsafe: never leave a section hidden if the observer misses it
+    setTimeout(function(){
+      document.querySelectorAll('.reveal,.wipe,.draw,[data-stagger]').forEach(function(el){
+        if(el.getBoundingClientRect().top < window.innerHeight*0.95) revealEl(el);
+      });
+    }, 1500);
+
+    // parallax (skipped if reduced motion)
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var px = reduce ? [] : Array.prototype.slice.call(document.querySelectorAll('[data-parallax]'));
+    var vh = window.innerHeight, ticking = false;
+    function frame(){
+      var center = vh/2, i, n = px.length, rects = [];
+      for(i=0;i<n;i++){ rects[i] = px[i].getBoundingClientRect(); }   // read pass (no interleaved writes)
+      for(i=0;i<n;i++){                                               // write pass
+        var r = rects[i];
+        if(r.bottom < -200 || r.top > vh+200) continue;
+        var speed = parseFloat(px[i].getAttribute('data-speed')) || 0.14;
+        var off = ((r.top + r.height/2) - center) * -speed;
+        px[i].style.transform = 'translate3d(0,'+off.toFixed(1)+'px,0)';
+      }
+      ticking = false;
+    }
+    function onScroll(){ navScroll(); toggleFab(); setProgress(); if(!ticking){ ticking = true; requestAnimationFrame(frame); } }
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('resize', function(){ vh = window.innerHeight; frame(); setProgress(); }, {passive:true});
+    navScroll(); toggleFab(); setProgress(); frame();
+  })();
+  </script>
+
+</body>
+</html>

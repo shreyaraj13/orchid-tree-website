@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pick your package — Orchid Tree</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Mulish:wght@400;500;600;700&family=Sacramento&display=swap" rel="stylesheet">
+<style>
+  /* ── Design tokens + base block ported verbatim from home.html so this page
+       reads as part of the same site. ── */
+  :root{
+    --cream:#f7f3ea; --card:#ffffff; --green:#3c4a16; --ink:#43382b;
+    --body:#6e675d; --gold:#c9a23c; --line:#ece6da;
+    --media:#e7e1d4; --media-tx:#b3a994; --media-dark:#8c8275;
+    --serif:'Cormorant Garamond',Georgia,serif; --sans:'Avenir Next','Avenir','Mulish',-apple-system,system-ui,sans-serif; --script:'Sacramento',cursive;
+    --radius:12px; --radius-sm:8px;
+    --img:url('https://orchidtree.in/uploads/bodhi_tree_3_png_eedb89acdf.webp');
+    --pad:clamp(24px,6.5vw,110px);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--sans);background:var(--cream);color:var(--body);line-height:1.65;overflow-x:hidden;}
+  img{display:block;}
+  .media{background:#e7e1d4 var(--img) center/cover no-repeat;display:flex;align-items:center;justify-content:center;color:transparent;background-size:cover;}
+  .wrap{max-width:1320px;margin:0 auto;padding-left:var(--pad);padding-right:var(--pad);}
+  .eyebrow{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:18px;}
+  h1{font-family:var(--serif);font-weight:600;color:#fff;}
+  h2{font-family:var(--serif);font-size:34px;font-weight:600;color:var(--ink);line-height:1.15;}
+  h3{font-family:var(--serif);font-weight:600;color:var(--ink);}
+  .muted{color:var(--body);font-size:16px;}
+
+  /* NAV — solidifies on scroll (verbatim from home.html) */
+  .nav{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;justify-content:space-between;padding:24px var(--pad);background:linear-gradient(to bottom,rgba(20,16,12,.55),rgba(20,16,12,0));transition:background .3s ease,padding .3s ease,box-shadow .3s ease;}
+  .nav .logo{display:flex;align-items:center;}
+  .nav .logo img{height:72px;width:auto;display:block;filter:brightness(0) invert(1) drop-shadow(0 1px 6px rgba(0,0,0,.4));transition:height .3s ease,filter .3s ease;}
+  .nav.solid .logo img{height:52px;filter:none;}
+  .nav .links{display:flex;gap:30px;align-items:center;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;font-weight:600;}
+  .nav .links a{color:rgba(255,255,255,.9);text-decoration:none;text-shadow:0 1px 8px rgba(0,0,0,.45);transition:opacity .2s ease,color .3s ease,text-shadow .3s ease;}
+  .nav .links a:not(.reserve){position:relative;} .nav .links a:not(.reserve)::after{content:"";position:absolute;left:2px;right:2px;bottom:-5px;height:1.5px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .28s ease;} .nav .links a:not(.reserve):hover::after{transform:scaleX(1);} .nav .links a:hover{opacity:1;}
+  .nav .links .reserve{border:1px solid rgba(255,255,255,.6);padding:9px 18px;border-radius:var(--radius-sm);transition:all .2s ease;}
+  .nav .links .reserve:hover{background:#fff;color:var(--ink);opacity:1;}
+  .nav.solid{background:rgba(247,243,234,.96);box-shadow:0 2px 22px rgba(67,56,43,.09);padding-top:15px;padding-bottom:15px;backdrop-filter:blur(6px);}
+  .nav.solid .links a{color:var(--ink);text-shadow:none;}
+  .nav.solid .links .reserve{border-color:var(--green);color:var(--green);}
+  .nav.solid .links .reserve:hover{background:var(--green);color:#fff;}
+
+  /* this page leads with a calm cream header instead of the photo hero, so the
+     fixed nav needs an opaque base from the first paint */
+  .nav.book{background:rgba(247,243,234,.96);box-shadow:0 2px 22px rgba(67,56,43,.09);}
+  .nav.book .logo img{height:52px;filter:none;}
+  .nav.book .links a{color:var(--ink);text-shadow:none;}
+  .nav.book .links .reserve{border-color:var(--green);color:var(--green);}
+  .nav.book .links .reserve:hover{background:var(--green);color:#fff;}
+
+  section{padding:96px 0;}
+
+  /* ── booking header: dates + group line + quiet edit link ── */
+  .bk-header{padding:124px 0 8px;}
+  .bk-head-inner{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:26px;}
+  .bk-head-inner .eyebrow{margin-bottom:10px;}
+  .bk-summary{font-family:var(--serif);font-size:24px;color:var(--ink);line-height:1.3;}
+  .bk-summary .sep{color:var(--gold);margin:0 8px;}
+  .bk-group{font-size:14px;color:var(--body);margin-top:6px;letter-spacing:.3px;}
+  .bk-edit{flex:none;font-family:var(--sans);font-size:12px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;color:var(--green);text-decoration:none;background:transparent;border:none;border-bottom:1px solid rgba(60,74,22,.3);padding:0 0 2px;cursor:pointer;transition:border-color .18s,color .18s;}
+  .bk-edit:hover{border-color:var(--green);}
+
+  /* inline editor on the results page */
+  .bk-editor{margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 10px 34px rgba(67,56,43,.08);padding:22px;display:flex;flex-wrap:wrap;gap:22px 36px;align-items:flex-start;}
+  .bk-editor[hidden]{display:none;}
+  .bke-dates{display:flex;gap:12px;flex:none;}
+  .bke-date{display:flex;flex-direction:column;gap:6px;border:1px solid var(--line);border-radius:var(--radius-sm);padding:10px 14px;cursor:pointer;min-width:150px;transition:border-color .16s;}
+  .bke-date:hover,.bke-date:focus-within{border-color:var(--green);}
+  .bke-lbl{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--media-tx);}
+  .bke-date input{font-family:var(--sans);font-size:15px;color:var(--ink);background:transparent;border:none;padding:0;width:100%;min-width:0;cursor:pointer;}
+  .bke-date input:focus{outline:none;}
+  .bke-steppers{display:flex;flex-direction:column;gap:10px;flex:1;min-width:240px;}
+  .bke-step-row{display:flex;align-items:center;justify-content:space-between;gap:20px;}
+  .bke-sl{display:flex;flex-direction:column;}
+  .bke-st{font-size:14px;color:var(--ink);font-weight:600;}
+  .bke-ss{font-size:12px;color:var(--media-tx);}
+  .bke-stepper{display:flex;align-items:center;gap:8px;}
+  .bke-step{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--green);font-size:19px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .16s,background .16s,color .16s;padding:0;}
+  .bke-step:hover:not(:disabled){border-color:var(--green);background:var(--green);color:#fff;}
+  .bke-step:disabled{opacity:.35;cursor:default;}
+  .bke-count{min-width:22px;text-align:center;font-size:15px;color:var(--ink);font-weight:600;}
+  .bke-actions{display:flex;align-items:center;gap:16px;flex:none;margin-left:auto;align-self:center;}
+  .bke-cancel{background:transparent;border:none;font-family:var(--sans);font-size:12px;letter-spacing:1px;text-transform:uppercase;font-weight:700;color:var(--media-tx);cursor:pointer;}
+  .bke-cancel:hover{color:var(--ink);}
+  @media (max-width:640px){
+    .bk-editor{gap:18px;}
+    .bke-dates{width:100%;}
+    .bke-date{flex:1;min-width:0;}
+    .bke-steppers{min-width:0;width:100%;}
+    .bke-actions{width:100%;margin-left:0;justify-content:flex-end;}
+  }
+
+  /* ── intro line above the options ── */
+  .bk-intro{padding:54px 0 8px;}
+  .bk-intro h2{margin-bottom:14px;}
+  .bk-intro .muted{max-width:620px;}
+
+  /* ── card grids ── */
+  .opt-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:26px;padding:34px 0 12px;}
+  .opt-grid.rooms{grid-template-columns:1fr 1fr;}
+
+  /* ── option card (shared shell for rooms + packages) — built on home.html .room ── */
+  .opt{border-radius:var(--radius);overflow:hidden;background:var(--card);box-shadow:0 4px 20px rgba(67,56,43,.06);display:flex;flex-direction:column;transition:box-shadow .3s ease,transform .3s ease;}
+  .opt:hover{box-shadow:0 16px 40px rgba(67,56,43,.14);transform:translateY(-3px);}
+  /* cover image, with the room-band scrim + caption language from guest.html */
+  .opt .cover{position:relative;height:300px;overflow:hidden;}
+  .opt .cover .ph{position:absolute;inset:0;background-color:#e7e1d4;background-size:cover;background-position:center;background-repeat:no-repeat;transition:transform .7s ease;}
+  .opt:hover .cover .ph{transform:scale(1.05);}
+  .opt .cover .scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(40,33,25,.82),transparent 60%);}
+  .opt .cover .cap{position:absolute;left:0;right:0;bottom:0;padding:24px;}
+  .opt .cover .cn{font-family:var(--serif);font-size:27px;font-weight:600;color:#fff;line-height:1.1;}
+  .opt .cover .cf{color:rgba(255,255,255,.9);font-size:13.5px;margin-top:5px;line-height:1.4;}
+  /* top-left "who fits here" pills (rb-meta / rb-pill from guest.html) */
+  .opt .rb-meta{position:absolute;top:14px;left:14px;z-index:3;display:flex;gap:8px;flex-wrap:wrap;max-width:80%;}
+  .opt .rb-pill{font-size:11px;font-weight:700;letter-spacing:.5px;color:#fff;background:rgba(20,16,12,.45);padding:6px 12px;border-radius:20px;}
+  .opt .rb-pill.pet{color:var(--gold);}
+  .opt .rb-pill.nopet{color:rgba(255,255,255,.65);}
+
+  .opt .body{padding:24px 26px 26px;display:flex;flex-direction:column;flex:1;}
+
+  /* per-room breakdown list (packages) */
+  .breakdown{list-style:none;margin:0 0 4px;}
+  .breakdown li{display:flex;align-items:center;gap:13px;padding:11px 0;border-bottom:1px solid var(--line);}
+  .breakdown li:last-child{border-bottom:none;}
+  .breakdown .thumb{flex:none;width:46px;height:46px;border-radius:var(--radius-sm);background-color:#e7e1d4;background-size:cover;background-position:center;}
+  .breakdown .rinfo{min-width:0;}
+  .breakdown .rname{font-family:var(--serif);font-size:18px;color:var(--ink);line-height:1.2;}
+  .breakdown .rlabel{font-size:12.5px;color:var(--body);margin-top:2px;}
+
+  .cap-line{font-size:13px;color:var(--ink);font-weight:600;letter-spacing:.2px;margin:16px 0 4px;display:flex;align-items:center;gap:8px;}
+  .cap-line:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold);flex:none;}
+  .pet-note{font-size:13px;color:var(--body);margin-top:8px;line-height:1.45;}
+
+  /* room-card facts (single-room fork) */
+  .room-facts{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px;}
+  .room-facts .chip{font-size:11px;font-weight:600;letter-spacing:.5px;color:var(--ink);background:var(--cream);border:1px solid var(--line);padding:7px 13px;border-radius:var(--radius-sm);}
+  .room-feel{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--body);margin:2px 0 2px;}
+
+  /* ── price block — mirrors the guest.html invoice voice ── */
+  .price-block{margin-top:auto;padding-top:20px;border-top:1px solid var(--line);}
+  .price-block .all-in{display:flex;align-items:baseline;justify-content:space-between;gap:12px;}
+  .price-block .amt{font-family:var(--serif);font-size:30px;color:var(--green);line-height:1;}
+  .price-block .lbl{font-size:12px;letter-spacing:.5px;color:var(--media-tx);text-align:right;}
+  .price-block .tax{font-size:12px;color:var(--body);margin-top:6px;}
+  .price-block .per{font-size:12px;color:var(--media-tx);margin-top:2px;}
+
+  /* ── primary action button (from guest.html .btn.primary) ── */
+  .btn{display:block;width:100%;text-align:center;padding:15px 18px;font-size:12px;letter-spacing:1.3px;text-transform:uppercase;font-weight:600;cursor:pointer;margin-top:18px;background:transparent;border:1px solid #d6cfc0;color:var(--green);border-radius:var(--radius-sm);transition:background .18s,border-color .18s,color .18s;}
+  .btn:hover{border-color:var(--green);}
+  .btn.primary{background:var(--green);color:#fff;border-color:var(--green);font-weight:700;letter-spacing:1.6px;}
+  .btn.primary:hover{background:#2c3810;border-color:#2c3810;}
+  .btn.busy{background:#b9cabf;border-color:#b9cabf;color:#fff;cursor:default;pointer-events:none;}
+
+  /* ── too-big / empty fallback card ── */
+  .fallback{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 4px 20px rgba(67,56,43,.06);padding:48px 40px;text-align:center;max-width:620px;margin:34px auto 0;}
+  .fallback h3{font-size:28px;margin-bottom:14px;}
+  .fallback .muted{margin:0 auto 26px;max-width:440px;}
+  .fallback .wa-primary{display:inline-flex;align-items:center;gap:10px;background:var(--green);color:#fff;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;padding:16px 30px;border-radius:var(--radius-sm);text-decoration:none;transition:background .18s;}
+  .fallback .wa-primary:hover{background:#2c3810;}
+  .fallback .wa-primary svg{width:18px;height:18px;}
+
+  /* ── quiet plan-with-us help line ── */
+  .help-line{text-align:center;padding:30px 0 0;}
+  .help-line a{font-size:14px;color:var(--body);text-decoration:none;border-bottom:1px solid rgba(110,103,93,.3);padding-bottom:2px;transition:color .18s,border-color .18s;}
+  .help-line a:hover{color:var(--green);border-color:var(--green);}
+
+  .options-sec{padding-bottom:80px;}
+
+  /* ── reveal ── */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease;}
+  .reveal.in{opacity:1;transform:none;}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+    .opt .cover .ph{transition:none;}
+  }
+
+  /* ── FOOTER (verbatim from home.html) ── */
+  footer{background:var(--green);color:#fff;padding:72px var(--pad) 36px;}
+  .foot-grid{max-width:1320px;margin:0 auto;display:flex;gap:60px;justify-content:space-between;flex-wrap:wrap;}
+  footer h4{font-family:var(--serif);font-size:24px;color:var(--gold);margin-bottom:14px;}
+  .foot-logo{height:66px;width:auto;display:block;filter:brightness(0) invert(1);margin-bottom:16px;}
+  .foot-social{display:flex;gap:12px;margin-top:20px;justify-content:center;}
+  .foot-social a{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center;color:#fff;transition:background .18s,border-color .18s,color .18s;}
+  .foot-social a:hover{background:var(--gold);border-color:var(--gold);color:var(--green);}
+  .foot-social svg{width:24px;height:24px;}
+  footer .col h5{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+  footer .col a,footer .col p{display:block;color:rgba(255,255,255,.85);font-size:14px;margin-bottom:10px;text-decoration:none;}
+  footer .col a:hover{color:#fff;}
+  footer .tag{max-width:300px;color:rgba(255,255,255,.85);font-size:14px;}
+  .foot-bottom{max-width:1320px;margin:40px auto 0;padding-top:24px;border-top:1px solid rgba(255,255,255,.2);font-size:12px;color:rgba(255,255,255,.7);display:flex;justify-content:space-between;}
+
+  /* ── compact Reserve pill (from home.html .book-fab) ── */
+  .book-fab{position:fixed;right:24px;bottom:24px;z-index:50;display:inline-flex;align-items:center;gap:9px;background:var(--green);color:#fff;font-size:12px;letter-spacing:1.6px;text-transform:uppercase;font-weight:700;padding:14px 24px;border-radius:40px;text-decoration:none;box-shadow:0 8px 26px rgba(0,0,0,.22);transition:background .18s;}
+  .book-fab:hover{background:#2c3810;}
+  .book-fab svg{width:18px;height:18px;}
+
+  @media (max-width:820px){
+    .nav .links{display:none;}
+    section{padding:60px 0;}
+    h2{font-size:26px;}
+    .bk-header{padding:96px 0 8px;}
+    .bk-head-inner{align-items:flex-start;}
+    .bk-summary{font-size:20px;}
+    .bk-intro{padding:40px 0 8px;}
+    .opt-grid,.opt-grid.rooms{grid-template-columns:1fr;gap:22px;}
+    .opt .cover{height:260px;}
+    .fallback{padding:36px 24px;}
+    .foot-grid{flex-direction:column;gap:32px;}
+    .foot-bottom{flex-direction:column;gap:10px;}
+    .book-fab{right:16px;bottom:16px;}
+  }
+  @media (max-width:420px){
+    .bk-summary{font-size:18px;}
+    .bk-summary .sep{display:block;height:0;margin:2px 0;color:transparent;}
+  }
+
+  /* ── zone tags: poolside vs garden cottage, surfaced everywhere ── */
+  .zone{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;letter-spacing:.6px;text-transform:uppercase;font-weight:700;padding:3px 9px 3px 7px;border-radius:20px;line-height:1;white-space:nowrap;}
+  .zone svg{width:12px;height:12px;flex:none;}
+  .zone.pool{color:#1f6f8b;background:rgba(31,111,139,.10);}
+  .zone.garden{color:#3f7d4e;background:rgba(63,125,78,.12);}
+  /* clickable breakdown rows */
+  .breakdown li.clickable{cursor:pointer;border-radius:8px;margin:0 -8px;padding-left:8px;padding-right:8px;transition:background .15s;}
+  .breakdown li.clickable:hover{background:var(--cream);}
+  .breakdown .rtop{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .breakdown .rchevron{margin-left:auto;flex:none;color:var(--media-tx);font-size:20px;line-height:1;transition:color .15s,transform .15s;}
+  .breakdown li.clickable:hover .rchevron{color:var(--green);transform:translateX(2px);}
+  .room-note{font-size:14px;color:var(--ink);background:rgba(224,162,60,.10);border:1px solid rgba(224,162,60,.3);border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:18px;}
+  .room-note a,.room-broaden{color:var(--green);font-weight:700;text-decoration:none;border-bottom:1px solid rgba(60,74,22,.3);}
+  .room-broaden{display:inline-block;margin-top:20px;font-size:13.5px;}
+  .room-note a:hover,.room-broaden:hover{border-color:var(--green);}
+  .room-view{display:inline-block;margin:12px 0 2px;font-size:12.5px;font-weight:700;color:var(--green);cursor:pointer;border-bottom:1px solid rgba(60,74,22,.3);}
+  .room-view:hover{border-color:var(--green);}
+  /* single-room cover acts as a button into the detail modal */
+  .room-open{cursor:pointer;position:relative;}
+  .room-open::after{content:'View details';position:absolute;top:16px;right:16px;z-index:3;font-size:10.5px;letter-spacing:.6px;text-transform:uppercase;font-weight:700;color:var(--ink);background:rgba(255,255,255,.92);padding:6px 11px;border-radius:20px;box-shadow:0 2px 10px rgba(0,0,0,.18);opacity:0;transform:translateY(-4px);transition:opacity .2s,transform .2s;}
+  .room-open:hover::after{opacity:1;transform:none;}
+
+  /* ── rich room modal (ported from guest.html) ── */
+  .overlay{display:none;position:fixed;inset:0;background:rgba(67,56,43,.5);z-index:60;align-items:center;justify-content:center;padding:24px;}
+  .overlay.open{display:flex;}
+  .modal{background:var(--card);max-width:660px;width:100%;max-height:92vh;overflow:auto;border-radius:var(--radius);box-shadow:0 24px 70px rgba(0,0,0,.34);}
+  .modal-body{padding:40px;}
+  .modal-body .close{float:right;cursor:pointer;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:8px 16px;font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:700;border-radius:var(--radius-sm);}
+  .modal-body .close:hover{background:var(--ink);color:#fff;}
+  .modal-body .tagline{font-family:var(--serif);font-style:italic;font-size:17px;color:var(--body);margin:2px 0 16px;}
+  .modal-body .tagline .tier{font-style:normal;font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:var(--green);background:rgba(60,74,22,.08);padding:4px 10px;border-radius:var(--radius-sm);margin-left:10px;vertical-align:middle;}
+  .modal-body .story{font-size:15px;color:var(--body);line-height:1.62;margin-bottom:8px;}
+  .modal-body .price{font-size:14px;color:var(--ink);font-weight:700;margin-top:10px;}
+  /* the setting band — the clear poolside / garden-cottage distinction */
+  .setting-band{display:flex;gap:14px;align-items:flex-start;padding:16px 18px;border-radius:var(--radius-sm);margin:4px 0 20px;border:1px solid var(--line);}
+  .setting-band.pool{background:rgba(31,111,139,.07);border-color:rgba(31,111,139,.18);}
+  .setting-band.garden{background:rgba(63,125,78,.07);border-color:rgba(63,125,78,.18);}
+  .setting-band .sb-ic{flex:none;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;}
+  .setting-band.pool .sb-ic{background:#1f6f8b;}
+  .setting-band.garden .sb-ic{background:#3f7d4e;}
+  .setting-band .sb-ic svg{width:20px;height:20px;}
+  .setting-band .sb-title{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;margin-bottom:5px;}
+  .setting-band.pool .sb-title{color:#1f6f8b;}
+  .setting-band.garden .sb-title{color:#3f7d4e;}
+  .setting-band .sb-text{font-size:14px;color:var(--ink);line-height:1.55;}
+  .rmodal-main{position:relative;height:340px;background-color:#8c8275;overflow:hidden;}
+  .rmodal-main .rm-img{position:absolute;inset:0;background-color:#e7e1d4;background-size:cover;background-position:center;background-repeat:no-repeat;transition:opacity .8s ease;}
+  .rmodal-main .rm-top{opacity:0;}
+  .rm-zone{position:absolute;top:16px;left:16px;z-index:3;}
+  .rm-zone .zone{background:rgba(255,255,255,.92);box-shadow:0 2px 10px rgba(0,0,0,.18);}
+  .rm-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:40px;height:40px;border-radius:50%;border:none;background:rgba(255,255,255,.85);color:var(--ink);font-size:24px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;}
+  .rm-nav:hover{background:#fff;}
+  .rm-nav.prev{left:14px;}
+  .rm-nav.next{right:14px;}
+  .rm-count{position:absolute;bottom:12px;right:14px;z-index:3;background:rgba(20,16,12,.5);color:#fff;font-size:11px;font-weight:700;letter-spacing:.5px;padding:4px 11px;border-radius:20px;}
+  .rmodal-thumbs{display:flex;gap:8px;padding:12px 14px 0;overflow-x:auto;scrollbar-width:thin;scrollbar-color:#cdc4b2 transparent;}
+  .rmodal-thumbs::-webkit-scrollbar{height:6px;}
+  .rmodal-thumbs::-webkit-scrollbar-thumb{background:#cdc4b2;border-radius:6px;}
+  .rmodal-thumbs .th{flex:0 0 66px;height:48px;border-radius:6px;background-color:#e7e1d4;background-size:cover;background-position:center;cursor:pointer;opacity:.55;border:2px solid transparent;transition:opacity .15s,border-color .15s;}
+  .rmodal-thumbs .th:hover{opacity:.85;}
+  .rmodal-thumbs .th.active{opacity:1;border-color:var(--green);}
+  .facts{display:grid;grid-template-columns:1fr 1fr;gap:0 32px;margin-top:14px;}
+  .facts .f{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px;}
+  .facts .f .k{color:var(--media-tx);}
+  .facts .f .v{color:var(--ink);font-weight:600;text-align:right;}
+  .amen-list{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px;}
+  .amen-list .a{font-size:12px;color:var(--ink);background:var(--cream);border:1px solid var(--line);padding:8px 13px;border-radius:var(--radius-sm);}
+  .room-ask{display:inline-block;margin-top:24px;font-size:13px;font-weight:700;color:var(--green);text-decoration:none;border-bottom:1px solid rgba(60,74,22,.3);}
+  .room-ask:hover{border-color:var(--green);}
+  @media(max-width:560px){ .modal-body{padding:26px 22px;} .facts{grid-template-columns:1fr;} .rmodal-main{height:230px;} }
+</style>
+</head>
+<body>
+
+  <!-- NAV (verbatim markup from home.html; logo + Home → home.html) -->
+  <div class="nav book" id="nav">
+    <a class="logo" href="home.html" aria-label="Orchid Tree home"><img src="images/logo.png" alt="Orchid Tree"></a>
+    <div class="links">
+      <a href="home.html">Home</a>
+      <a href="stays.html">Stays</a>
+      <a href="experiences.html">Experiences</a>
+      <a href="restaurant.html">Restaurant</a>
+      <a href="corporate.html">Corporate</a>
+      <a href="about.html">About</a>
+      <a href="https://wa.me/918088251913?text=Hi%20Orchid%20Tree%2C%20I%27d%20like%20to%20enquire%20about%20a%20stay." class="reserve" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+  </div>
+
+  <!-- BOOKING HEADER -->
+  <div class="wrap bk-header">
+    <div class="bk-head-inner">
+      <div>
+        <div class="eyebrow">Your stay</div>
+        <div class="bk-summary" id="bkSummary"></div>
+        <div class="bk-group" id="bkGroup"></div>
+      </div>
+      <button class="bk-edit" id="bkEdit" type="button" aria-expanded="false" aria-controls="bkEditor">Edit</button>
+    </div>
+    <!-- inline editor: change dates / guests without leaving the results -->
+    <div class="bk-editor" id="bkEditor" hidden>
+      <div class="bke-dates">
+        <label class="bke-date"><span class="bke-lbl">Arrive</span><input type="date" id="bkeArrive"></label>
+        <label class="bke-date"><span class="bke-lbl">Leave</span><input type="date" id="bkeLeave"></label>
+      </div>
+      <div class="bke-steppers">
+        <div class="bke-step-row"><div class="bke-sl"><span class="bke-st">Adults</span><span class="bke-ss">Over 6</span></div>
+          <div class="bke-stepper"><button type="button" class="bke-step" data-step="adults" data-dir="-1" aria-label="Decrease adults">−</button><span class="bke-count" id="bkeAdults">2</span><button type="button" class="bke-step" data-step="adults" data-dir="1" aria-label="Increase adults">+</button></div></div>
+        <div class="bke-step-row"><div class="bke-sl"><span class="bke-st">Children</span><span class="bke-ss">Age up to 6</span></div>
+          <div class="bke-stepper"><button type="button" class="bke-step" data-step="children" data-dir="-1" aria-label="Decrease children">−</button><span class="bke-count" id="bkeChildren">0</span><button type="button" class="bke-step" data-step="children" data-dir="1" aria-label="Increase children">+</button></div></div>
+        <div class="bke-step-row"><div class="bke-sl"><span class="bke-st">Pets</span><span class="bke-ss">Bringing a friend</span></div>
+          <div class="bke-stepper"><button type="button" class="bke-step" data-step="pets" data-dir="-1" aria-label="Decrease pets">−</button><span class="bke-count" id="bkePets">0</span><button type="button" class="bke-step" data-step="pets" data-dir="1" aria-label="Increase pets">+</button></div></div>
+      </div>
+      <div class="bke-actions">
+        <button type="button" class="bke-cancel" id="bkeCancel">Cancel</button>
+        <button type="button" class="btn primary" id="bkeUpdate">Update results</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPTIONS -->
+  <div class="wrap options-sec">
+    <div class="bk-intro reveal" id="introBlock"></div>
+    <div id="optionsArea"></div>
+    <div class="help-line reveal" id="helpLine"></div>
+  </div>
+
+  <!-- FOOTER (verbatim from home.html) -->
+  <footer>
+    <div class="foot-grid">
+      <div class="col" style="flex:1;min-width:240px;">
+        <img class="foot-logo" src="images/logo.png" alt="Orchid Tree">
+        <p class="tag">Boutique is not size, it's soul. Every corner here is designed with intention, not repetition.</p>
+        <div class="foot-social">
+          <a href="https://www.instagram.com/orchidtree.in/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 2c-2.7 0-3.05.01-4.12.06-1.06.05-1.79.22-2.43.47-.66.26-1.22.6-1.77 1.15-.55.55-.89 1.11-1.15 1.77-.25.64-.42 1.37-.47 2.43C2.01 8.95 2 9.3 2 12s.01 3.05.06 4.12c.05 1.06.22 1.79.47 2.43.26.66.6 1.22 1.15 1.77.55.55 1.11.89 1.77 1.15.64.25 1.37.42 2.43.47 1.07.05 1.42.06 4.12.06s3.05-.01 4.12-.06c1.06-.05 1.79-.22 2.43-.47.66-.26 1.22-.6 1.77-1.15.55-.55.89-1.11 1.15-1.77.25-.64.42-1.37.47-2.43.05-1.07.06-1.42.06-4.12s-.01-3.05-.06-4.12c-.05-1.06-.22-1.79-.47-2.43a4.9 4.9 0 0 0-1.15-1.77 4.9 4.9 0 0 0-1.77-1.15c-.64-.25-1.37-.42-2.43-.47C15.05 2.01 14.7 2 12 2zm0 1.8c2.67 0 2.99.01 4.04.06.97.04 1.5.21 1.86.35.47.18.8.4 1.15.75.35.35.57.68.75 1.15.14.36.3.89.35 1.86.05 1.05.06 1.37.06 4.04s-.01 2.99-.06 4.04c-.04.97-.21 1.5-.35 1.86-.18.47-.4.8-.75 1.15-.35.35-.68.57-1.15.75-.36.14-.89.3-1.86.35-1.05.05-1.37.06-4.04.06s-2.99-.01-4.04-.06c-.97-.04-1.5-.21-1.86-.35a3.1 3.1 0 0 1-1.15-.75 3.1 3.1 0 0 1-.75-1.15c-.14-.36-.3-.89-.35-1.86-.05-1.05-.06-1.37-.06-4.04s.01-2.99.06-4.04c.04-.97.21-1.5.35-1.86.18-.47.4-.8.75-1.15.35-.35.68-.57 1.15-.75.36-.14.89-.3 1.86-.35C9.01 3.81 9.33 3.8 12 3.8zm0 3.06A5.14 5.14 0 1 0 12 17.14 5.14 5.14 0 0 0 12 6.86zm0 8.48A3.34 3.34 0 1 1 12 8.66a3.34 3.34 0 0 1 0 6.68zm6.54-8.69a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></svg></a>
+          <a href="https://www.facebook.com/orchidtree.in" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.5h2.52l.38-2.93H13.5V9.7c0-.85.24-1.43 1.45-1.43h1.55V5.65c-.27-.04-1.19-.12-2.27-.12-2.25 0-3.79 1.37-3.79 3.89v1.65H8.4v2.93h2.59V21z"/></svg></a>
+          <a href="https://www.linkedin.com/company/orchid-tree-wellness-retreat/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 8.6V19H3.66V8.6zM5.3 3.7a1.9 1.9 0 1 1 0 3.8 1.9 1.9 0 0 1 0-3.8zM9 8.6h3.14v1.42h.04c.44-.82 1.5-1.69 3.1-1.69 3.32 0 3.93 2.18 3.93 5.02V19h-3.27v-4.62c0-1.1-.02-2.52-1.54-2.52-1.54 0-1.78 1.2-1.78 2.44V19H9z"/></svg></a>
+        </div>
+      </div>
+      <div class="col">
+        <h5>Explore</h5>
+        <a href="stays.html">Our Stays</a><a href="experiences.html">Experiences</a><a href="restaurant.html">Restaurant</a><a href="about.html">About</a><a href="corporate.html">Corporate</a><a href="faq.html">FAQ</a>
+      </div>
+      <div class="col">
+        <h5>Connect</h5>
+        <p>Survey No. 7/2, Yelachamanahalli Village, Hoskote, Karnataka 562114</p>
+        <a href="mailto:orchidtree.blr@gmail.com">orchidtree.blr@gmail.com</a>
+        <a href="https://wa.me/918088251913" target="_blank" rel="noopener">+91 80882 51913</a>
+      </div>
+    </div>
+    <div style="text-align:center;margin:14px 0 16px;line-height:1;"><div style="font-family:'Sacramento',cursive;font-size:clamp(30px,4vw,42px);color:var(--gold);line-height:1;">Orchid Tree</div><div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.6);margin-top:10px;">The art of doing nothing</div></div>
+    <div class="foot-bottom">
+      <span>© 2026 Orchid Tree. All rights reserved.</span>
+      <span><a href="privacy-policy.html" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.35);">Privacy Policy</a> · <a href="privacy-policy.html#terms" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.35);">Terms of Service</a></span>
+    </div>
+  </footer>
+
+  <!-- compact Reserve pill -->
+  <a class="book-fab" href="https://wa.me/918088251913?text=Hi%20Orchid%20Tree%2C%20I%27d%20like%20to%20enquire%20about%20a%20stay." target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm5.2 14.1c-.2.6-1.2 1.1-1.7 1.2-.4.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.5-2.6-1.1-4.3-3.8-4.5-4-.1-.2-1-1.4-1-2.6 0-1.2.6-1.8.9-2.1.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5.2.5.7 1.7.7 1.8.1.1.1.3 0 .4l-.3.5c-.1.2-.3.4-.1.7.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.2.1.4.1.5-.1l.7-.8c.2-.2.4-.2.6-.1l1.6.8c.2.1.4.2.5.3.1.2.1.5-.1 1z"/></svg>
+    WhatsApp
+  </a>
+
+  <!-- rich room detail modal -->
+  <div class="overlay" id="overlay" onclick="if(event.target===this)closeRoom()">
+    <div class="modal">
+      <div class="rmodal-main" id="mMain">
+        <div class="rm-img rm-base"></div>
+        <div class="rm-img rm-top"></div>
+        <div class="rm-zone" id="mZone"></div>
+        <button class="rm-nav prev" id="mPrev" aria-label="Previous photo">&lsaquo;</button>
+        <button class="rm-nav next" id="mNext" aria-label="Next photo">&rsaquo;</button>
+        <div class="rm-count" id="mCount"></div>
+      </div>
+      <div class="rmodal-thumbs" id="mThumbs"></div>
+      <div class="modal-body">
+        <button class="close" onclick="closeRoom()">Close</button>
+        <div class="eyebrow" id="mCat"></div>
+        <h2 id="mTitle"></h2>
+        <div class="tagline" id="mTagline"></div>
+        <div id="mSetting"></div>
+        <p class="story" id="mStory"></p>
+        <p class="muted" id="mDesc" style="margin-top:8px;"></p>
+        <div class="price" id="mPrice"></div>
+        <div class="eyebrow" style="margin-top:24px;">The room</div>
+        <div class="facts" id="mFacts"></div>
+        <div class="eyebrow" style="margin-top:24px;">What this place offers</div>
+        <div class="amen-list" id="mOffers"></div>
+        <div id="mAsk"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="shared/catalog.js"></script>
+  <script src="shared/content.js"></script>
+  <script src="shared/store.js"></script>
+  <script src="shared/packages.js"></script>
+  <script>
+  (function(){
+    var S  = window.OrchidStore;
+    var P  = window.OrchidPackages;
+    var CT = window.OrchidContent;
+    var C  = window.OrchidCatalog;
+
+    // ---- helpers ----------------------------------------------------------
+    function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+    function el(id){ return document.getElementById(id); }
+
+    // ---- zone: poolside cluster vs garden cottage (the estate's two areas) -
+    var ICON_POOL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16c1.5 0 1.5 1.2 3 1.2S8.5 16 10 16s1.5 1.2 3 1.2 1.5-1.2 3-1.2 1.5 1.2 3 1.2"/><path d="M2 20c1.5 0 1.5 1.2 3 1.2S8.5 20 10 20s1.5 1.2 3 1.2 1.5-1.2 3-1.2 1.5 1.2 3 1.2"/><path d="M7 16V5.5A1.5 1.5 0 0 1 8.5 4 1.5 1.5 0 0 1 10 5.5"/><path d="M16 16V5.5A1.5 1.5 0 0 0 14.5 4 1.5 1.5 0 0 0 13 5.5"/></svg>';
+    var ICON_GARDEN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-7"/><path d="M12 15c-3.5 0-6-2.4-6-5.8C6 5.6 8.7 3 12 3s6 2.6 6 6.2c0 3.4-2.5 5.8-6 5.8z"/><path d="M12 15c0-2.5 1.3-4.5 3-5.5M12 12c0-2-1-3.6-2.5-4.4"/></svg>';
+    // zone derived from the room's category: "...by the Pool" vs "...Garden Cottage"
+    function zoneOf(category){
+      return /garden/i.test(category||'') ? 'garden' : 'pool';
+    }
+    function zoneLabel(category){
+      return zoneOf(category) === 'garden' ? 'Garden cottage' : 'Poolside';
+    }
+    function zoneTag(category){
+      var z = zoneOf(category);
+      var ic = z === 'garden' ? ICON_GARDEN : ICON_POOL;
+      return '<span class="zone '+z+'">'+ic+zoneLabel(category)+'</span>';
+    }
+    // the rich, human explanation shown in the modal
+    var SETTING_COPY = {
+      pool: { title: 'By the pool', text: 'Steps from the water and clustered together with the other poolside rooms. Bright, easy and close to everything — the natural choice when your group wants to stay near each other and the pool.' },
+      garden: { title: 'A garden cottage, set apart', text: 'Tucked among the trees a short walk from the pool, with a private sit-out patio and a bath open to the sky. Quieter and more private — its own little world, a little removed from the poolside rooms.' },
+    };
+    function settingBand(category){
+      var z = zoneOf(category), c = SETTING_COPY[z], ic = z === 'garden' ? ICON_GARDEN : ICON_POOL;
+      return '<div class="setting-band '+z+'"><div class="sb-ic">'+ic+'</div>'+
+        '<div><div class="sb-title">'+esc(c.title)+'</div><div class="sb-text">'+esc(c.text)+'</div></div></div>';
+    }
+
+    // rupee formatting — prefer the store helper for consistency with guest.html
+    function rupees(n){
+      if(S && typeof S.rupees === 'function') return S.rupees(n);
+      return '₹' + Number(n||0).toLocaleString('en-IN');
+    }
+
+    var WA_NUM = (CT && CT.contact && CT.contact.whatsapp) || '918088251913';
+    function waLink(msg){ return 'https://wa.me/' + WA_NUM + '?text=' + encodeURIComponent(msg); }
+
+    // ---- read query params ------------------------------------------------
+    var q = new URLSearchParams(location.search);
+    function intParam(k){ var n = parseInt(q.get(k), 10); return isFinite(n) && n > 0 ? n : 0; }
+    var inParam  = q.get('in')  || '';
+    var outParam = q.get('out') || '';
+    var adults   = intParam('adults');
+    var children = intParam('children');
+    var pets     = intParam('pets');
+    if(adults <= 0) adults = 2; // a stay needs at least one adult
+    var roomParam = q.get('room') || ''; // deep-link: book one specific room
+
+    // nights from in/out (difference in days), fallback 1
+    function nightsBetween(a, b){
+      var d1 = new Date(a + 'T00:00:00'), d2 = new Date(b + 'T00:00:00');
+      if(isNaN(d1) || isNaN(d2)) return 1;
+      var diff = Math.round((d2 - d1) / 86400000);
+      return diff > 0 ? diff : 1;
+    }
+    var nights = (inParam && outParam) ? nightsBetween(inParam, outParam) : 1;
+
+    var group = { adults: adults, children: children, pets: pets, nights: nights };
+
+    // ---- header: dates + group line + carry-through edit link -------------
+    function fmtDate(iso){
+      var d = new Date(iso + 'T00:00:00');
+      if(isNaN(d)) return iso;
+      var MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      return d.getDate() + ' ' + MON[d.getMonth()];
+    }
+    function plural(n, one, many){ return n + ' ' + (n === 1 ? one : many); }
+
+    var dateLine = (inParam && outParam)
+      ? 'Arrive ' + fmtDate(inParam) + ' <span class="sep">→</span> Leave ' + fmtDate(outParam)
+      : 'Your stay';
+
+    var groupBits = [ plural(group.adults, 'adult', 'adults') ];
+    if(group.children > 0) groupBits.push(plural(group.children, 'child', 'children'));
+    if(group.pets > 0)     groupBits.push(plural(group.pets, 'pet', 'pets'));
+
+    el('bkSummary').innerHTML = dateLine;
+    el('bkGroup').textContent = plural(nights, 'night', 'nights') + ' · ' + groupBits.join(', ');
+
+    // carry the params back to the home book bar so nothing is re-typed
+    var carry = new URLSearchParams();
+    if(inParam)  carry.set('in', inParam);
+    if(outParam) carry.set('out', outParam);
+    carry.set('adults', String(group.adults));
+    carry.set('children', String(group.children));
+    carry.set('pets', String(group.pets));
+    el('bkEdit').href = 'home.html?' + carry.toString() + '#book';
+
+    // ---- guard: engine / store missing ------------------------------------
+    if(!P || !S){
+      el('introBlock').innerHTML = '<h2>We can\'t load the options right now</h2>'+
+        '<p class="muted">Please refresh the page, or plan your stay with us directly.</p>';
+      el('optionsArea').innerHTML = fallbackCard();
+      el('helpLine').innerHTML = '';
+      reveal();
+      return;
+    }
+
+    // ---- option cards -----------------------------------------------------
+    function pills(capacityLabel, petFriendly){
+      var pet = petFriendly
+        ? '<span class="rb-pill pet">Pets welcome</span>'
+        : '<span class="rb-pill nopet">No pets</span>';
+      return '<div class="rb-meta"><span class="rb-pill">'+esc(capacityLabel)+'</span>'+pet+'</div>';
+    }
+    function cover(image, pillsHtml, name, feel){
+      var ph = image
+        ? '<div class="ph" style="background-image:url(\''+esc(image)+'\')"></div>'
+        : '<div class="ph"></div>';
+      return '<div class="cover">'+ph+'<div class="scrim"></div>'+pillsHtml+
+        '<div class="cap"><div class="cn">'+esc(name)+'</div>'+
+        (feel ? '<div class="cf">'+esc(feel)+'</div>' : '')+'</div></div>';
+    }
+    function priceBlock(subtotal, nights, perNight){
+      var perLine = perNight
+        ? '<div class="per">about '+rupees(Math.round(perNight))+' per night</div>'
+        : '';
+      return '<div class="price-block">'+
+        '<div class="all-in"><span class="amt">'+rupees(subtotal)+'</span>'+
+          '<span class="lbl">all-in for '+plural(nights, 'night', 'nights')+'</span></div>'+
+        '<div class="tax">+18% tax at checkout</div>'+ perLine +
+      '</div>';
+    }
+
+    // ---- SINGLE-ROOM FORK -------------------------------------------------
+    function singleRoomCard(opt, i){
+      var facts = '<div class="room-facts">'+
+        zoneTag(opt.type)+
+        '<span class="chip">'+esc(opt.capacityLabel)+'</span>'+
+        '<span class="chip">'+(opt.petFriendly ? 'Pets welcome' : 'No pets')+'</span>'+
+      '</div>';
+      var feel = opt.feel ? '<div class="room-feel">'+esc(opt.feel)+'</div>' : '';
+      return '<div class="opt reveal" data-kind="room" data-idx="'+i+'">'+
+        '<div class="room-open" data-room="'+esc(opt.roomId)+'">'+
+          cover(opt.image, pills(opt.capacityLabel, opt.petFriendly), opt.name, opt.feel)+
+        '</div>'+
+        '<div class="body">'+
+          feel + facts +
+          '<span class="room-view" data-room="'+esc(opt.roomId)+'">View room details &rsaquo;</span>'+
+          priceBlock(opt.subtotal, opt.nights, opt.perNight)+
+          '<span class="btn primary" data-choose="room" data-idx="'+i+'">Choose this room</span>'+
+        '</div>'+
+      '</div>';
+    }
+
+    // ---- PACKAGE ----------------------------------------------------------
+    function packageCard(pkg, i){
+      var rows = (pkg.rooms || []).map(function(r){
+        var thumb = r.image
+          ? '<div class="thumb" style="background-image:url(\''+esc(r.image)+'\')"></div>'
+          : '<div class="thumb"></div>';
+        return '<li class="clickable" data-room="'+esc(r.id)+'">'+thumb+'<div class="rinfo">'+
+          '<div class="rtop"><span class="rname">'+esc(r.name)+'</span>'+zoneTag(r.type)+'</div>'+
+          '<div class="rlabel">'+esc(r.label)+'</div></div>'+
+          '<span class="rchevron">&rsaquo;</span></li>';
+      }).join('');
+      return '<div class="opt reveal" data-kind="package" data-idx="'+i+'">'+
+        cover(pkg.cover, pills('Sleeps '+pkg.totalCapacity, pkg.petFriendly), pkg.name, pkg.feel)+
+        '<div class="body">'+
+          '<ul class="breakdown">'+rows+'</ul>'+
+          '<div class="cap-line">'+esc(pkg.capacityLine)+'</div>'+
+          (pkg.petNote ? '<div class="pet-note">'+esc(pkg.petNote)+'</div>' : '')+
+          priceBlock(pkg.subtotal, pkg.nights, pkg.perNightTotal)+
+          '<span class="btn primary" data-choose="package" data-idx="'+i+'">Choose this package</span>'+
+        '</div>'+
+      '</div>';
+    }
+
+    // ---- too-big / empty fallback -----------------------------------------
+    function fallbackCard(){
+      var msg = 'Hi, I\'d like to plan a stay at Orchid Tree';
+      if(inParam && outParam) msg += ' from ' + fmtDate(inParam) + ' to ' + fmtDate(outParam);
+      msg += ' for ' + groupBits.join(', ') + '. Can you help?';
+      return '<div class="fallback reveal">'+
+        '<div class="eyebrow">A stay for your group</div>'+
+        '<h3>Your group is bigger than we can place online</h3>'+
+        '<p class="muted">We have eleven rooms across the estate. A group this size is best arranged with our team, who can hold the right rooms for you and plan the details.</p>'+
+        '<a class="wa-primary" href="'+esc(waLink(msg))+'" target="_blank" rel="noopener">'+
+          '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm5.2 14.1c-.2.6-1.2 1.1-1.7 1.2-.4.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.5-2.6-1.1-4.3-3.8-4.5-4-.1-.2-1-1.4-1-2.6 0-1.2.6-1.8.9-2.1.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5.2.5.7 1.7.7 1.8.1.1.1.3 0 .4l-.3.5c-.1.2-.3.4-.1.7.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.2.1.4.1.5-.1l.7-.8c.2-.2.4-.2.6-.1l1.6.8c.2.1.4.2.5.3.1.2.1.5-.1 1z"/></svg>'+
+          'Plan with us on WhatsApp</a>'+
+      '</div>';
+    }
+
+    // ---- one specific room (deep-link from a room CTA) --------------------
+    function forcedRoomOption(id){
+      var r = C && C.get(id); if(!r) return null;
+      var price = (P.ROOM_PRICES && P.ROOM_PRICES[r.category]) || 0;
+      return {
+        type: r.category, roomId: id, roomIds: [id], name: r.name, feel: r.tagline,
+        image: (r.imageUrls && r.imageUrls[0]) || null,
+        petFriendly: r.petFriendly, capacity: r.capacity,
+        capacityLabel: r.occupancyShort || ('Sleeps ' + r.capacity),
+        groupSize: group.adults + group.children, nights: nights,
+        subtotal: price * nights, perNight: price,
+      };
+    }
+    function roomFits(id){
+      var r = C && C.get(id); if(!r) return false;
+      var meta = P.TYPE_META && P.TYPE_META[r.category];
+      var adultCap = (meta && meta.adultCap) || r.capacity;
+      return (group.adults + group.children) <= r.capacity &&
+             group.adults <= adultCap &&
+             (group.pets === 0 || r.petFriendly);
+    }
+
+    // ---- branch + render --------------------------------------------------
+    var rendered;
+    try {
+      if(roomParam && C && C.get(roomParam)){
+        var rm = C.get(roomParam);
+        var ro = forcedRoomOption(roomParam);
+        el('introBlock').innerHTML = introHtml('Your room', rm.name,
+          'Your stay in ' + rm.name + '. Every room comes with breakfast, the pool, the steam room, and the run of the estate.');
+        var note = '';
+        if(!roomFits(roomParam)){
+          var uf = new URLSearchParams(location.search); uf.delete('room');
+          note = '<p class="room-note">This room sleeps '+rm.capacity+', which is fewer than your group. '+
+            '<a href="book-packages.html?'+uf.toString()+'">See options that fit everyone &rsaquo;</a></p>';
+        }
+        var uall = new URLSearchParams(location.search); uall.delete('room');
+        var broaden = '<a class="room-broaden" href="book-packages.html?'+uall.toString()+'">Travelling as a larger group? See all options &rsaquo;</a>';
+        el('optionsArea').innerHTML = note + '<div class="opt-grid rooms">'+ singleRoomCard(ro, 0) +'</div>' + broaden;
+        rendered = { kind: 'room', list: [ro] };
+      } else if(P.fitsSingleRoom(group)){
+        var rooms = P.generateSingleRooms(group) || [];
+        if(!rooms.length){
+          el('introBlock').innerHTML = introHtml('A stay for your group', 'Let\'s find you a room');
+          el('optionsArea').innerHTML = fallbackCard();
+        } else {
+          el('introBlock').innerHTML = introHtml('Your room', rooms.length > 1 ? 'Rooms that fit your group' : 'The room that fits your group',
+            'One room holds everyone. Pick the feeling you\'re after. Every room comes with breakfast, the pool, the steam room, and the run of the estate.');
+          el('optionsArea').innerHTML = '<div class="opt-grid rooms">'+ rooms.map(singleRoomCard).join('') +'</div>';
+          rendered = { kind: 'room', list: rooms };
+        }
+      } else {
+        var packages = P.generatePackages(group) || [];
+        if(!packages.length){
+          el('introBlock').innerHTML = introHtml('A stay for your group', 'Let\'s plan this together');
+          el('optionsArea').innerHTML = fallbackCard();
+        } else {
+          el('introBlock').innerHTML = introHtml('Your options', packages.length >= 3 ? 'Three ways to stay' : 'Ways to stay',
+            'Your group needs more than one room. Here are a few ways to arrange them. Every room comes with breakfast and the run of the estate.');
+          el('optionsArea').innerHTML = '<div class="opt-grid">'+ packages.map(packageCard).join('') +'</div>';
+          rendered = { kind: 'package', list: packages };
+        }
+      }
+    } catch(err){
+      el('introBlock').innerHTML = introHtml('A stay for your group', 'Let\'s plan this together');
+      el('optionsArea').innerHTML = fallbackCard();
+    }
+
+    function introHtml(eyebrow, title, body){
+      return '<div class="eyebrow">'+esc(eyebrow)+'</div><h2>'+esc(title)+'</h2>'+
+        (body ? '<p class="muted">'+esc(body)+'</p>' : '');
+    }
+
+    // ---- quiet plan-with-us help line -------------------------------------
+    var helpMsg = 'Hi, I\'d like to plan a stay at Orchid Tree';
+    if(inParam && outParam) helpMsg += ' from ' + fmtDate(inParam) + ' to ' + fmtDate(outParam);
+    helpMsg += ' for ' + groupBits.join(', ') + '.';
+    el('helpLine').innerHTML = '<a href="'+esc(waLink(helpMsg))+'" target="_blank" rel="noopener">Prefer to plan with us? Message the team &rarr;</a>';
+
+    // ---- inline editor: change dates / guests without leaving the page -----
+    (function(){
+      var editBtn = el('bkEdit'), panel = el('bkEditor');
+      if(!editBtn || !panel) return;
+      var arr = el('bkeArrive'), lv = el('bkeLeave');
+      var ecounts = { adults: group.adults, children: group.children, pets: group.pets };
+      var emins = { adults: 1, children: 0, pets: 0 };
+
+      function fmt(d){ var y=d.getFullYear(),m=('0'+(d.getMonth()+1)).slice(-2),day=('0'+d.getDate()).slice(-2); return y+'-'+m+'-'+day; }
+      function addDays(d,n){ var x=new Date(d); x.setDate(x.getDate()+n); return x; }
+      var today = new Date(); today.setHours(0,0,0,0);
+      arr.value = inParam || fmt(today);
+      arr.min   = fmt(today);
+      lv.value  = outParam || fmt(addDays(today,1));
+      lv.min    = fmt(addDays(arr.value ? new Date(arr.value) : today, 1));
+      arr.addEventListener('change', function(){
+        var a = arr.value ? new Date(arr.value) : today;
+        lv.min = fmt(addDays(a,1));
+        if(!lv.value || new Date(lv.value) <= a) lv.value = fmt(addDays(a,1));
+      });
+
+      function refresh(){
+        panel.querySelectorAll('.bke-step').forEach(function(b){
+          var k=b.getAttribute('data-step'), d=parseInt(b.getAttribute('data-dir'),10);
+          if(d<0) b.disabled = ecounts[k] <= emins[k];
+        });
+        el('bkeAdults').textContent = ecounts.adults;
+        el('bkeChildren').textContent = ecounts.children;
+        el('bkePets').textContent = ecounts.pets;
+      }
+      panel.querySelectorAll('.bke-step').forEach(function(b){
+        b.addEventListener('click', function(){
+          var k=b.getAttribute('data-step'), d=parseInt(b.getAttribute('data-dir'),10);
+          var n=ecounts[k]+d; if(n<emins[k]) n=emins[k]; ecounts[k]=n; refresh();
+        });
+      });
+      refresh();
+
+      function open(){ panel.hidden=false; editBtn.setAttribute('aria-expanded','true'); }
+      function close(){ panel.hidden=true; editBtn.setAttribute('aria-expanded','false'); }
+      editBtn.addEventListener('click', function(){ panel.hidden ? open() : close(); });
+      el('bkeCancel').addEventListener('click', close);
+      el('bkeUpdate').addEventListener('click', function(){
+        if(!arr.value || !lv.value || new Date(lv.value) <= new Date(arr.value)){
+          lv.focus(); return;
+        }
+        var u = new URLSearchParams();
+        u.set('in', arr.value); u.set('out', lv.value);
+        u.set('adults', String(ecounts.adults));
+        u.set('children', String(ecounts.children));
+        u.set('pets', String(ecounts.pets));
+        if(roomParam) u.set('room', roomParam); // stay in single-room mode
+        location.href = 'book-packages.html?' + u.toString();
+      });
+    })();
+
+    // ---- choose an option → create booking (same contract as admin.html) --
+    // The chosen option waits here until the guest gives + verifies their details.
+    function choose(btn){
+      if(!rendered) return;
+      var idx = parseInt(btn.getAttribute('data-idx'), 10);
+      var selected = rendered.list[idx];
+      if(!selected) return;
+
+      // disable + show preparing state
+      btn.classList.add('busy');
+      btn.textContent = 'Preparing your booking…';
+      Array.prototype.forEach.call(document.querySelectorAll('[data-choose]'), function(b){
+        b.style.pointerEvents = 'none';
+      });
+
+      var roomIds = selected.roomIds || (selected.roomId ? [selected.roomId] : []);
+      try {
+        var booking = S.create({
+          guest:   { name: "", whatsapp: "" },           // collected + verified on the quote page
+          stay:    { checkIn: inParam, checkOut: outParam },
+          roomIds: roomIds,
+          guestMix:{ adults: group.adults, children: group.children, pets: group.pets },
+          pricing: { roomSubtotal: selected.subtotal, listPrice: 0, taxRate: 0.18 },
+          foodCredit: 0,
+          deadlineHours: 0,
+          status: "sent",
+        });
+        S.markSent(booking.id);
+        location.href = "guest.html?b=" + booking.token;
+      } catch(e){
+        btn.classList.remove('busy');
+        btn.textContent = rendered.kind === 'room' ? 'Choose this room' : 'Choose this package';
+        Array.prototype.forEach.call(document.querySelectorAll('[data-choose]'), function(b){
+          b.style.pointerEvents = '';
+        });
+      }
+    }
+    document.addEventListener('click', function(ev){
+      var btn = ev.target.closest && ev.target.closest('[data-choose]');
+      if(btn){ choose(btn); return; }
+      var rm = ev.target.closest && ev.target.closest('[data-room]');
+      if(rm) openRoom(rm.getAttribute('data-room'));
+    });
+
+    // ---- rich room modal (gallery + specs + setting), ported from guest.html
+    function roomUrls(r){ return (r.imageUrls && r.imageUrls.length) ? r.imageUrls : (r.imageUrl ? [r.imageUrl] : []); }
+
+    var MG = { urls: [], i: 0, cur: 0, timer: null };
+    function mgLayers(){ return [document.querySelector('#mMain .rm-base'), document.querySelector('#mMain .rm-top')]; }
+    function mgGo(target){
+      var n = MG.urls.length; if(!n) return;
+      target = (target + n) % n; MG.i = target;
+      var layers = mgLayers(), incoming = layers[1 - MG.cur];
+      incoming.style.backgroundImage = "url('" + MG.urls[target] + "')";
+      incoming.style.opacity = '1';
+      layers[MG.cur].style.opacity = '0';
+      MG.cur = 1 - MG.cur;
+      var cnt = el('mCount'); if(cnt) cnt.textContent = (target + 1) + ' / ' + n;
+      var thumbs = el('mThumbs');
+      if(thumbs){ var a = thumbs.querySelector('.th.active'); if(a) a.classList.remove('active');
+        var t = thumbs.querySelector('.th[data-i="' + target + '"]'); if(t) t.classList.add('active'); }
+    }
+    function mgTimer(){ clearInterval(MG.timer); MG.timer = null; if(MG.urls.length > 1) MG.timer = setInterval(function(){ mgGo(MG.i + 1); }, 3200); }
+    function mgStop(){ clearInterval(MG.timer); MG.timer = null; }
+    function mgStart(urls){
+      mgStop(); MG.urls = urls || []; MG.i = 0; MG.cur = 0;
+      var layers = mgLayers();
+      layers[0].style.backgroundImage = urls[0] ? "url('" + urls[0] + "')" : ''; layers[0].style.opacity = '1';
+      layers[1].style.backgroundImage = ''; layers[1].style.opacity = '0';
+      urls.forEach(function(u){ var im = new Image(); im.src = u; });
+      var multi = urls.length > 1;
+      el('mPrev').style.display = multi ? '' : 'none';
+      el('mNext').style.display = multi ? '' : 'none';
+      el('mCount').style.display = multi ? '' : 'none';
+      el('mCount').textContent = '1 / ' + urls.length;
+      var thumbs = el('mThumbs');
+      thumbs.innerHTML = multi
+        ? urls.map(function(u, i){ return '<div class="th' + (i === 0 ? ' active' : '') + '" data-i="' + i + '" style="background-image:url(\'' + esc(u) + '\')"></div>'; }).join('')
+        : '';
+      Array.prototype.forEach.call(thumbs.querySelectorAll('.th'), function(th){
+        th.addEventListener('click', function(){ mgGo(+th.getAttribute('data-i')); mgTimer(); });
+      });
+      mgTimer();
+    }
+    el('mPrev').addEventListener('click', function(){ mgGo(MG.i - 1); mgTimer(); });
+    el('mNext').addEventListener('click', function(){ mgGo(MG.i + 1); mgTimer(); });
+
+    function openRoom(id){
+      var r = C && C.get(id); if(!r) return;
+      el('mCat').textContent = r.category;
+      el('mTitle').textContent = r.name;
+      el('mTagline').innerHTML = esc(r.tagline) + (r.tier ? '<span class="tier">'+esc(r.tier)+'</span>' : '');
+      el('mZone').innerHTML = zoneTag(r.category);
+      el('mSetting').innerHTML = settingBand(r.category);
+      el('mStory').textContent = r.story || '';
+      el('mDesc').textContent = r.description || '';
+
+      var priceEl = el('mPrice');
+      if(r.priceFrom){ priceEl.style.display=''; priceEl.textContent = 'From ' + rupees(r.priceFrom) + ' + taxes per night.'; }
+      else { priceEl.style.display='none'; }
+
+      mgStart(roomUrls(r));
+
+      el('mFacts').innerHTML = (r.facts || []).map(function(f){
+        return '<div class="f"><span class="k">'+esc(f.label)+'</span><span class="v">'+esc(f.value)+'</span></div>';
+      }).join('');
+      el('mOffers').innerHTML = (r.amenities || []).map(function(a){ return '<span class="a">'+esc(a)+'</span>'; }).join('');
+      el('mAsk').innerHTML = '<a class="room-ask" href="'+esc(waLink('Hi, I have a question about the '+r.name+' room at Orchid Tree.'))+'" target="_blank" rel="noopener">Have a question about this room? Message us &rarr;</a>';
+
+      el('overlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeRoom(){ mgStop(); el('overlay').classList.remove('open'); document.body.style.overflow = ''; }
+    window.openRoom = openRoom;
+    window.closeRoom = closeRoom;
+    document.addEventListener('keydown', function(ev){ if(ev.key === 'Escape') closeRoom(); });
+
+    // ---- scroll reveal ----------------------------------------------------
+    function reveal(){
+      if(!('IntersectionObserver' in window)){
+        document.querySelectorAll('.reveal').forEach(function(e){ e.classList.add('in'); });
+        return;
+      }
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, {threshold:0.12});
+      document.querySelectorAll('.reveal').forEach(function(e){ io.observe(e); });
+    }
+    reveal();
+  })();
+  </script>
+</body>
+</html>

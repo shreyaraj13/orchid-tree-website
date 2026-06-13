@@ -1,0 +1,5 @@
+# macOS
+.DS_Store
+
+# Generated Vercel deploy mirror (recreated by deploy.sh)
+.deploy/

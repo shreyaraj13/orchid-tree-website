@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orchid Tree — A boutique resort near Bangalore</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Headings: Cormorant Garamond (free stand-in for Minerva). Body: Avenir (macOS system) with Mulish fallback. Accent: Sacramento (signature). -->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Mulish:wght@400;500;600;700&family=Sacramento&display=swap" rel="stylesheet">
+<style>
+  /* ── Built from orchidtree-home-wireframe.html. Design polished, real photos,
+       and the animation language from guest.html (nav solidify, scroll-reveal,
+       hover zoom, gallery crossfade on room cards, carousel arrows). ── */
+  :root{
+    --cream:#f7f3ea; --card:#ffffff; --green:#3c4a16; --ink:#43382b;
+    --body:#6e675d; --gold:#c9a23c; --line:#ece6da;
+    --media:#e7e1d4; --media-tx:#b3a994; --media-dark:#8c8275;
+    --serif:'Cormorant Garamond',Georgia,serif; --sans:'Avenir Next','Avenir','Mulish',-apple-system,system-ui,sans-serif; --script:'Sacramento',cursive;
+    --radius:12px; --radius-sm:8px;
+    --img:url('https://orchidtree.in/uploads/bodhi_tree_3_png_eedb89acdf.webp');
+    --pad:clamp(24px,6.5vw,110px);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--sans);background:var(--cream);color:var(--body);line-height:1.65;overflow-x:hidden;}
+  img{display:block;}
+  .media{background:#e7e1d4 var(--img) center/cover no-repeat;display:flex;align-items:center;justify-content:center;color:transparent;background-size:cover;}
+  .wrap{max-width:1320px;margin:0 auto;padding-left:var(--pad);padding-right:var(--pad);}
+  .eyebrow{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:18px;}
+  h1{font-family:var(--serif);font-weight:600;color:#fff;}
+  h2{font-family:var(--serif);font-size:34px;font-weight:600;color:var(--ink);line-height:1.15;}
+  h3{font-family:var(--serif);font-weight:600;color:var(--ink);}
+  .muted{color:var(--body);font-size:16px;}
+
+  /* NAV — solidifies on scroll */
+  .nav{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;justify-content:space-between;padding:24px var(--pad);background:linear-gradient(to bottom,rgba(20,16,12,.55),rgba(20,16,12,0));transition:background .3s ease,padding .3s ease,box-shadow .3s ease;}
+  .nav .logo{display:flex;align-items:center;}
+  .nav .logo img{height:72px;width:auto;display:block;filter:brightness(0) invert(1) drop-shadow(0 1px 6px rgba(0,0,0,.4));transition:height .3s ease,filter .3s ease;}
+  .nav.solid .logo img{height:52px;filter:none;}
+  .nav .links{display:flex;gap:30px;align-items:center;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;font-weight:600;}
+  .nav .links a{color:rgba(255,255,255,.9);text-decoration:none;text-shadow:0 1px 8px rgba(0,0,0,.45);transition:opacity .2s ease,color .3s ease,text-shadow .3s ease;}
+  .nav .links a:not(.reserve){position:relative;} .nav .links a:not(.reserve)::after{content:"";position:absolute;left:2px;right:2px;bottom:-5px;height:1.5px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .28s ease;} .nav .links a:not(.reserve):hover::after{transform:scaleX(1);} .nav .links a:hover{opacity:1;}
+  .nav .links .reserve{border:1px solid rgba(255,255,255,.6);padding:9px 18px;border-radius:var(--radius-sm);transition:all .2s ease;}
+  .nav .links .reserve:hover{background:#fff;color:var(--ink);opacity:1;}
+  .nav.solid{background:rgba(247,243,234,.96);box-shadow:0 2px 22px rgba(67,56,43,.09);padding-top:15px;padding-bottom:15px;backdrop-filter:blur(6px);}
+  .nav.solid .links a{color:var(--ink);text-shadow:none;}
+  .nav.solid .links .reserve{border-color:var(--green);color:var(--green);}
+  .nav.solid .links .reserve:hover{background:var(--green);color:#fff;}
+
+  /* HERO */
+  .hero{position:relative;height:100vh;min-height:620px;background:#8c8275 url('https://orchidtree.in/uploads/Experience_section_jpg_afb1c77479.webp') center/cover no-repeat;}
+  /* video starts hidden and fades in once we've skipped the logo intro */
+  .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:var(--media-dark);opacity:0;transition:opacity .8s ease;}
+  .hero-video.ready{opacity:1;}
+  .hero .scrim{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(40,33,25,.5),rgba(40,33,25,.12) 32%,rgba(40,33,25,.45) 70%,rgba(40,33,25,.78));}
+  /* bottom-left, left-aligned: clear kicker → headline → sub ladder on the dark band */
+  .hero .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;text-align:left;padding:0 var(--pad) 184px;}
+  .hero .center>*{max-width:720px;}
+  .hero .center .eyebrow{color:var(--gold);}
+  .hero h1{font-size:64px;line-height:1.05;letter-spacing:1px;}
+  .hero .sub{color:rgba(255,255,255,.92);font-size:19px;margin-top:18px;letter-spacing:.5px;text-shadow:0 1px 6px rgba(0,0,0,.4);max-width:600px;}
+  .bookbar{position:absolute;left:var(--pad);bottom:52px;width:min(720px,calc(100% - var(--pad) * 2));background:rgba(255,255,255,.95);border-radius:14px;display:flex;align-items:stretch;box-shadow:0 10px 34px rgba(0,0,0,.22);z-index:5;}
+  .bookbar .f{flex:1;font-size:15px;color:var(--ink);border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:center;position:relative;}
+  .bookbar .f .k{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--media-tx);margin-bottom:4px;}
+  .bookbar > button{background:var(--green);color:#fff;border:none;padding:0 34px;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .18s ease;border-radius:0 14px 14px 0;}
+  .bookbar > button:hover{background:#2c3810;}
+
+  /* ── self-serve book bar: balanced cells, each opens a dropdown ── */
+  .bb-trigger{padding:18px 24px;cursor:pointer;display:flex;flex-direction:column;justify-content:center;outline:none;}
+  .bb-trigger:focus-visible{box-shadow:inset 0 0 0 2px var(--green);border-radius:8px;}
+  .bb-value{font-size:15px;color:var(--ink);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:color .16s;}
+  .bb-field:hover .bb-value{color:var(--green);}
+
+  .bb-pop{position:absolute;left:0;top:calc(100% + 12px);z-index:30;width:300px;max-width:calc(100vw - 32px);background:var(--card);border:1px solid var(--line);border-radius:var(--radius-sm);box-shadow:0 10px 34px rgba(0,0,0,.22);padding:6px 18px;}
+  .bb-pop[hidden]{display:none;}
+  /* flip above the bar when there isn't room below */
+  .bb-pop.bb-pop--up{top:auto;bottom:calc(100% + 12px);box-shadow:0 -10px 34px rgba(0,0,0,.22);}
+  /* dates dropdown */
+  .bb-pop--dates{width:392px;padding:16px;}
+  .bb-date-grid{display:flex;gap:12px;}
+  .bb-date-cell{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px;border:1px solid var(--line);border-radius:var(--radius-sm);padding:10px 12px;cursor:pointer;transition:border-color .16s;overflow:hidden;}
+  .bb-date-cell:hover,.bb-date-cell:focus-within{border-color:var(--green);}
+  .bb-date-lbl{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--media-tx);}
+  .bb-date{font-family:var(--sans);font-size:15px;color:var(--ink);background:transparent;border:none;padding:0;margin:0;width:100%;min-width:0;box-sizing:border-box;cursor:pointer;-webkit-appearance:none;appearance:none;}
+  .bb-date:focus{outline:none;}
+  .bb-date::-webkit-calendar-picker-indicator{opacity:.5;cursor:pointer;}
+  /* guests dropdown */
+  .bb-pop-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--line);}
+  .bb-pop-row:last-child{border-bottom:none;}
+  .bb-pop-label{display:flex;flex-direction:column;}
+  .bb-pop-title{font-size:15px;color:var(--ink);font-weight:600;}
+  .bb-pop-sub{font-size:12px;color:var(--media-tx);}
+  .bb-stepper{display:flex;align-items:center;gap:6px;}
+  .bb-step{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--green);font-size:20px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .16s,background .16s,color .16s;padding:0;}
+  .bb-step:hover:not(:disabled){border-color:var(--green);background:var(--green);color:#fff;}
+  .bb-step:disabled{opacity:.35;cursor:default;}
+  .bb-count{min-width:24px;text-align:center;font-size:15px;color:var(--ink);font-weight:600;}
+  @media (max-width:820px){
+    /* on the stacked mobile bar the popovers span the bar's width */
+    .bb-pop,.bb-pop--dates{width:100%;left:0;right:0;max-width:100%;top:calc(100% + 8px);}
+  }
+  /* ── end self-serve book bar ── */
+
+  /* scroll-to-explore cue: gentle up/down bob to draw the eye down */
+  .scrolltip{position:absolute;right:var(--pad);bottom:24px;z-index:6;display:flex;flex-direction:column;align-items:center;gap:9px;text-decoration:none;color:#fff;animation:bob 2.2s ease-in-out infinite;}
+  .scrolltip .mouse{width:26px;height:42px;border:2px solid rgba(255,255,255,.85);border-radius:14px;display:flex;justify-content:center;padding-top:7px;box-shadow:0 1px 8px rgba(0,0,0,.25);}
+  .scrolltip .wheel{width:4px;height:8px;border-radius:2px;background:#fff;animation:wheel 1.6s ease-in-out infinite;}
+  .scrolltip .stxt{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;font-weight:700;text-shadow:0 1px 6px rgba(0,0,0,.45);}
+  @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(9px);}}
+  @keyframes wheel{0%{opacity:0;transform:translateY(-3px);}30%{opacity:1;}65%{opacity:1;transform:translateY(7px);}100%{opacity:0;transform:translateY(7px);}}
+
+  /* POSITIONING STRIP */
+  .strip{background:var(--ink);color:#fff;text-align:center;padding:20px var(--pad);font-size:13px;letter-spacing:2px;text-transform:uppercase;}
+  .strip b{color:var(--gold);font-weight:700;}
+
+  section{padding:96px 0;}
+  .lead{max-width:620px;margin:0 auto;text-align:center;}
+  .lead h2{margin-bottom:22px;}
+  .lead .muted{font-size:18px;line-height:1.8;}
+
+  /* asymmetric split */
+  .split{display:flex;gap:60px;align-items:stretch;}
+  .split.reverse{flex-direction:row-reverse;}
+  .split .media{flex:0 0 46%;min-height:440px;border-radius:var(--radius);align-self:stretch;overflow:hidden;}
+  .split .media .ph{width:100%;height:100%;background-size:cover;background-position:center;transition:transform .8s ease;}
+  .split:hover .media .ph{transform:scale(1.04);}
+  .split .txt{flex:1;display:flex;flex-direction:column;justify-content:center;}
+  .split .txt h2{margin-bottom:20px;}
+  .split .txt .muted{font-size:17px;line-height:1.8;}
+
+  /* minimalist text statement (no image) — asymmetric: headline left, paragraph offset down-right */
+  .brand{background:var(--card);}
+  .brand-inner{display:flex;gap:72px;align-items:flex-end;}
+  .brand-head{flex:0 0 50%;}
+  .brand-head h2{font-size:46px;line-height:1.12;}
+  .brand-body{flex:1;padding-bottom:8px;}
+  .brand-body .muted{font-size:17px;line-height:1.85;text-align:left;max-width:420px;}
+
+  /* EXPERIENCES shorts carousel */
+  .shorts-wrap{position:relative;margin-top:72px;}
+  .shorts{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:14px;scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:#cdc4b2 transparent;}
+  .shorts::-webkit-scrollbar{height:8px;}
+  .shorts::-webkit-scrollbar-thumb{background:#cdc4b2;border-radius:8px;}
+  .short{position:relative;flex:0 0 340px;height:500px;border-radius:var(--radius);overflow:hidden;scroll-snap-align:start;}
+  /* image is wider than the card so it can pan; JS drives the parallax on scroll */
+  .short .ph{position:absolute;top:0;bottom:0;left:0;width:132%;background-size:cover;background-position:center;will-change:transform;}
+  .short .scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(40,33,25,.72),transparent 60%);}
+  .short .lbl{position:absolute;left:0;bottom:0;padding:22px;color:#fff;font-size:13px;font-weight:600;font-family:var(--sans);text-transform:uppercase;letter-spacing:2.5px;line-height:1.4;text-shadow:0 1px 8px rgba(0,0,0,.55);z-index:2;}
+  .shorts-fade{position:absolute;top:0;right:0;bottom:14px;width:70px;pointer-events:none;background:linear-gradient(to right,rgba(247,243,234,0),var(--cream));}
+  .brand + section .shorts-fade,.incl .shorts-fade{background:linear-gradient(to right,rgba(255,255,255,0),var(--card));}
+  .carousel-nav{display:flex;gap:10px;}
+  .cnav{width:44px;height:44px;border-radius:50%;border:1px solid #d6cfc0;background:var(--card);color:var(--green);font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .16s,border-color .16s,color .16s;}
+  .cnav:hover{border-color:var(--green);background:var(--green);color:#fff;}
+  .cnav:disabled{opacity:.3;cursor:default;background:var(--card);border-color:#d6cfc0;color:var(--green);}
+  .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;}
+
+  /* ROOMS */
+  .rooms{padding-bottom:110px;}
+  .rooms-head{text-align:center;margin-bottom:14px;}
+  .tier{margin-top:64px;}
+  .tier .tier-label{text-align:center;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:8px;}
+  .tier .tier-note{text-align:center;color:var(--body);font-size:14px;margin-bottom:30px;font-style:italic;font-family:var(--serif);}
+  .room-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;}
+  .room{border-radius:var(--radius);overflow:hidden;background:var(--card);box-shadow:0 4px 20px rgba(67,56,43,.06);cursor:pointer;transition:box-shadow .3s ease,transform .3s ease;}
+  .room:hover{box-shadow:0 16px 40px rgba(67,56,43,.14);transform:translateY(-3px);}
+  .room .media{position:relative;height:320px;}
+  .room .media .rmh{position:absolute;inset:0;background-color:#e7e1d4;background-size:cover;background-position:center;background-repeat:no-repeat;transition:opacity .8s ease,transform .7s ease;}
+  .room .media .rmh-top{opacity:0;}
+  .room:hover .media .rmh{transform:scale(1.06);}
+  .room .media .rcount{position:absolute;top:14px;right:14px;z-index:3;background:rgba(20,16,12,.45);color:#fff;font-size:10px;font-weight:700;letter-spacing:.5px;padding:5px 10px;border-radius:20px;}
+  .room .body{padding:26px;}
+  .room h3{font-size:23px;margin-bottom:4px;}
+  .room .names{font-size:12px;letter-spacing:1px;color:var(--media-tx);text-transform:uppercase;margin-bottom:12px;}
+  .room .names b{color:var(--ink);font-weight:700;}
+  .room .desc{font-size:14px;color:var(--body);margin-bottom:16px;}
+  .room .foot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:16px;}
+  .room .sleeps{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--ink);font-weight:600;}
+  .room .pet{font-size:10px;letter-spacing:1px;text-transform:uppercase;font-weight:700;padding:5px 10px;border-radius:var(--radius-sm);}
+  .room .pet.yes{background:rgba(201,162,60,.16);color:#9a7820;}
+  .room .pet.no{background:#f1ede4;color:var(--media-tx);}
+
+  /* COTTAGES desire band */
+  .honesty{background:var(--ink);color:#fff;}
+  .honesty .inner{display:flex;gap:56px;align-items:center;}
+  .honesty .media{flex:0 0 44%;height:380px;border-radius:var(--radius);overflow:hidden;}
+  .honesty .media .ph{width:100%;height:100%;background-size:cover;background-position:center;transition:transform .8s ease;}
+  .honesty:hover .media .ph{transform:scale(1.04);}
+  .honesty .txt{flex:1;}
+  .honesty .eyebrow{color:var(--gold);}
+  .honesty h2{color:#fff;margin-bottom:18px;}
+  .honesty p{color:rgba(255,255,255,.86);font-size:16px;}
+
+  /* INCLUDED */
+  .incl{background:var(--card);}
+  .incl-cols{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:0;}
+  .incl-col{border:1px solid var(--line);border-radius:var(--radius);padding:30px;}
+  .incl-col h3{font-size:18px;margin-bottom:16px;}
+  .incl-col.in h3{color:var(--green);}
+  .incl-col.out h3{color:var(--media-tx);}
+  .incl-col ul{list-style:none;}
+  .incl-col li{font-size:14px;padding:7px 0 7px 22px;position:relative;color:var(--ink);}
+  .incl-col.in li:before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:700;}
+  .incl-col.out li{color:var(--body);}
+  .incl-col.out li:before{content:"+";position:absolute;left:0;color:var(--media-tx);font-weight:700;}
+
+  /* REVIEWS */
+  .reviews{background:var(--card);}
+  .rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:44px;}
+  .rev{border:1px solid var(--line);border-radius:var(--radius);padding:28px;}
+  .rev .stars{color:var(--gold);font-size:14px;margin-bottom:14px;letter-spacing:2px;}
+  .rev p{font-style:italic;font-family:var(--serif);color:var(--ink);font-size:15px;margin-bottom:18px;}
+  .rev .who{font-size:13px;font-weight:700;color:var(--ink);}
+  .rev .vg{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--media-tx);}
+  .rev-foot{text-align:center;margin-top:30px;font-size:14px;color:var(--body);}
+  .rev-foot a{color:var(--green);font-weight:700;text-decoration:none;border-bottom:1px solid rgba(60,74,22,.3);}
+
+  /* PATHS */
+  .paths{background:var(--cream);}
+  .path-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:44px;}
+  .path{position:relative;height:300px;border-radius:var(--radius);overflow:hidden;cursor:pointer;}
+  .path .ph{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .7s ease;}
+  .path:hover .ph{transform:scale(1.06);}
+  .path .scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(40,33,25,.8),rgba(40,33,25,.1) 70%);}
+  .path .cap{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:28px;color:#fff;z-index:2;}
+  .path h3{color:#fff;font-size:22px;margin-bottom:6px;}
+  .path .cap p{font-size:13px;color:rgba(255,255,255,.85);margin-bottom:14px;}
+  .path .go{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:700;}
+
+  /* ARCHITECT */
+  .arch{background:var(--cream);}
+  .arch .inner{display:flex;gap:56px;align-items:center;}
+  .arch .media{flex:0 0 46%;height:440px;border-radius:var(--radius);overflow:hidden;}
+  .arch .media .ph{width:100%;height:100%;background-size:cover;background-position:center;transition:transform .8s ease;}
+  .arch:hover .media .ph{transform:scale(1.04);}
+  .arch .txt{flex:1;}
+
+  /* FAQ */
+  .faq{background:var(--cream);}
+  .faq-list{max-width:820px;margin:44px auto 0;}
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-q{width:100%;text-align:left;background:none;border:none;cursor:pointer;padding:24px 0;font-family:var(--serif);font-size:19px;color:var(--ink);display:flex;justify-content:space-between;align-items:center;gap:20px;}
+  .faq-q .plus{color:var(--gold);font-size:22px;flex:0 0 auto;transition:transform .25s ease;}
+  .faq-item.open .faq-q .plus{transform:rotate(45deg);}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+  .faq-item.open .faq-a{max-height:260px;}
+  .faq-a p{padding:0 0 24px;color:var(--body);font-size:15px;max-width:680px;}
+
+  /* FOOTER */
+  footer{background:var(--green);color:#fff;padding:72px var(--pad) 36px;}
+  .foot-grid{max-width:1320px;margin:0 auto;display:flex;gap:60px;justify-content:space-between;flex-wrap:wrap;}
+  footer h4{font-family:var(--serif);font-size:24px;color:var(--gold);margin-bottom:14px;}
+  .foot-logo{height:66px;width:auto;display:block;filter:brightness(0) invert(1);margin-bottom:16px;}
+  .foot-social{display:flex;gap:12px;margin-top:20px;justify-content:center;}
+  .foot-social a{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center;color:#fff;transition:background .18s,border-color .18s,color .18s;}
+  .foot-social a:hover{background:var(--gold);border-color:var(--gold);color:var(--green);}
+  .foot-social svg{width:24px;height:24px;}
+  footer .col h5{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+  footer .col a,footer .col p{display:block;color:rgba(255,255,255,.85);font-size:14px;margin-bottom:10px;text-decoration:none;}
+  footer .col a:hover{color:#fff;}
+  footer .tag{max-width:300px;color:rgba(255,255,255,.85);font-size:14px;}
+  .foot-bottom{max-width:1320px;margin:40px auto 0;padding-top:24px;border-top:1px solid rgba(255,255,255,.2);font-size:12px;color:rgba(255,255,255,.7);display:flex;justify-content:space-between;}
+
+  /* compact "Reserve" pill that follows after the hero */
+  .book-fab{position:fixed;right:24px;bottom:24px;z-index:50;display:inline-flex;align-items:center;gap:9px;background:var(--green);color:#fff;font-size:12px;letter-spacing:1.6px;text-transform:uppercase;font-weight:700;padding:14px 24px;border-radius:40px;text-decoration:none;box-shadow:0 8px 26px rgba(0,0,0,.22);opacity:0;transform:translateY(16px);pointer-events:none;transition:opacity .3s ease,transform .3s ease,background .18s;}
+  .book-fab.show{opacity:1;transform:none;pointer-events:auto;}
+  .book-fab:hover{background:#2c3810;}
+  .book-fab svg{width:18px;height:18px;}
+
+  /* scroll reveal */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease;}
+  .reveal.in{opacity:1;transform:none;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:none;}}
+  .hero .center .eyebrow{animation:fadeUp .8s ease both;}
+  .hero .center h1{animation:fadeUp .9s ease .12s both;}
+  .hero .center .sub{animation:fadeUp .9s ease .26s both;}
+  .bookbar{animation:fadeUp .9s ease .4s both;}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+    .hero .center *,.bookbar{animation:none;}
+    .room .media .rmh,.short .ph,.path .ph,.split .media .ph{transition:none;}
+  }
+
+  @media (max-width:820px){
+    .nav .links{display:none;}
+    .hero h1{font-size:38px;}
+    .hero .center{padding-bottom:248px;}
+    .bookbar{flex-direction:column;align-items:stretch;left:16px;bottom:22px;width:calc(100% - 32px);}
+    .bookbar .f{border-right:none;border-bottom:1px solid var(--line);}
+    .bookbar > button{padding:16px;border-radius:0 0 14px 14px;}
+    section{padding:60px 0;}
+    h2{font-size:26px;}
+    .room-grid,.incl-cols,.rev-grid,.path-grid{grid-template-columns:1fr;}
+    .honesty .inner,.arch .inner{flex-direction:column;gap:28px;}
+    .honesty .media,.arch .media{flex:0 0 auto;width:100%;height:260px;}
+    .brand-inner{flex-direction:column;gap:20px;align-items:flex-start;}
+    .brand-head{flex:0 0 auto;}
+    .brand-head h2{font-size:30px;}
+    .brand-body{margin-top:0;}
+    .brand-body .muted{max-width:none;}
+    .split{flex-direction:column;gap:28px;}
+    .split.reverse{flex-direction:column;}
+    .split .media{flex:0 0 auto;width:100%;min-height:260px;height:260px;}
+    .short{flex:0 0 200px;height:340px;}
+    .carousel-nav{display:none;}
+    .scrolltip{display:none;}
+    .foot-grid{flex-direction:column;gap:32px;}
+    .foot-bottom{flex-direction:column;gap:10px;}
+  }
+
+  /* ── zone tags: poolside vs garden cottage, surfaced everywhere ── */
+  .zone{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;letter-spacing:.6px;text-transform:uppercase;font-weight:700;padding:3px 9px 3px 7px;border-radius:20px;line-height:1;white-space:nowrap;}
+  .zone svg{width:12px;height:12px;flex:none;}
+  .zone.pool{color:#1f6f8b;background:rgba(31,111,139,.10);}
+  .zone.garden{color:#3f7d4e;background:rgba(63,125,78,.12);}
+
+  /* ── rich room modal (ported from guest.html) ── */
+  .overlay{display:none;position:fixed;inset:0;background:rgba(67,56,43,.5);z-index:60;align-items:center;justify-content:center;padding:24px;}
+  .overlay.open{display:flex;}
+  .modal{background:var(--card);max-width:660px;width:100%;max-height:92vh;overflow:auto;border-radius:var(--radius);box-shadow:0 24px 70px rgba(0,0,0,.34);}
+  .modal-body{padding:40px;}
+  .modal-body .close{float:right;cursor:pointer;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:8px 16px;font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:700;border-radius:var(--radius-sm);}
+  .modal-body .close:hover{background:var(--ink);color:#fff;}
+  .modal-body .tagline{font-family:var(--serif);font-style:italic;font-size:17px;color:var(--body);margin:2px 0 16px;}
+  .modal-body .tagline .tier{font-style:normal;font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:var(--green);background:rgba(60,74,22,.08);padding:4px 10px;border-radius:var(--radius-sm);margin-left:10px;vertical-align:middle;}
+  .modal-body .story{font-size:15px;color:var(--body);line-height:1.62;margin-bottom:8px;}
+  .modal-body .price{font-size:14px;color:var(--ink);font-weight:700;margin-top:10px;}
+  /* the setting band — the clear poolside / garden-cottage distinction */
+  .setting-band{display:flex;gap:14px;align-items:flex-start;padding:16px 18px;border-radius:var(--radius-sm);margin:4px 0 20px;border:1px solid var(--line);}
+  .setting-band.pool{background:rgba(31,111,139,.07);border-color:rgba(31,111,139,.18);}
+  .setting-band.garden{background:rgba(63,125,78,.07);border-color:rgba(63,125,78,.18);}
+  .setting-band .sb-ic{flex:none;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;}
+  .setting-band.pool .sb-ic{background:#1f6f8b;}
+  .setting-band.garden .sb-ic{background:#3f7d4e;}
+  .setting-band .sb-ic svg{width:20px;height:20px;}
+  .setting-band .sb-title{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;margin-bottom:5px;}
+  .setting-band.pool .sb-title{color:#1f6f8b;}
+  .setting-band.garden .sb-title{color:#3f7d4e;}
+  .setting-band .sb-text{font-size:14px;color:var(--ink);line-height:1.55;}
+  .rmodal-main{position:relative;height:340px;background-color:#8c8275;overflow:hidden;}
+  .rmodal-main .rm-img{position:absolute;inset:0;background-color:#e7e1d4;background-size:cover;background-position:center;background-repeat:no-repeat;transition:opacity .8s ease;}
+  .rmodal-main .rm-top{opacity:0;}
+  .rm-zone{position:absolute;top:16px;left:16px;z-index:3;}
+  .rm-zone .zone{background:rgba(255,255,255,.92);box-shadow:0 2px 10px rgba(0,0,0,.18);}
+  .rm-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:40px;height:40px;border-radius:50%;border:none;background:rgba(255,255,255,.85);color:var(--ink);font-size:24px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;}
+  .rm-nav:hover{background:#fff;}
+  .rm-nav.prev{left:14px;}
+  .rm-nav.next{right:14px;}
+  .rm-count{position:absolute;bottom:12px;right:14px;z-index:3;background:rgba(20,16,12,.5);color:#fff;font-size:11px;font-weight:700;letter-spacing:.5px;padding:4px 11px;border-radius:20px;}
+  .rmodal-thumbs{display:flex;gap:8px;padding:12px 14px 0;overflow-x:auto;scrollbar-width:thin;scrollbar-color:#cdc4b2 transparent;}
+  .rmodal-thumbs::-webkit-scrollbar{height:6px;}
+  .rmodal-thumbs::-webkit-scrollbar-thumb{background:#cdc4b2;border-radius:6px;}
+  .rmodal-thumbs .th{flex:0 0 66px;height:48px;border-radius:6px;background-color:#e7e1d4;background-size:cover;background-position:center;cursor:pointer;opacity:.55;border:2px solid transparent;transition:opacity .15s,border-color .15s;}
+  .rmodal-thumbs .th:hover{opacity:.85;}
+  .rmodal-thumbs .th.active{opacity:1;border-color:var(--green);}
+  .facts{display:grid;grid-template-columns:1fr 1fr;gap:0 32px;margin-top:14px;}
+  .facts .f{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px;}
+  .facts .f .k{color:var(--media-tx);}
+  .facts .f .v{color:var(--ink);font-weight:600;text-align:right;}
+  .amen-list{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px;}
+  .amen-list .a{font-size:12px;color:var(--ink);background:var(--cream);border:1px solid var(--line);padding:8px 13px;border-radius:var(--radius-sm);}
+  .room-ask{display:inline-block;margin-top:24px;font-size:13px;font-weight:700;color:var(--green);text-decoration:none;border-bottom:1px solid rgba(60,74,22,.3);}
+  .room-ask:hover{border-color:var(--green);}
+
+  /* ── booking CTA + requirement collector inside the modal ── */
+  .rbook{margin-top:28px;padding-top:24px;border-top:1px solid var(--line);}
+  .rbook-cta{display:block;}
+  .rbook-cta[hidden]{display:none;}
+  .rbook-lead{font-family:var(--serif);font-style:italic;font-size:17px;color:var(--body);margin-bottom:14px;}
+  .rbook-btn{display:block;width:100%;text-align:center;background:var(--green);color:#fff;border:none;border-radius:var(--radius-sm);padding:16px 18px;font-size:12px;letter-spacing:1.6px;text-transform:uppercase;font-weight:700;cursor:pointer;transition:background .18s;font-family:var(--sans);}
+  .rbook-btn:hover{background:#2c3810;}
+  .rbook-collect{display:none;}
+  .rbook-collect.open{display:block;}
+  .rc-dates{display:flex;gap:12px;}
+  .rc-date{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px;border:1px solid var(--line);border-radius:var(--radius-sm);padding:10px 14px;cursor:pointer;transition:border-color .16s;overflow:hidden;}
+  .rc-date:hover,.rc-date:focus-within{border-color:var(--green);}
+  .rc-date .k{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--media-tx);}
+  .rc-date input{font-family:var(--sans);font-size:15px;color:var(--ink);background:transparent;border:none;padding:0;width:100%;min-width:0;box-sizing:border-box;cursor:pointer;-webkit-appearance:none;appearance:none;}
+  .rc-date input:focus{outline:none;}
+  .rc-date input::-webkit-calendar-picker-indicator{opacity:.5;cursor:pointer;}
+  .rc-steppers{margin-top:14px;border-top:1px solid var(--line);}
+  .rc-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--line);}
+  .rc-label{display:flex;flex-direction:column;}
+  .rc-title{font-size:15px;color:var(--ink);font-weight:600;}
+  .rc-sub{font-size:12px;color:var(--media-tx);}
+  .rc-note{font-size:12.5px;color:var(--body);margin:12px 0 18px;line-height:1.5;}
+  .rc-submit{display:block;width:100%;text-align:center;background:var(--green);color:#fff;border:none;border-radius:var(--radius-sm);padding:16px 18px;font-size:12px;letter-spacing:1.6px;text-transform:uppercase;font-weight:700;cursor:pointer;transition:background .18s;font-family:var(--sans);}
+  .rc-submit:hover{background:#2c3810;}
+  @media(max-width:560px){ .modal-body{padding:26px 22px;} .facts{grid-template-columns:1fr;} .rmodal-main{height:230px;} }
+</style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <div class="nav" id="nav">
+    <a class="logo" href="#" aria-label="Orchid Tree home"><img src="images/logo.png" alt="Orchid Tree"></a>
+    <div class="links">
+      <a href="stays.html">Stays</a>
+      <a href="experiences.html">Experiences</a>
+      <a href="restaurant.html">Restaurant</a>
+      <a href="weddings.html">Weddings</a>
+      <a href="corporate.html">Corporate</a>
+      <a href="about.html">About</a>
+      <a href="https://wa.me/918088251913?text=Hi%20Orchid%20Tree%2C%20I%27d%20like%20to%20enquire%20about%20a%20stay." class="reserve" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <video class="hero-video" id="heroVideo" autoplay muted playsinline poster="https://orchidtree.in/uploads/Experience_section_jpg_afb1c77479.webp">
+      <source src="ORCHID_WEBISTE_9febd4b485.mov" type="video/mp4">
+    </video>
+    <div class="scrim"></div>
+    <div class="center">
+      <div class="eyebrow">Orchid Tree · A boutique resort</div>
+      <h1>The art of doing<br>nothing, beautifully</h1>
+      <div class="sub">Orchid Tree is a boutique nature retreat forty-five minutes from Whitefield. Eleven rooms, a living forest, and nowhere you need to be.</div>
+    </div>
+    <div class="bookbar" id="book">
+      <div class="f bb-field" id="bbDatesField">
+        <div class="bb-trigger" id="bbDatesTrigger" role="button" tabindex="0" aria-haspopup="true" aria-expanded="false">
+          <span class="k">Dates</span>
+          <span class="bb-value" id="bbDatesValue">Add your dates</span>
+        </div>
+        <div class="bb-pop bb-pop--dates" id="bbDatesPop" hidden>
+          <div class="bb-date-grid">
+            <div class="bb-date-cell">
+              <span class="bb-date-lbl">Arrive</span>
+              <input type="date" id="bbArrive" class="bb-date" aria-label="Arrive">
+            </div>
+            <div class="bb-date-cell">
+              <span class="bb-date-lbl">Leave</span>
+              <input type="date" id="bbLeave" class="bb-date" aria-label="Leave">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="f bb-field" id="bbGuestsField">
+        <div class="bb-trigger" id="bbGuestsTrigger" role="button" tabindex="0" aria-haspopup="true" aria-expanded="false">
+          <span class="k">Guests</span>
+          <span class="bb-value" id="bbGuestSummary">2 adults · 0 children</span>
+        </div>
+        <div class="bb-pop" id="bbGuestPop" hidden>
+          <div class="bb-pop-row">
+            <div class="bb-pop-label"><span class="bb-pop-title">Adults</span><span class="bb-pop-sub">Over 6</span></div>
+            <div class="bb-stepper">
+              <button type="button" class="bb-step" data-step="adults" data-dir="-1" aria-label="Decrease adults">−</button>
+              <span class="bb-count" id="bbAdults">2</span>
+              <button type="button" class="bb-step" data-step="adults" data-dir="1" aria-label="Increase adults">+</button>
+            </div>
+          </div>
+          <div class="bb-pop-row">
+            <div class="bb-pop-label"><span class="bb-pop-title">Children</span><span class="bb-pop-sub">Age up to 6</span></div>
+            <div class="bb-stepper">
+              <button type="button" class="bb-step" data-step="children" data-dir="-1" aria-label="Decrease children">−</button>
+              <span class="bb-count" id="bbChildren">0</span>
+              <button type="button" class="bb-step" data-step="children" data-dir="1" aria-label="Increase children">+</button>
+            </div>
+          </div>
+          <div class="bb-pop-row">
+            <div class="bb-pop-label"><span class="bb-pop-title">Pets</span><span class="bb-pop-sub">Bringing a friend</span></div>
+            <div class="bb-stepper">
+              <button type="button" class="bb-step" data-step="pets" data-dir="-1" aria-label="Decrease pets">−</button>
+              <span class="bb-count" id="bbPets">0</span>
+              <button type="button" class="bb-step" data-step="pets" data-dir="1" aria-label="Increase pets">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button id="checkAvail">Check availability</button>
+    </div>
+    <a class="scrolltip" href="#experiences" aria-label="Scroll to explore">
+      <span class="mouse"><span class="wheel"></span></span>
+      <span class="stxt">Scroll to explore</span>
+    </a>
+  </div>
+
+  <!-- POSITIONING STRIP -->
+  <div class="strip">Designed by an award-winning landscape architect &nbsp;·&nbsp; <b>4.4</b> from 615+ guests &nbsp;·&nbsp; Calm over crowds, always</div>
+
+  <!-- BRAND MOMENT -->
+  <section class="brand">
+    <div class="wrap brand-inner reveal">
+      <div class="brand-head">
+        <div class="brand-sig" style="font-family:var(--script);font-size:clamp(42px,5.5vw,64px);color:var(--gold);line-height:1;margin-bottom:14px;">Orchid Tree</div>
+        <div class="eyebrow">This is a boutique resort</div>
+        <h2>Eleven rooms.<br>One living forest.<br>No itinerary.</h2>
+      </div>
+      <div class="brand-body">
+        <p class="muted">A forest left standing, with rooms tucked between the trees. No buffets, no crowds, nothing pinned to your door.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCES -->
+  <section class="wrap" id="experiences">
+    <div class="split reveal">
+      <div class="media"><div class="ph" style="background-image:url('images/ozone-pool.jpg')"></div></div>
+      <div class="txt">
+        <div class="eyebrow">A day here</div>
+        <h2>Mornings you don't set an alarm for</h2>
+        <p class="muted">The day starts with birdsong and a breakfast you didn't have to plan. After that, the hours are yours. Float in the ozone pool until your fingers wrinkle. Take the buggy down to the farm and pull a tomato off the vine. Lose an afternoon to carrom and a paperback. As the light drops, there's a bonfire, a sky thick with stars, and your own bottle poured slowly. Do all of it. Do none of it. Both are the right answer here.</p>
+      </div>
+    </div>
+
+    <div class="sec-head reveal" style="margin-top:72px;">
+      <div><div class="eyebrow" style="margin-bottom:6px;">If you feel like it</div><h2 style="font-size:26px;">Things to fill a day, or not</h2></div>
+      <div class="carousel-nav" id="expNav"><button class="cnav" id="expPrev" aria-label="Previous">&larr;</button><button class="cnav" id="expNext" aria-label="Next">&rarr;</button></div>
+    </div>
+    <div class="shorts-wrap reveal">
+      <div class="shorts" id="expShorts"></div>
+      <div class="shorts-fade" id="expFade"></div>
+    </div>
+  </section>
+
+  <!-- ROOMS -->
+  <section class="wrap rooms" id="rooms">
+    <div class="rooms-head reveal">
+      <div class="eyebrow">Eleven rooms, no two the same</div>
+      <h2>Find the one that's yours</h2>
+      <p class="muted" style="max-width:620px;margin:14px auto 0;">Some rooms sit by the pool, bright and easy, steps from the water. Others are cottages built into the trees, with baths open to the sky. Pick the feeling you're after. Every room comes with breakfast, the pool, the steam room, and the run of the estate. Each room is named after a tree on the estate.</p>
+    </div>
+
+    <div class="tier reveal">
+      <div class="tier-label">By the pool</div>
+      <div class="tier-note">bright, open, a few steps from the water</div>
+      <div class="room-grid">
+        <div class="room" data-rep="bael">
+          <div class="media"><div class="rmh rmh-base"></div><div class="rmh rmh-top"></div></div>
+          <div class="body">
+            <h3>Couple Room by the Pool</h3>
+            <div class="names"><b>4 rooms</b> · Bael · Bilva · Datura · Tulsi</div>
+            <div class="desc">Wake to the pool and a skylight full of morning. Cool, quiet, made for sleeping in.</div>
+            <div class="foot"><span class="sleeps">Sleeps 2 + 1 child (up to 6)</span><span class="pet no">No pets</span></div>
+          </div>
+        </div>
+        <div class="room" data-rep="spatika">
+          <div class="media"><div class="rmh rmh-base"></div><div class="rmh rmh-top"></div></div>
+          <div class="body">
+            <h3>Family Room by the Pool</h3>
+            <div class="names"><b>4 rooms</b> · Ashoka · Mallige · Parijata · Spatika</div>
+            <div class="desc">Room for everyone, pullout bedding and the same skylit calm, with the pool just outside.</div>
+            <div class="foot"><span class="sleeps">Sleeps up to 4</span><span class="pet yes">Pet friendly</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tier reveal">
+      <div class="tier-label">Garden cottages</div>
+      <div class="tier-note">built around living trees, open-to-sky baths, private steam</div>
+      <div class="room-grid">
+        <div class="room" data-rep="bodhi-tree">
+          <div class="media"><div class="rmh rmh-base"></div><div class="rmh rmh-top"></div></div>
+          <div class="body">
+            <h3>The Couple Garden Cottage</h3>
+            <div class="names"><b>2 cottages</b> · Hattimara · Bodhi Tree</div>
+            <div class="desc">Built around a living tree, with a private steam room and a bath open to the sky. Our most romantic room.</div>
+            <div class="foot"><span class="sleeps">Sleeps 2 + 1 child (up to 6)</span><span class="pet yes">Pet friendly</span></div>
+          </div>
+        </div>
+        <div class="room" data-rep="chandana">
+          <div class="media"><div class="rmh rmh-base"></div><div class="rmh rmh-top"></div></div>
+          <div class="body">
+            <h3>The Family Garden Cottage</h3>
+            <div class="names"><b>1 cottage</b> · Chandana</div>
+            <div class="desc">Our largest space and most private, a vacation home tucked into the forest, with an open-to-sky bath of its own.</div>
+            <div class="foot"><span class="sleeps">Sleeps up to 6</span><span class="pet yes">Pet friendly</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COTTAGES desire band -->
+  <section class="honesty">
+    <div class="wrap inner reveal">
+      <div class="media"><div class="ph" style="background-image:url('https://orchidtree.in/uploads/Bodhi_Tree_03_1_35a5ef31e4.webp')"></div></div>
+      <div class="txt">
+        <div class="eyebrow">The garden cottages</div>
+        <h2>A room with the sky for a ceiling</h2>
+        <p>Chandana, Bodhi Tree and Hattimara are built around living trees. You bathe under open sky, wake to the canopy, and step onto a patio that belongs only to you. These are not poolside rooms. They are their own world, and the guests who choose them rarely want to leave.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- INCLUDED -->
+  <section class="incl" id="included">
+    <div class="wrap split reverse reveal">
+      <div class="media"><div class="ph" style="background-image:url('https://orchidtree.in/uploads/Copy_of_Barbeque_03_cf30f0f667.jpg')"></div></div>
+      <div class="txt">
+        <div class="eyebrow">What's included</div>
+        <h2>Everything you need, nothing you don't</h2>
+        <p class="muted" style="margin-bottom:28px;">Your room comes with breakfast, the run of the estate, and every amenity. Lunch and dinner are cooked fresh at our restaurant, so we ask you to pre-order, the kitchen cooks to your table, not to a buffet bin. Bring your own bottle; we'll pour it under the stars.</p>
+        <div class="incl-cols">
+          <div class="incl-col in">
+            <h3>Included with your stay</h3>
+            <ul>
+              <li>Your room</li>
+              <li>Breakfast</li>
+              <li>Activities across the estate</li>
+              <li>Pool, steam, games and amenities</li>
+            </ul>
+          </div>
+          <div class="incl-col out">
+            <h3>From the restaurant</h3>
+            <ul>
+              <li>Lunch, freshly cooked (pre-order)</li>
+              <li>Dinner, freshly cooked (pre-order)</li>
+              <li>A massage, whenever you like</li>
+              <li>Proudly BYOB, enjoy your own</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="reviews">
+    <div class="wrap">
+      <div class="lead reveal">
+        <div class="eyebrow">Guest experiences</div>
+        <h2>They came for the quiet. They remember Mary.</h2>
+      </div>
+      <div class="rev-grid reveal" id="revGrid"></div>
+      <div class="rev-foot reveal" id="revFoot"></div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="wrap">
+      <div class="lead reveal">
+        <div class="eyebrow">Good to know</div>
+        <h2>Before you come</h2>
+      </div>
+      <div class="faq-list reveal">
+        <div class="faq-item open"><button class="faq-q">How far is Orchid Tree from Bangalore?<span class="plus">+</span></button><div class="faq-a"><p>About forty-five minutes from Whitefield, in Bangalore Rural near Hoskote. The exact location is shared once your stay is confirmed, to keep the estate private.</p></div></div>
+        <div class="faq-item"><button class="faq-q">What's included in the price?<span class="plus">+</span></button><div class="faq-a"><p>Your room, breakfast, all estate activities, and amenities like the pool, steam room, and games. Lunch and dinner are served fresh at the restaurant and can be pre-ordered, and a massage can be added whenever you like.</p></div></div>
+        <div class="faq-item"><button class="faq-q">Is Orchid Tree all-inclusive?<span class="plus">+</span></button><div class="faq-a"><p>Breakfast is included with every stay. Lunch and dinner are a la carte from our restaurant, cooked fresh to order, so we recommend pre-ordering before you arrive.</p></div></div>
+        <div class="faq-item"><button class="faq-q">Can I bring alcohol?<span class="plus">+</span></button><div class="faq-a"><p>Yes. Orchid Tree is proudly BYOB, enjoyed in our designated outdoor lounge areas.</p></div></div>
+        <div class="faq-item"><button class="faq-q">Are pets allowed?<span class="plus">+</span></button><div class="faq-a"><p>Pets are welcome in the cottages and family rooms. The Couple Rooms by the pool are kept pet-free for guests with allergies.</p></div></div>
+        <div class="faq-item"><button class="faq-q">Are the cottages different from the poolside rooms?<span class="plus">+</span></button><div class="faq-a"><p>Yes, and meaningfully so. The garden cottages are built around living trees with open-to-sky baths and private steam rooms. The poolside rooms are brighter and overlook the water.</p></div></div>
+        <div class="faq-item"><button class="faq-q">How many rooms does Orchid Tree have?<span class="plus">+</span></button><div class="faq-a"><p>Eleven, across four types, designed for calm rather than crowds.</p></div></div>
+        <div class="faq-item"><button class="faq-q">Is it good for families, couples, or groups?<span class="plus">+</span></button><div class="faq-a"><p>All three. Couples lean to the pool rooms or the romantic cottages; families and groups to the family rooms and Chandana, our largest cottage.</p></div></div>
+        <div class="faq-item"><button class="faq-q">Can I host an event or wedding here?<span class="plus">+</span></button><div class="faq-a"><p>Yes. The estate hosts intimate weddings, celebrations, and corporate offsites, with a full buyout of all eleven rooms.</p></div></div>
+        <div class="faq-item"><button class="faq-q">What's the cancellation policy?<span class="plus">+</span></button><div class="faq-a"><p>A full refund on cancellations made at least 48 hours before check-in.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PATHS -->
+  <section class="paths" id="paths">
+    <div class="wrap">
+      <div class="lead reveal">
+        <div class="eyebrow">Beyond the stay</div>
+        <h2>What brings you to Orchid Tree?</h2>
+      </div>
+      <div class="path-grid reveal">
+        <div class="path">
+          <div class="ph" style="background-image:url('https://orchidtree.in/uploads/bael_1_2b4731913c.png')"></div><div class="scrim"></div>
+          <div class="cap"><h3>A private stay</h3><p>For couples and families seeking calm.</p><div class="go">View rooms ›</div></div>
+        </div>
+        <div class="path">
+          <div class="ph" style="background-image:url('https://orchidtree.in/uploads/Copy_of_2_a5beee287f.jpg')"></div><div class="scrim"></div>
+          <div class="cap"><h3>A corporate offsite</h3><p>Quiet space for focus and team time.</p><div class="go">Plan an offsite ›</div></div>
+        </div>
+        <a class="path" href="weddings.html" style="display:block;text-decoration:none;">
+          <div class="ph" style="background-image:url('https://orchidtree.in/uploads/Image8_scaled_jpg_ec00384f49.webp')"></div><div class="scrim"></div>
+          <div class="cap"><h3>An intimate event</h3><p>Small weddings and celebrations.</p><div class="go">Host with us ›</div></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARCHITECT -->
+  <section class="arch" id="architect">
+    <div class="wrap inner reveal">
+      <div class="media"><div class="ph" style="background-image:url('https://orchidtree.in/uploads/pradip_aboutus_a82dd2aa16.jpg')"></div></div>
+      <div class="txt">
+        <div class="eyebrow">The architect of stillness</div>
+        <h2>Designed by Pradeep Kuppa Swamy</h2>
+        <p class="muted" style="margin-bottom:16px;">The landscape architect behind Infosys Mysore, Biocon and Britannia, with work recognised by the World Architecture Award. Orchid Tree is his reflection on stillness.</p>
+        <p class="muted">The architecture bends around the living forest, never the other way. Solar powered, sustained by recycled water, built with a minimal concrete footprint. When you breathe here, you breathe easy.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="foot-grid">
+      <div class="col" style="flex:1;min-width:240px;">
+        <img class="foot-logo" src="images/logo.png" alt="Orchid Tree">
+        <p class="tag">Boutique is not size, it's soul. Every corner here is designed with intention, not repetition.</p>
+        <div class="foot-social">
+          <a href="https://www.instagram.com/orchidtree.in/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 2c-2.7 0-3.05.01-4.12.06-1.06.05-1.79.22-2.43.47-.66.26-1.22.6-1.77 1.15-.55.55-.89 1.11-1.15 1.77-.25.64-.42 1.37-.47 2.43C2.01 8.95 2 9.3 2 12s.01 3.05.06 4.12c.05 1.06.22 1.79.47 2.43.26.66.6 1.22 1.15 1.77.55.55 1.11.89 1.77 1.15.64.25 1.37.42 2.43.47 1.07.05 1.42.06 4.12.06s3.05-.01 4.12-.06c1.06-.05 1.79-.22 2.43-.47.66-.26 1.22-.6 1.77-1.15.55-.55.89-1.11 1.15-1.77.25-.64.42-1.37.47-2.43.05-1.07.06-1.42.06-4.12s-.01-3.05-.06-4.12c-.05-1.06-.22-1.79-.47-2.43a4.9 4.9 0 0 0-1.15-1.77 4.9 4.9 0 0 0-1.77-1.15c-.64-.25-1.37-.42-2.43-.47C15.05 2.01 14.7 2 12 2zm0 1.8c2.67 0 2.99.01 4.04.06.97.04 1.5.21 1.86.35.47.18.8.4 1.15.75.35.35.57.68.75 1.15.14.36.3.89.35 1.86.05 1.05.06 1.37.06 4.04s-.01 2.99-.06 4.04c-.04.97-.21 1.5-.35 1.86-.18.47-.4.8-.75 1.15-.35.35-.68.57-1.15.75-.36.14-.89.3-1.86.35-1.05.05-1.37.06-4.04.06s-2.99-.01-4.04-.06c-.97-.04-1.5-.21-1.86-.35a3.1 3.1 0 0 1-1.15-.75 3.1 3.1 0 0 1-.75-1.15c-.14-.36-.3-.89-.35-1.86-.05-1.05-.06-1.37-.06-4.04s.01-2.99.06-4.04c.04-.97.21-1.5.35-1.86.18-.47.4-.8.75-1.15.35-.35.68-.57 1.15-.75.36-.14.89-.3 1.86-.35C9.01 3.81 9.33 3.8 12 3.8zm0 3.06A5.14 5.14 0 1 0 12 17.14 5.14 5.14 0 0 0 12 6.86zm0 8.48A3.34 3.34 0 1 1 12 8.66a3.34 3.34 0 0 1 0 6.68zm6.54-8.69a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></svg></a>
+          <a href="https://www.facebook.com/orchidtree.in" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.5h2.52l.38-2.93H13.5V9.7c0-.85.24-1.43 1.45-1.43h1.55V5.65c-.27-.04-1.19-.12-2.27-.12-2.25 0-3.79 1.37-3.79 3.89v1.65H8.4v2.93h2.59V21z"/></svg></a>
+          <a href="https://www.linkedin.com/company/orchid-tree-wellness-retreat/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 8.6V19H3.66V8.6zM5.3 3.7a1.9 1.9 0 1 1 0 3.8 1.9 1.9 0 0 1 0-3.8zM9 8.6h3.14v1.42h.04c.44-.82 1.5-1.69 3.1-1.69 3.32 0 3.93 2.18 3.93 5.02V19h-3.27v-4.62c0-1.1-.02-2.52-1.54-2.52-1.54 0-1.78 1.2-1.78 2.44V19H9z"/></svg></a>
+        </div>
+      </div>
+      <div class="col">
+        <h5>Explore</h5>
+        <a href="stays.html">Our Stays</a><a href="experiences.html">Experiences</a><a href="restaurant.html">Restaurant</a><a href="weddings.html">Weddings</a><a href="about.html">About</a><a href="corporate.html">Corporate</a><a href="host-with-us.html">Host with Us</a><a href="blog.html">Journal</a><a href="faq.html">FAQ</a>
+      </div>
+      <div class="col">
+        <h5>Connect</h5>
+        <p>Survey No. 7/2, Yelachamanahalli Village, Hoskote, Karnataka 562114</p>
+        <a href="mailto:orchidtree.blr@gmail.com">orchidtree.blr@gmail.com</a>
+        <a href="https://wa.me/918088251913" target="_blank" rel="noopener">+91 80882 51913</a>
+      </div>
+    </div>
+    <div style="text-align:center;margin:14px 0 16px;line-height:1;"><div style="font-family:'Sacramento',cursive;font-size:clamp(30px,4vw,42px);color:var(--gold);line-height:1;">Orchid Tree</div><div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.6);margin-top:10px;">The art of doing nothing</div></div>
+    <div class="foot-bottom">
+      <span>© 2026 Orchid Tree. All rights reserved.</span>
+      <span><a href="privacy-policy.html" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.35);">Privacy Policy</a> · <a href="privacy-policy.html#terms" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.35);">Terms of Service</a></span>
+    </div>
+  </footer>
+
+  <!-- compact booking CTA that follows after the hero (replaces the chunky bar trailing down) -->
+  <a class="book-fab" id="bookFab" href="https://wa.me/918088251913?text=Hi%20Orchid%20Tree%2C%20I%27d%20like%20to%20enquire%20about%20a%20stay." target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm5.2 14.1c-.2.6-1.2 1.1-1.7 1.2-.4.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.5-2.6-1.1-4.3-3.8-4.5-4-.1-.2-1-1.4-1-2.6 0-1.2.6-1.8.9-2.1.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5.2.5.7 1.7.7 1.8.1.1.1.3 0 .4l-.3.5c-.1.2-.3.4-.1.7.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.2.1.4.1.5-.1l.7-.8c.2-.2.4-.2.6-.1l1.6.8c.2.1.4.2.5.3.1.2.1.5-.1 1z"/></svg> WhatsApp</a>
+
+  <!-- rich room detail modal -->
+  <div class="overlay" id="overlay" onclick="if(event.target===this)closeRoom()">
+    <div class="modal">
+      <div class="rmodal-main" id="mMain">
+        <div class="rm-img rm-base"></div>
+        <div class="rm-img rm-top"></div>
+        <div class="rm-zone" id="mZone"></div>
+        <button class="rm-nav prev" id="mPrev" aria-label="Previous photo">&lsaquo;</button>
+        <button class="rm-nav next" id="mNext" aria-label="Next photo">&rsaquo;</button>
+        <div class="rm-count" id="mCount"></div>
+      </div>
+      <div class="rmodal-thumbs" id="mThumbs"></div>
+      <div class="modal-body">
+        <button class="close" onclick="closeRoom()">Close</button>
+        <div class="eyebrow" id="mCat"></div>
+        <h2 id="mTitle"></h2>
+        <div class="tagline" id="mTagline"></div>
+        <div id="mSetting"></div>
+        <p class="story" id="mStory"></p>
+        <p class="muted" id="mDesc" style="margin-top:8px;"></p>
+        <div class="price" id="mPrice"></div>
+        <div class="eyebrow" style="margin-top:24px;">The room</div>
+        <div class="facts" id="mFacts"></div>
+        <div class="eyebrow" style="margin-top:24px;">What this place offers</div>
+        <div class="amen-list" id="mOffers"></div>
+        <div id="mAsk"></div>
+
+        <!-- booking CTA → requirement collector for THIS room -->
+        <div class="rbook">
+          <div class="rbook-cta" id="rbookCta">
+            <div class="rbook-lead">Ready to stay in this room?</div>
+            <button type="button" class="rbook-btn" id="rbookOpen">Check availability</button>
+          </div>
+          <div class="rbook-collect" id="rbookCollect">
+            <div class="rc-dates">
+              <label class="rc-date"><span class="k">Arrive</span><input type="date" id="rcArrive" aria-label="Arrive"></label>
+              <label class="rc-date"><span class="k">Leave</span><input type="date" id="rcLeave" aria-label="Leave"></label>
+            </div>
+            <div class="rc-steppers">
+              <div class="rc-row">
+                <div class="rc-label"><span class="rc-title">Adults</span><span class="rc-sub">Over 6</span></div>
+                <div class="bb-stepper">
+                  <button type="button" class="bb-step" data-rc="adults" data-dir="-1" aria-label="Decrease adults">−</button>
+                  <span class="bb-count" id="rcAdults">2</span>
+                  <button type="button" class="bb-step" data-rc="adults" data-dir="1" aria-label="Increase adults">+</button>
+                </div>
+              </div>
+              <div class="rc-row">
+                <div class="rc-label"><span class="rc-title">Children</span><span class="rc-sub">Age up to 6</span></div>
+                <div class="bb-stepper">
+                  <button type="button" class="bb-step" data-rc="children" data-dir="-1" aria-label="Decrease children">−</button>
+                  <span class="bb-count" id="rcChildren">0</span>
+                  <button type="button" class="bb-step" data-rc="children" data-dir="1" aria-label="Increase children">+</button>
+                </div>
+              </div>
+              <div class="rc-row">
+                <div class="rc-label"><span class="rc-title">Pets</span><span class="rc-sub">Bringing a friend</span></div>
+                <div class="bb-stepper">
+                  <button type="button" class="bb-step" data-rc="pets" data-dir="-1" aria-label="Decrease pets">−</button>
+                  <span class="bb-count" id="rcPets">0</span>
+                  <button type="button" class="bb-step" data-rc="pets" data-dir="1" aria-label="Increase pets">+</button>
+                </div>
+              </div>
+            </div>
+            <div class="rc-note">Children up to age 6 stay on existing bedding.</div>
+            <button type="button" class="rc-submit" id="rcSubmit">See availability &rarr;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="shared/catalog.js"></script>
+  <script src="shared/content.js"></script>
+  <script>
+  (function(){
+    var C = window.OrchidCatalog, CT = window.OrchidContent;
+    function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+    function stars(n){ var f=Math.round(n),s=''; for(var i=0;i<5;i++) s+= i<f?'★':'☆'; return s; }
+
+    // ---- hero video: skip the logo intro at the start, loop from there ----
+    var HERO_START = 4; // seconds to skip (adjust if the logo is shorter/longer)
+    var hv = document.getElementById('heroVideo');
+    if(hv){
+      var toStart = function(){ try{ hv.currentTime = HERO_START; }catch(e){} };
+      hv.addEventListener('loadedmetadata', toStart);
+      if(hv.readyState >= 1) toStart();
+      hv.addEventListener('seeked', function(){ hv.classList.add('ready'); });
+      var loopBack = function(){ try{ hv.currentTime = HERO_START; hv.play(); }catch(e){} };
+      hv.addEventListener('ended', loopBack);
+      hv.addEventListener('timeupdate', function(){ if(hv.duration && hv.currentTime > hv.duration - 0.3) loopBack(); });
+    }
+
+    // ---- nav solidify on scroll ----
+    var nav = document.getElementById('nav');
+    function navScroll(){ if(window.scrollY > 60) nav.classList.add('solid'); else nav.classList.remove('solid'); }
+    window.addEventListener('scroll', navScroll, {passive:true}); navScroll();
+
+    // ---- compact Reserve pill: appears once you scroll past the hero ----
+    var fab = document.getElementById('bookFab');
+    function toggleFab(){ if(fab){ if(window.scrollY > window.innerHeight * 0.85) fab.classList.add('show'); else fab.classList.remove('show'); } }
+    window.addEventListener('scroll', toggleFab, {passive:true}); toggleFab();
+
+    // ---- scroll reveal ----
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:0.14});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+
+    // ---- FAQ accordion ----
+    document.querySelectorAll('.faq-q').forEach(function(q){
+      q.addEventListener('click', function(){ var it=q.parentElement;var wasOpen=it.classList.contains('open');it.parentElement.querySelectorAll('.faq-item.open').forEach(function(o){o.classList.remove('open');});if(!wasOpen)it.classList.add('open'); });
+    });
+
+    // ---- self-serve book bar: dates + guests dropdowns ----
+    (function(){
+      var datesTrigger = document.getElementById('bbDatesTrigger');
+      var datesPop     = document.getElementById('bbDatesPop');
+      var datesField   = document.getElementById('bbDatesField');
+      var datesValue   = document.getElementById('bbDatesValue');
+      var arriveEl = document.getElementById('bbArrive');
+      var leaveEl  = document.getElementById('bbLeave');
+      var guestsTrigger = document.getElementById('bbGuestsTrigger');
+      var guestPop      = document.getElementById('bbGuestPop');
+      var guestsField   = document.getElementById('bbGuestsField');
+      var summary       = document.getElementById('bbGuestSummary');
+      var checkBtn = document.getElementById('checkAvail');
+      if(!arriveEl || !leaveEl || !guestPop || !checkBtn) return;
+
+      function fmt(d){
+        var y=d.getFullYear(), m=('0'+(d.getMonth()+1)).slice(-2), day=('0'+d.getDate()).slice(-2);
+        return y+'-'+m+'-'+day;
+      }
+      function addDays(d,n){ var x=new Date(d); x.setDate(x.getDate()+n); return x; }
+      var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      function pretty(iso){ if(!iso) return null; var p=iso.split('-'); return parseInt(p[2],10)+' '+MON[parseInt(p[1],10)-1]; }
+
+      // defaults: arrive today, leave tomorrow
+      var today = new Date(); today.setHours(0,0,0,0);
+      var tomorrow = addDays(today,1);
+      arriveEl.value = fmt(today);   arriveEl.min = fmt(today);
+      leaveEl.value  = fmt(tomorrow); leaveEl.min = fmt(tomorrow);
+
+      // pre-fill from URL params (lossless return from "Edit" on the options page)
+      var qp = new URLSearchParams(location.search);
+      if(qp.get('in'))  arriveEl.value = qp.get('in');
+      if(qp.get('out')) leaveEl.value  = qp.get('out');
+
+      function updateDatesValue(){
+        var a=pretty(arriveEl.value), b=pretty(leaveEl.value);
+        datesValue.textContent = (a && b) ? (a+' – '+b) : 'Add your dates';
+      }
+      arriveEl.addEventListener('change', function(){
+        var a = arriveEl.value ? new Date(arriveEl.value) : today;
+        leaveEl.min = fmt(addDays(a,1));
+        if(!leaveEl.value || new Date(leaveEl.value) <= a){ leaveEl.value = fmt(addDays(a,1)); }
+        updateDatesValue();
+      });
+      leaveEl.addEventListener('change', updateDatesValue);
+      updateDatesValue();
+
+      // clicking anywhere in a date cell opens that native picker
+      Array.prototype.forEach.call(datesPop.querySelectorAll('.bb-date-cell'), function(cell){
+        cell.addEventListener('click', function(ev){
+          var inp = cell.querySelector('input');
+          if(inp && inp.showPicker && ev.target !== inp){ try{ inp.showPicker(); }catch(e){} }
+        });
+      });
+
+      // ---- guests stepper ----
+      var counts = { adults:2, children:0, pets:0 };
+      var mins   = { adults:1, children:0, pets:0 };
+      ['adults','children','pets'].forEach(function(k){
+        var v = parseInt(qp.get(k),10);
+        if(isFinite(v) && v >= mins[k]) counts[k] = v;
+      });
+      function plural(n,word){ return n+' '+word+(n===1?'':'s'); }
+      function updateSummary(){
+        var parts = [plural(counts.adults,'adult')];
+        parts.push(counts.children + ' ' + (counts.children===1?'child':'children')); // always shown
+        if(counts.pets>0) parts.push(plural(counts.pets,'pet'));
+        summary.textContent = parts.join(' · ');
+      }
+      function refreshSteppers(){
+        guestPop.querySelectorAll('.bb-step').forEach(function(btn){
+          var key = btn.getAttribute('data-step'), dir = parseInt(btn.getAttribute('data-dir'),10);
+          if(dir < 0) btn.disabled = counts[key] <= mins[key];
+        });
+        document.getElementById('bbAdults').textContent = counts.adults;
+        document.getElementById('bbChildren').textContent = counts.children;
+        document.getElementById('bbPets').textContent = counts.pets;
+      }
+      guestPop.querySelectorAll('.bb-step').forEach(function(btn){
+        btn.addEventListener('click', function(ev){
+          ev.stopPropagation();
+          var key = btn.getAttribute('data-step'), dir = parseInt(btn.getAttribute('data-dir'),10);
+          var next = counts[key] + dir;
+          if(next < mins[key]) next = mins[key];
+          counts[key] = next;
+          refreshSteppers(); updateSummary();
+        });
+      });
+      updateSummary(); refreshSteppers();
+
+      // ---- dropdown manager: one open at a time, click-out / Esc to close ----
+      var POPS = [
+        { t:datesTrigger,  p:datesPop,  f:datesField },
+        { t:guestsTrigger, p:guestPop,  f:guestsField },
+      ];
+      function closeAll(except){
+        POPS.forEach(function(o){
+          if(o.p !== except){ o.p.hidden = true; o.p.classList.remove('bb-pop--up'); o.t.setAttribute('aria-expanded','false'); }
+        });
+      }
+      // open above the bar when there isn't enough room below
+      function placePop(o){
+        o.p.classList.remove('bb-pop--up');
+        var tr = o.t.getBoundingClientRect();
+        var popH = o.p.offsetHeight;
+        var below = window.innerHeight - tr.bottom;
+        var above = tr.top;
+        if(below < popH + 24 && above > below) o.p.classList.add('bb-pop--up');
+      }
+      POPS.forEach(function(o){
+        o.t.addEventListener('click', function(ev){
+          ev.stopPropagation();
+          var willOpen = o.p.hidden;
+          closeAll(willOpen ? o.p : null);
+          o.p.hidden = !willOpen;
+          o.t.setAttribute('aria-expanded', String(willOpen));
+          if(willOpen) placePop(o);
+        });
+        o.t.addEventListener('keydown', function(ev){
+          if(ev.key==='Enter' || ev.key===' '){ ev.preventDefault(); o.t.click(); }
+        });
+        o.p.addEventListener('click', function(ev){ ev.stopPropagation(); });
+      });
+      document.addEventListener('click', function(ev){
+        var inside = POPS.some(function(o){ return o.f.contains(ev.target); });
+        if(!inside) closeAll(null);
+      });
+      document.addEventListener('keydown', function(ev){ if(ev.key==='Escape') closeAll(null); });
+
+      // ---- check availability → straight to the package options ----
+      checkBtn.addEventListener('click', function(){
+        window.location.href = 'book-packages.html?in=' + encodeURIComponent(arriveEl.value) +
+          '&out=' + encodeURIComponent(leaveEl.value) +
+          '&adults=' + encodeURIComponent(counts.adults) +
+          '&children=' + encodeURIComponent(counts.children) +
+          '&pets=' + encodeURIComponent(counts.pets);
+      });
+    })();
+
+    // ---- anchors: smooth scroll ----
+    document.querySelectorAll('a[href^="#"]').forEach(function(a){
+      a.addEventListener('click', function(ev){ var t=document.querySelector(a.getAttribute('href')); if(t){ ev.preventDefault(); t.scrollIntoView({behavior:'smooth'}); } });
+    });
+
+    // ---- EXPERIENCES shorts (built from real photos) ----
+    var U = 'https://orchidtree.in/uploads/';
+    var SHORTS = [
+      { lbl:'Ozone pool', img:'images/ozone-pool.jpg' },
+      { lbl:'Farm visit & buggy ride', img:U+'Image8_scaled_jpg_ec00384f49.webp' },
+      { lbl:'Bonfire & stargazing', img:U+'Experience_section_jpg_afb1c77479.webp' },
+      { lbl:'Steam & deep rest', img:U+'bodhi_tree_5c9ce0f7ce.webp' },
+      { lbl:'Karaoke & music corner', img:U+'Copy_of_2_a5beee287f.jpg' },
+      { lbl:'Trampoline & games', img:U+'Image_6_1024x1536_bk_923d98c089.jpg' },
+      { lbl:'Birdwatching & trails', img:U+'chandana_2_00966a14a0.png' },
+      { lbl:'Movies in the hall', img:U+'datura_1_a0ba781d1b.png' },
+    ];
+    document.getElementById('expShorts').innerHTML = SHORTS.map(function(s){
+      return '<div class="short"><div class="ph" style="background-image:url(\''+esc(s.img)+'\')"></div><div class="scrim"></div><div class="lbl">'+esc(s.lbl)+'</div></div>';
+    }).join('');
+    (function(){
+      var sh=document.getElementById('expShorts'), nav=document.getElementById('expNav'), fade=document.getElementById('expFade');
+      var prev=document.getElementById('expPrev'), next=document.getElementById('expNext');
+      function step(){ var t=sh.querySelector('.short'); return (t?t.getBoundingClientRect().width:260)+18; }
+      function sync(){
+        var over=sh.scrollWidth-sh.clientWidth>4;
+        nav.style.visibility=over?'visible':'hidden';
+        fade.style.opacity=(over && sh.scrollLeft < sh.scrollWidth-sh.clientWidth-4)?'1':'0';
+        prev.disabled=sh.scrollLeft<=2; next.disabled=sh.scrollLeft>=sh.scrollWidth-sh.clientWidth-2;
+      }
+      prev.onclick=function(){ sh.scrollBy({left:-step()*2,behavior:'smooth'}); };
+      next.onclick=function(){ sh.scrollBy({left:step()*2,behavior:'smooth'}); };
+      sh.addEventListener('scroll',sync,{passive:true}); window.addEventListener('resize',sync); sync();
+    })();
+
+    // ---- horizontal parallax: each image drifts L→R as you scroll the carousel ----
+    (function(){
+      if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var sh = document.getElementById('expShorts'); if(!sh) return;
+      function parallax(){
+        var rect = sh.getBoundingClientRect(), vw = rect.width || 1;
+        Array.prototype.forEach.call(sh.querySelectorAll('.short'), function(card){
+          var ph = card.querySelector('.ph'); if(!ph) return;
+          var cr = card.getBoundingClientRect();
+          var prog = ((cr.left + cr.width / 2) - rect.left) / vw;   // 0 at left edge, 1 at right
+          prog = Math.max(0, Math.min(1, prog));
+          var x = -prog * (card.clientWidth * 0.28);                // pan within the 32% of extra width
+          ph.style.transform = 'translateX(' + x.toFixed(1) + 'px)';
+        });
+      }
+      var ticking = false;
+      function tick(){ if(!ticking){ ticking = true; requestAnimationFrame(function(){ parallax(); ticking = false; }); } }
+      sh.addEventListener('scroll', tick, {passive:true});
+      window.addEventListener('resize', tick);
+      tick();
+    })();
+
+    // ---- ROOM cards: cover photo + crossfade through the gallery on hover ----
+    document.querySelectorAll('.room[data-rep]').forEach(function(card){
+      var r = C && C.get(card.getAttribute('data-rep')); if(!r) return;
+      // clicking the card opens the rich room-detail modal for that room
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', function(){ if(window.openRoom) window.openRoom(card.getAttribute('data-rep')); });
+      var urls = (r.imageUrls||[]).slice();
+      var base = card.querySelector('.rmh-base'), top = card.querySelector('.rmh-top');
+      if(urls[0]) base.style.backgroundImage = "url('"+urls[0]+"')";
+      // photo count badge
+      if(urls.length>1){ var b=document.createElement('div'); b.className='rcount'; b.textContent=urls.length+' photos'; card.querySelector('.media').appendChild(b); }
+      if(urls.length<2) return;
+      var cur=0, idx=0, loaded=false;
+      function preload(){ if(loaded) return; loaded=true; urls.forEach(function(u){ var im=new Image(); im.src=u; }); }
+      function tick(){
+        if(!card._hover) return;
+        idx=(idx+1)%urls.length;
+        var layers=[base,top], incoming=layers[1-cur];
+        incoming.style.backgroundImage="url('"+urls[idx]+"')";
+        incoming.style.opacity='1'; layers[cur].style.opacity='0'; cur=1-cur;
+        card._t=setTimeout(tick,2200);
+      }
+      card.addEventListener('mouseenter',function(){ card._hover=true; preload(); card._t=setTimeout(tick,500); });
+      card.addEventListener('mouseleave',function(){
+        card._hover=false; clearTimeout(card._t);
+        base.style.backgroundImage="url('"+urls[0]+"')"; base.style.opacity='1'; top.style.opacity='0'; cur=0; idx=0;
+      });
+    });
+
+    // ---- REVIEWS from content.js (kept in sync with the guest page) ----
+    if(CT && CT.reviews){
+      var ids = ['aditi','ketty','srikant'];
+      var picked = ids.map(function(id){ return CT.getReview(id); }).filter(Boolean);
+      document.getElementById('revGrid').innerHTML = picked.map(function(r){
+        return '<div class="rev"><div class="stars">'+stars(r.rating)+'</div><p>"'+esc(r.text)+'"</p>'+
+          '<div class="who">'+esc(r.name)+'</div><div class="vg">'+(r.verified?'Verified Guest':'')+'</div></div>';
+      }).join('');
+      var url = CT.googleReviewsUrl;
+      document.getElementById('revFoot').innerHTML = '<b>4.4</b> from '+(url?'<a href="'+esc(url)+'" target="_blank" rel="noopener">615+ Google reviews</a>':'615+ Google reviews');
+    }
+
+    // ============================================================
+    //  RICH ROOM MODAL (ported from book-packages.html / guest.html)
+    // ============================================================
+    function el(id){ return document.getElementById(id); }
+
+    // ---- zone: poolside cluster vs garden cottage (the estate's two areas) -
+    var ICON_POOL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16c1.5 0 1.5 1.2 3 1.2S8.5 16 10 16s1.5 1.2 3 1.2 1.5-1.2 3-1.2 1.5 1.2 3 1.2"/><path d="M2 20c1.5 0 1.5 1.2 3 1.2S8.5 20 10 20s1.5 1.2 3 1.2 1.5-1.2 3-1.2 1.5 1.2 3 1.2"/><path d="M7 16V5.5A1.5 1.5 0 0 1 8.5 4 1.5 1.5 0 0 1 10 5.5"/><path d="M16 16V5.5A1.5 1.5 0 0 0 14.5 4 1.5 1.5 0 0 0 13 5.5"/></svg>';
+    var ICON_GARDEN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-7"/><path d="M12 15c-3.5 0-6-2.4-6-5.8C6 5.6 8.7 3 12 3s6 2.6 6 6.2c0 3.4-2.5 5.8-6 5.8z"/><path d="M12 15c0-2.5 1.3-4.5 3-5.5M12 12c0-2-1-3.6-2.5-4.4"/></svg>';
+    function zoneOf(category){ return /garden/i.test(category||'') ? 'garden' : 'pool'; }
+    function zoneLabel(category){ return zoneOf(category) === 'garden' ? 'Garden cottage' : 'Poolside'; }
+    function zoneTag(category){
+      var z = zoneOf(category);
+      var ic = z === 'garden' ? ICON_GARDEN : ICON_POOL;
+      return '<span class="zone '+z+'">'+ic+zoneLabel(category)+'</span>';
+    }
+    var SETTING_COPY = {
+      pool: { title: 'By the pool', text: 'Steps from the water and clustered together with the other poolside rooms. Bright, easy and close to everything — the natural choice when your group wants to stay near each other and the pool.' },
+      garden: { title: 'A garden cottage, set apart', text: 'Tucked among the trees a short walk from the pool, with a private sit-out patio and a bath open to the sky. Quieter and more private — its own little world, a little removed from the poolside rooms.' },
+    };
+    function settingBand(category){
+      var z = zoneOf(category), c = SETTING_COPY[z], ic = z === 'garden' ? ICON_GARDEN : ICON_POOL;
+      return '<div class="setting-band '+z+'"><div class="sb-ic">'+ic+'</div>'+
+        '<div><div class="sb-title">'+esc(c.title)+'</div><div class="sb-text">'+esc(c.text)+'</div></div></div>';
+    }
+
+    function rupees(n){ return '₹' + Number(n||0).toLocaleString('en-IN'); }
+    var WA_NUM = (CT && CT.contact && CT.contact.whatsapp) || '918088251913';
+    function waLink(msg){ return 'https://wa.me/' + WA_NUM + '?text=' + encodeURIComponent(msg); }
+
+    // ---- gallery (crossfade + thumbs + autoplay) ----
+    function roomUrls(r){ return (r.imageUrls && r.imageUrls.length) ? r.imageUrls : (r.imageUrl ? [r.imageUrl] : []); }
+    var MG = { urls: [], i: 0, cur: 0, timer: null };
+    function mgLayers(){ return [document.querySelector('#mMain .rm-base'), document.querySelector('#mMain .rm-top')]; }
+    function mgGo(target){
+      var n = MG.urls.length; if(!n) return;
+      target = (target + n) % n; MG.i = target;
+      var layers = mgLayers(), incoming = layers[1 - MG.cur];
+      incoming.style.backgroundImage = "url('" + MG.urls[target] + "')";
+      incoming.style.opacity = '1';
+      layers[MG.cur].style.opacity = '0';
+      MG.cur = 1 - MG.cur;
+      var cnt = el('mCount'); if(cnt) cnt.textContent = (target + 1) + ' / ' + n;
+      var thumbs = el('mThumbs');
+      if(thumbs){ var a = thumbs.querySelector('.th.active'); if(a) a.classList.remove('active');
+        var t = thumbs.querySelector('.th[data-i="' + target + '"]'); if(t) t.classList.add('active'); }
+    }
+    function mgTimer(){ clearInterval(MG.timer); MG.timer = null; if(MG.urls.length > 1) MG.timer = setInterval(function(){ mgGo(MG.i + 1); }, 3200); }
+    function mgStop(){ clearInterval(MG.timer); MG.timer = null; }
+    function mgStart(urls){
+      mgStop(); MG.urls = urls || []; MG.i = 0; MG.cur = 0;
+      var layers = mgLayers();
+      layers[0].style.backgroundImage = urls[0] ? "url('" + urls[0] + "')" : ''; layers[0].style.opacity = '1';
+      layers[1].style.backgroundImage = ''; layers[1].style.opacity = '0';
+      urls.forEach(function(u){ var im = new Image(); im.src = u; });
+      var multi = urls.length > 1;
+      el('mPrev').style.display = multi ? '' : 'none';
+      el('mNext').style.display = multi ? '' : 'none';
+      el('mCount').style.display = multi ? '' : 'none';
+      el('mCount').textContent = '1 / ' + urls.length;
+      var thumbs = el('mThumbs');
+      thumbs.innerHTML = multi
+        ? urls.map(function(u, i){ return '<div class="th' + (i === 0 ? ' active' : '') + '" data-i="' + i + '" style="background-image:url(\'' + esc(u) + '\')"></div>'; }).join('')
+        : '';
+      Array.prototype.forEach.call(thumbs.querySelectorAll('.th'), function(th){
+        th.addEventListener('click', function(){ mgGo(+th.getAttribute('data-i')); mgTimer(); });
+      });
+      mgTimer();
+    }
+    el('mPrev').addEventListener('click', function(){ mgGo(MG.i - 1); mgTimer(); });
+    el('mNext').addEventListener('click', function(){ mgGo(MG.i + 1); mgTimer(); });
+
+    // ---- requirement collector (dates + guests → book-packages for THIS room) ----
+    var currentRoomId = null;
+    (function(){
+      var ctaBox  = el('rbookCta'), collect = el('rbookCollect');
+      var openBtn = el('rbookOpen'), submit = el('rcSubmit');
+      var arr = el('rcArrive'), lv = el('rcLeave');
+      var counts = { adults: 2, children: 0, pets: 0 };
+      var mins   = { adults: 1, children: 0, pets: 0 };
+
+      function fmt(d){ var y=d.getFullYear(),m=('0'+(d.getMonth()+1)).slice(-2),day=('0'+d.getDate()).slice(-2); return y+'-'+m+'-'+day; }
+      function addDays(d,n){ var x=new Date(d); x.setDate(x.getDate()+n); return x; }
+
+      function refresh(){
+        collect.querySelectorAll('.bb-step').forEach(function(b){
+          var k=b.getAttribute('data-rc'), d=parseInt(b.getAttribute('data-dir'),10);
+          if(d<0) b.disabled = counts[k] <= mins[k];
+        });
+        el('rcAdults').textContent = counts.adults;
+        el('rcChildren').textContent = counts.children;
+        el('rcPets').textContent = counts.pets;
+      }
+      collect.querySelectorAll('.bb-step').forEach(function(b){
+        b.addEventListener('click', function(){
+          var k=b.getAttribute('data-rc'), d=parseInt(b.getAttribute('data-dir'),10);
+          var n=counts[k]+d; if(n<mins[k]) n=mins[k]; counts[k]=n; refresh();
+        });
+      });
+
+      // clicking a date cell opens that native picker
+      Array.prototype.forEach.call(collect.querySelectorAll('.rc-date'), function(cell){
+        cell.addEventListener('click', function(ev){
+          var inp = cell.querySelector('input');
+          if(inp && inp.showPicker && ev.target !== inp){ try{ inp.showPicker(); }catch(e){} }
+        });
+      });
+      arr.addEventListener('change', function(){
+        var today=new Date(); today.setHours(0,0,0,0);
+        var a = arr.value ? new Date(arr.value) : today;
+        lv.min = fmt(addDays(a,1));
+        if(!lv.value || new Date(lv.value) <= a) lv.value = fmt(addDays(a,1));
+      });
+
+      // reset to State A with fresh defaults — called each time a room opens
+      window._rbookReset = function(){
+        var today=new Date(); today.setHours(0,0,0,0);
+        arr.value = fmt(today);   arr.min = fmt(today);
+        lv.value  = fmt(addDays(today,1)); lv.min = fmt(addDays(today,1));
+        counts = { adults: 2, children: 0, pets: 0 };
+        refresh();
+        collect.classList.remove('open');
+        ctaBox.hidden = false;
+      };
+
+      openBtn.addEventListener('click', function(){
+        ctaBox.hidden = true;
+        collect.classList.add('open');
+      });
+
+      submit.addEventListener('click', function(){
+        if(!arr.value || !lv.value || new Date(lv.value) <= new Date(arr.value)){
+          lv.focus(); return;
+        }
+        if(!currentRoomId) return;
+        var u = new URLSearchParams();
+        u.set('room', currentRoomId);
+        u.set('in', arr.value);
+        u.set('out', lv.value);
+        u.set('adults', String(counts.adults));
+        u.set('children', String(counts.children));
+        u.set('pets', String(counts.pets));
+        window.location.href = 'book-packages.html?' + u.toString();
+      });
+    })();
+
+    function openRoom(id){
+      var r = C && C.get(id); if(!r) return;
+      currentRoomId = id;
+      el('mCat').textContent = r.category;
+      el('mTitle').textContent = r.name;
+      el('mTagline').innerHTML = esc(r.tagline) + (r.tier ? '<span class="tier">'+esc(r.tier)+'</span>' : '');
+      el('mZone').innerHTML = zoneTag(r.category);
+      el('mSetting').innerHTML = settingBand(r.category);
+      el('mStory').textContent = r.story || '';
+      el('mDesc').textContent = r.description || '';
+
+      var priceEl = el('mPrice');
+      if(r.priceFrom){ priceEl.style.display=''; priceEl.textContent = 'From ' + rupees(r.priceFrom) + ' + taxes per night.'; }
+      else { priceEl.style.display='none'; }
+
+      mgStart(roomUrls(r));
+
+      el('mFacts').innerHTML = (r.facts || []).map(function(f){
+        return '<div class="f"><span class="k">'+esc(f.label)+'</span><span class="v">'+esc(f.value)+'</span></div>';
+      }).join('');
+      el('mOffers').innerHTML = (r.amenities || []).map(function(a){ return '<span class="a">'+esc(a)+'</span>'; }).join('');
+      el('mAsk').innerHTML = '<a class="room-ask" href="'+esc(waLink('Hi, I have a question about the '+r.name+' room at Orchid Tree.'))+'" target="_blank" rel="noopener">Have a question about this room? Message us &rarr;</a>';
+
+      if(window._rbookReset) window._rbookReset();
+
+      el('overlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeRoom(){ mgStop(); el('overlay').classList.remove('open'); document.body.style.overflow = ''; }
+    window.openRoom = openRoom;
+    window.closeRoom = closeRoom;
+    document.addEventListener('keydown', function(ev){ if(ev.key === 'Escape') closeRoom(); });
+  })();
+  </script>
+</body>
+</html>
