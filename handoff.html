@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Orchid Tree — Website Handoff</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Mulish:wght@400;500;600;700&family=Sacramento&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#f7f3ea; --card:#fff; --green:#3c4a16; --ink:#43382b; --body:#55504a;
+    --gold:#c9a23c; --line:#e6ddcb; --media-tx:#b3a994;
+    --serif:'Cormorant Garamond',Georgia,serif; --sans:'Mulish','Helvetica Neue',Arial,sans-serif; --script:'Sacramento',cursive;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  body{font-family:var(--sans);color:var(--body);background:#fff;line-height:1.55;font-size:10.5pt;}
+  @page{size:A4;margin:16mm 15mm;}
+
+  h1,h2,h3,h4{font-family:var(--serif);color:var(--ink);font-weight:600;line-height:1.12;}
+  .eyebrow{font-size:8.5pt;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:700;}
+  a{color:var(--green);text-decoration:none;}
+  p{margin-bottom:8px;}
+  strong{color:var(--ink);}
+
+  /* COVER */
+  .cover{background:var(--green);color:#fff;border-radius:10px;min-height:248mm;padding:30mm 22mm;display:flex;flex-direction:column;justify-content:space-between;break-after:page;}
+  .cover .logo{height:70px;width:auto;filter:brightness(0) invert(1);}
+  .cover .ctitle{font-family:var(--serif);font-size:46pt;line-height:1.02;font-weight:500;margin-bottom:10px;}
+  .cover .csub{font-size:13pt;color:rgba(255,255,255,.85);max-width:120mm;line-height:1.5;}
+  .cover .ceyebrow{font-size:9pt;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:14px;}
+  .cover .script{font-family:var(--script);font-size:34pt;color:var(--gold);line-height:1;}
+  .cover .cmeta{display:flex;gap:34px;flex-wrap:wrap;font-size:9.5pt;color:rgba(255,255,255,.82);}
+  .cover .cmeta b{display:block;color:#fff;font-weight:700;letter-spacing:.5px;}
+  .cover .cline{height:1px;background:rgba(255,255,255,.3);margin:18px 0;}
+
+  /* SECTIONS */
+  .sec{break-inside:avoid;margin-bottom:20px;}
+  .sec-num{font-family:var(--serif);font-size:11pt;color:var(--gold);font-weight:600;}
+  h2.sh{font-size:21pt;margin:2px 0 10px;border-bottom:2px solid var(--gold);padding-bottom:8px;}
+  h3.sub{font-size:13pt;margin:14px 0 5px;color:var(--ink);}
+  .lead{font-size:11pt;color:var(--body);max-width:160mm;}
+
+  ul{margin:6px 0 10px 18px;}
+  li{margin-bottom:4px;}
+  .two{display:flex;gap:18px;}
+  .two>div{flex:1;}
+
+  table{width:100%;border-collapse:collapse;margin:8px 0 12px;font-size:9pt;}
+  th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top;}
+  th{color:var(--media-tx);text-transform:uppercase;letter-spacing:1px;font-size:7.5pt;font-weight:700;}
+  td a{word-break:break-all;}
+  tr{break-inside:avoid;}
+
+  .card{background:var(--cream);border:1px solid var(--line);border-left:3px solid var(--green);border-radius:6px;padding:12px 16px;margin:10px 0;break-inside:avoid;}
+  .card h4{font-size:12pt;margin-bottom:4px;}
+  .card.gold{border-left-color:var(--gold);}
+  .pill{display:inline-block;font-size:7.5pt;letter-spacing:1px;text-transform:uppercase;font-weight:700;padding:2px 8px;border-radius:20px;}
+  .p-done{background:rgba(60,74,22,.12);color:var(--green);}
+  .p-todo{background:rgba(201,162,60,.16);color:#8a6d1f;}
+  .p-note{background:rgba(110,103,93,.14);color:#5c554c;}
+
+  .palette{display:flex;gap:0;margin:8px 0 4px;border-radius:6px;overflow:hidden;border:1px solid var(--line);}
+  .palette span{flex:1;height:34px;font-size:7pt;color:#fff;display:flex;align-items:flex-end;justify-content:center;padding-bottom:3px;}
+
+  .page-break{break-before:page;}
+  .foot-note{font-size:8.5pt;color:var(--media-tx);border-top:1px solid var(--line);padding-top:8px;margin-top:14px;}
+  .sig{font-family:var(--script);font-size:18pt;color:var(--gold);}
+</style>
+</head>
+<body>
+
+  <!-- COVER -->
+  <section class="cover">
+    <div>
+      <img class="logo" src="images/logo.png" alt="Orchid Tree">
+    </div>
+    <div>
+      <div class="ceyebrow">Website Handoff</div>
+      <div class="ctitle">Orchid Tree<br>Website</div>
+      <div class="cline" style="max-width:130mm;"></div>
+      <p class="csub">A complete, mobile-first marketing site with a shared design system, an SEO-ready blog, a dining pre-order journey, and a full brand guideline. Everything you need to run it, grow it, and hand it on.</p>
+    </div>
+    <div>
+      <div class="cmeta">
+        <div><b>Prepared</b>June 2026</div>
+        <div><b>Live at</b>orchid-sigma.vercel.app</div>
+        <div><b>Code</b>github.com/shreyaraj13/orchid-tree-website</div>
+        <div><b>Pages</b>22</div>
+      </div>
+      <div style="margin-top:22px;"><span class="script">Orchid Tree</span></div>
+    </div>
+  </section>
+
+  <!-- 1. OVERVIEW -->
+  <section class="sec">
+    <div class="sec-num">01</div>
+    <h2 class="sh">What was built</h2>
+    <p class="lead">A fast, premium, mobile-first website built as hand-written HTML, CSS, and vanilla JavaScript on one shared design system. No framework, no build step, so it loads quickly and is simple to maintain. The work covers the full public site, a content engine for SEO, a guest dining journey, staff tooling, a complete brand guideline, and an SEO handover.</p>
+    <div class="two" style="margin-top:12px;">
+      <div>
+        <h3 class="sub">Delivered</h3>
+        <ul>
+          <li>Nine public landing pages, one per intent</li>
+          <li>A cinematic Stays page and a photo-led Restaurant page</li>
+          <li>The Journal (blog) with three SEO articles</li>
+          <li>A Plan Your Dining pre-order flow</li>
+          <li>A staff kitchen dashboard</li>
+          <li>A full brand guideline, written and visual</li>
+          <li>An SEO handover guide</li>
+          <li>Source published to GitHub</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="sub">Design language</h3>
+        <p>Deep olive on cream, gold accents, and a family of warm browns. Cormorant Garamond headings, Mulish body, a Sacramento script signature. Calm, editorial, restrained.</p>
+        <div class="palette">
+          <span style="background:#f7f3ea;color:#8a8275;">#f7f3ea</span>
+          <span style="background:#3c4a16;">#3c4a16</span>
+          <span style="background:#43382b;">#43382b</span>
+          <span style="background:#c9a23c;">#c9a23c</span>
+          <span style="background:#6e675d;">#6e675d</span>
+        </div>
+        <p style="font-size:8.5pt;color:var(--media-tx);">Cream · Olive · Ink brown · Gold · Body brown</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. THE PAGES -->
+  <section class="sec page-break">
+    <div class="sec-num">02</div>
+    <h2 class="sh">The live site, every page</h2>
+    <p class="lead">Base URL <a href="https://orchid-sigma.vercel.app">orchid-sigma.vercel.app</a>. The root <strong>/</strong> serves Home.</p>
+
+    <h3 class="sub">Public pages</h3>
+    <table>
+      <tr><th>Page</th><th>Address</th></tr>
+      <tr><td>Home</td><td><a href="https://orchid-sigma.vercel.app/">/</a></td></tr>
+      <tr><td>Stays</td><td>/stays.html</td></tr>
+      <tr><td>Experiences</td><td>/experiences.html</td></tr>
+      <tr><td>Restaurant</td><td>/restaurant.html</td></tr>
+      <tr><td>Weddings</td><td>/weddings.html</td></tr>
+      <tr><td>Corporate</td><td>/corporate.html</td></tr>
+      <tr><td>Host with Us</td><td>/host-with-us.html</td></tr>
+      <tr><td>About</td><td>/about.html</td></tr>
+      <tr><td>FAQ</td><td>/faq.html</td></tr>
+      <tr><td>Privacy &amp; Terms</td><td>/privacy-policy.html</td></tr>
+    </table>
+
+    <h3 class="sub">Journal (blog, for SEO)</h3>
+    <table>
+      <tr><th>Page</th><th>Address</th></tr>
+      <tr><td>The Journal (index)</td><td>/blog.html</td></tr>
+      <tr><td>Weekend Getaways Near Bangalore</td><td>/blog-weekend-getaways-near-bangalore.html</td></tr>
+      <tr><td>Farm-to-Table Near Bangalore</td><td>/blog-farm-to-table-dining-near-bangalore.html</td></tr>
+      <tr><td>Intimate Wedding Venues Near Bangalore</td><td>/blog-intimate-wedding-venues-near-bangalore.html</td></tr>
+    </table>
+
+    <div class="two">
+      <div>
+        <h3 class="sub">Guest &amp; booking flows</h3>
+        <table>
+          <tr><td>Plan Your Dining</td><td>/plan-your-dining.html</td></tr>
+          <tr><td>Book Packages</td><td>/book-packages.html</td></tr>
+          <tr><td>Guest / Room detail</td><td>/guest.html</td></tr>
+        </table>
+      </div>
+      <div>
+        <h3 class="sub">Internal tools &amp; reference</h3>
+        <table>
+          <tr><td>Kitchen Dashboard</td><td>/restaurant-dashboard.html</td></tr>
+          <tr><td>Admin</td><td>/admin.html</td></tr>
+          <tr><td>Brand Guidelines</td><td>/brand.html</td></tr>
+        </table>
+      </div>
+    </div>
+    <p style="font-size:8.5pt;color:var(--media-tx);">The Journal and Host with Us are reached from the footer. The dining flow, staff tools, and brand pages are direct-link only and set to noindex.</p>
+  </section>
+
+  <!-- 3. DESIGN SYSTEM -->
+  <section class="sec page-break">
+    <div class="sec-num">03</div>
+    <h2 class="sh">Design system &amp; brand</h2>
+    <p class="lead">The complete design language is documented in two places, so anyone can keep new work consistent.</p>
+    <div class="card">
+      <h4>BRAND-GUIDELINES.md</h4>
+      <p>The written reference: colour (including the warm brown family), typography, spacing, every component, motion, photography rules, voice and tone, iconography, SEO standards, data architecture, accessibility, and do/don'ts.</p>
+    </div>
+    <div class="card gold">
+      <h4>The living style guide, in the browser</h4>
+      <p>A three-page visual guide that renders the real colours, type, and components:</p>
+      <ul>
+        <li><strong>Foundations</strong> — /brand.html</li>
+        <li><strong>Components</strong> — /brand-components.html</li>
+        <li><strong>Voice &amp; Content</strong> — /brand-voice.html</li>
+      </ul>
+    </div>
+    <h3 class="sub">House rules, never break these</h3>
+    <ul>
+      <li>No exclamation marks. No em dashes or en dashes. Use commas and periods.</li>
+      <li>Always write the brand as <strong>Orchid Tree</strong>, two words.</li>
+      <li>Lead with a feeling, then one specific sensory detail. Keep text sparse, let photos carry.</li>
+      <li>Reach for brown, not grey or black, for any shade, scrim, or shadow.</li>
+    </ul>
+  </section>
+
+  <!-- 4. SEO -->
+  <section class="sec page-break">
+    <div class="sec-num">04</div>
+    <h2 class="sh">Search &amp; SEO</h2>
+    <p class="lead">The site is built to rank for local, high-intent searches near Bangalore. Full detail is in <strong>SEO.md</strong>. The headlines:</p>
+    <div class="two">
+      <div>
+        <h3 class="sub">Already in place</h3>
+        <ul>
+          <li>Unique title, description, canonical per page</li>
+          <li>Open Graph and Twitter cards</li>
+          <li>Structured data: LodgingBusiness, Restaurant, Service, FAQPage, BlogPosting, Breadcrumb</li>
+          <li>Semantic HTML, clean keyword URLs, alt text</li>
+          <li>Strong internal linking into the money pages</li>
+          <li>Fast, mobile-first, HTTPS</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="sub">Do first <span class="pill p-todo">action</span></h3>
+        <ul>
+          <li>Optimise the Home page: add a canonical, a meta description, and structured data</li>
+          <li>Add sitemap.xml and robots.txt (ready in SEO.md)</li>
+          <li>Set up Google Search Console and Google Business Profile</li>
+          <li>Decide the live domain and update all URLs, with 301 redirects</li>
+          <li>Set admin and booking pages to noindex</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <h4>The content engine</h4>
+      <p>The Journal captures informational searches and links into Stays, Restaurant, and Weddings. Aim for two to four quality posts a month. Next keyword ideas: pet-friendly resorts near Bangalore, monsoon getaways, corporate offsite venues near Bangalore, resorts near Whitefield for couples.</p>
+    </div>
+  </section>
+
+  <!-- 5. RUN & DEPLOY -->
+  <section class="sec page-break">
+    <div class="sec-num">05</div>
+    <h2 class="sh">Making changes &amp; publishing</h2>
+    <p class="lead">The site is static and hosted on Vercel. The source lives on GitHub.</p>
+    <h3 class="sub">To publish changes</h3>
+    <p>Edit the HTML, then run <strong>./deploy.sh</strong> from the project folder. It syncs the pages and shared data into the linked Vercel folder and ships to production at orchid-sigma.vercel.app.</p>
+    <h3 class="sub">Source code</h3>
+    <p><a href="https://github.com/shreyaraj13/orchid-tree-website">github.com/shreyaraj13/orchid-tree-website</a> (public). Future changes: git add, git commit, git push.</p>
+    <h3 class="sub">Publishing a new blog post</h3>
+    <p>Duplicate any blog-*.html file, change the title, description, canonical, structured data, and the article body, add a card to blog.html, add the file to deploy.sh, then deploy.</p>
+    <div class="card gold">
+      <h4>One menu, many surfaces</h4>
+      <p>The dining content lives once in shared/menu.js and feeds the Restaurant page, the Plan Your Dining flow, and the kitchen dashboard. Rooms live once in shared/catalog.js.</p>
+    </div>
+  </section>
+
+  <!-- 6. NEXT STEPS & ACCESS -->
+  <section class="sec page-break">
+    <div class="sec-num">06</div>
+    <h2 class="sh">Next steps &amp; access</h2>
+
+    <h3 class="sub">Recommended, in order</h3>
+    <table>
+      <tr><th>Priority</th><th>Action</th></tr>
+      <tr><td><span class="pill p-todo">P1</span></td><td>Google Business Profile and Search Console, the highest-impact local SEO moves</td></tr>
+      <tr><td><span class="pill p-todo">P1</span></td><td>Home page SEO, sitemap.xml, robots.txt, and the live domain decision with redirects</td></tr>
+      <tr><td><span class="pill p-note">P2</span></td><td>Connect a real backend so the menu, the guest pre-order link, and the kitchen dashboard sync live (currently front-end with WhatsApp dispatch)</td></tr>
+      <tr><td><span class="pill p-note">P2</span></td><td>Replace placeholder lifestyle photos with real Orchid Tree photography, swap slots are labelled in the code</td></tr>
+      <tr><td><span class="pill p-note">P3</span></td><td>Add web analytics and a steady stream of Journal posts</td></tr>
+    </table>
+
+    <h3 class="sub">Accounts you will want to hold</h3>
+    <ul>
+      <li><strong>Vercel</strong> — hosting and deploys (project "orchid")</li>
+      <li><strong>GitHub</strong> — the source repository</li>
+      <li><strong>Domain registrar</strong> — for the live domain</li>
+      <li><strong>Google Business Profile</strong> and <strong>Search Console</strong></li>
+      <li><strong>Image library</strong> — real photography to replace placeholders</li>
+    </ul>
+
+    <h3 class="sub">Key facts</h3>
+    <table>
+      <tr><td>Address</td><td>Survey No. 7/2, Yelachamanahalli Village, Hoskote, Bangalore Rural, Karnataka 562114</td></tr>
+      <tr><td>Phone / WhatsApp</td><td>+91 80882 51913</td></tr>
+      <tr><td>Email</td><td>orchidtree.blr@gmail.com</td></tr>
+      <tr><td>Rating shown</td><td>4.4 from 615+ guests</td></tr>
+    </table>
+
+    <div class="foot-note">
+      <span class="sig">Orchid Tree</span><br>
+      The art of doing nothing. &nbsp; This handoff covers the website as built and deployed in June 2026. The full written detail lives in BRAND-GUIDELINES.md and SEO.md in the repository.
+    </div>
+  </section>
+
+</body>
+</html>
